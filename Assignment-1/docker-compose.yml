@@ -1,0 +1,19 @@
+services:
+  mongo:
+    image: mongo:latest
+
+  mongo-seed:
+    build: ./mongo-seed
+    depends_on:
+      - mongo
+
+  backend:
+    build: ./Express
+    environment:
+      DB_HOST: mongo
+      DB_PORT: 27017
+      DB_NAME: fear-of-flight-db
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo
