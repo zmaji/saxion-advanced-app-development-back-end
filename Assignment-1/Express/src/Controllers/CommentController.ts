@@ -1,4 +1,4 @@
-import { Comment } from '../Typings/Comment';
+import type { Comment } from '../Typings/Comment';
 
 import comments from '../Data/Comments';
 

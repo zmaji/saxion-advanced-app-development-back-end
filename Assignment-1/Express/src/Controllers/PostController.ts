@@ -1,4 +1,4 @@
-import { Post } from '../Typings/Post';
+import type { Post } from '../Typings/Post';
 
 import posts from '../Data/Posts';
 
