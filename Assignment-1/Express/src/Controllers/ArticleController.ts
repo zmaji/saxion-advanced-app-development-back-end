@@ -1,4 +1,5 @@
-import type {Article} from '../Typings/Article';
+import type { Article } from '../Typings/Article';
+
 import ArticleModel from '../Models/ArticleModel';
 
 // @ts-ignore
@@ -13,6 +14,7 @@ const getArticles = async () => {
 
 const getArticle = (articleID: string) => {
     let article: Article = {
+        articleID: '1',
         name: 'Flying is dangerous',
         description: '10 reasons why not to fly',
         content: '1-10; Don\'t',
