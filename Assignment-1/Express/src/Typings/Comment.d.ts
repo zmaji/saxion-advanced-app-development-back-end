@@ -1,5 +1,5 @@
-import type { User } from '../Typings/User';
-import type { Post } from '../Typings/Post';
+import type { User } from '.User';
+import type { Post } from '.Post';
 
 export interface Comment {
   id: string,

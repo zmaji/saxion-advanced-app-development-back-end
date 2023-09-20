@@ -1,4 +1,4 @@
-import { User } from '../Typings/User';
+import type { User } from '../Typings/User';
 
 import users from '../Data/Users';
 
