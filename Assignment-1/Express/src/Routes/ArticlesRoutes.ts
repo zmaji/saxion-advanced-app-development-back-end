@@ -6,12 +6,19 @@ import ArticleController from '../Controllers/ArticleController';
 
 const router = express.Router();
 
-router.get('', (req, res) => {
-  let result: Article[] = ArticleController.getArticles();
+router.get('', async (req, res) => {
+    try {
+        const articles = await ArticleController.getArticles();
 
-  res
-    .status(StatusCodes.OK)
-    .send(result);
+        res
+            .status(StatusCodes.OK)
+            .json(articles);
+    } catch (error) {
+        console.error('Error:', error);
+        res
+            .status(StatusCodes.INTERNAL_SERVER_ERROR)
+            .json({ error: 'Internal Server Error' });
+    }
 });
 
 router.get('/:articleID', (req, res) => {

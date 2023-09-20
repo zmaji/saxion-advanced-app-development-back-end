@@ -1,14 +1,16 @@
 import type { Express } from "express";
 
 import express from 'express';
-
-const app: Express = express();
-const port = 3000
+import Database from './Database/Connection';
 
 import ArticleRoutes from './Routes/ArticlesRoutes';
 import PostRoutes from "./Routes/PostRoutes";
 import CommentRoutes from "./Routes/CommentRoutes";
 import UserRoutes from "./Routes/UserRoutes";
+
+const app: Express = express();
+const port = 3000
+const database = Database;
 
 app.use(express.urlencoded({
   extended: true

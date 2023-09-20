@@ -1,20 +1,14 @@
-import type { Article } from '../Typings/Article';
+import type {Article} from '../Typings/Article';
+import ArticleModel from '../Models/ArticleModel';
 
-const getArticles = () => {
-    let articles: Article[] = [
-        {
-            name: 'Flying is dangerous',
-            description: '10 reasons why not to fly',
-            content: '1-10; Don\'t',
-        },
-        {
-            name: 'Never again',
-            description: 'trust me I tried',
-            content: 'Nope',
-        }
-    ];
-
-    return articles;
+// @ts-ignore
+const getArticles = async () => {
+    try {
+        return await ArticleModel.find();
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
 };
 
 const getArticle = (articleID: string) => {
