@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "title": "Post Title 1",
+    "content": "Post Content 1",
+    "category": "Post Category 1",
+    "likes": 5,
+    "dislikes": 1
+  },
+  {
+    "id": "2",
+    "title": "Post Title 2",
+    "content": "Post Content 2",
+    "category": "Post Category 2",
+    "likes": 10,
+    "dislikes": 2
+  }
+]
