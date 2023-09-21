@@ -1,11 +1,35 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 
-const ArticleSchema = new mongoose.Schema({
-    name: String,
-    description: String,
-    content: String,
+export interface Article extends Document {
+    articleID: string;
+    name: string;
+    description: string;
+    content: string;
+}
+
+const articleSchema: Schema<Article> = new Schema({
+    articleID: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    name: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true,
+    },
+    content: {
+        type: String,
+        required: true,
+    },
 }, {
-    collection: 'articles'
-})
+    collection: 'articles',
+    versionKey: false
+});
 
-export default mongoose.model('Article', ArticleSchema);
+const ArticleModel = mongoose.model<Article>('Article', articleSchema);
+
+export default ArticleModel;
