@@ -11,8 +11,10 @@ class Database {
     }
 
     private connect() {
+        const mongoURI = `mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+
         // @ts-ignore
-        mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`, { useNewUrlParser: true })
+        mongoose.connect(mongoURI, { useNewUrlParser: true })
             .then(() => {
                 console.log('Database connection successful to ' + DB_HOST + ':' + DB_PORT);
             })

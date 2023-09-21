@@ -5,4 +5,6 @@ RUN npm install
 COPY ./. .
 EXPOSE 3000/tcp
 EXPOSE 3000/udp
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+
 CMD npm run start

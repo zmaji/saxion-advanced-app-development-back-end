@@ -1,32 +1,47 @@
-import type { Article } from "../Typings/Article";
+import type { Article } from "../Models/ArticleModel";
 
-import express from 'express';
+import { Router, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import ArticleController from '../Controllers/ArticleController';
 
-const router = express.Router();
+const router = Router();
 
-router.get('', async (req, res) => {
-    try {
-        const articles = await ArticleController.getArticles();
-
+router.get('', (req, res) => {
+    ArticleController.getArticles(function (result: any) {
         res
             .status(StatusCodes.OK)
-            .json(articles);
-    } catch (error) {
-        console.error('Error:', error);
-        res
-            .status(StatusCodes.INTERNAL_SERVER_ERROR)
-            .json({ error: 'Internal Server Error' });
-    }
+            .send(result);
+    })
 });
 
-router.get('/:articleID', (req, res) => {
-  let result: Article = ArticleController.getArticle(req.params.articleID);
+router.get('/:articleID',  (req, res) => {
+    ArticleController.getArticle(req.params.articleID, function (result: any) {
+        const response = result;
 
-  res
-    .status(StatusCodes.OK)
-    .send(result);
+        if (response) {
+            res
+                .status(StatusCodes.OK)
+                .send(response);
+        } else {
+            res
+                .status(StatusCodes.INTERNAL_SERVER_ERROR)
+                .json({ error: 'Internal Server Error' });
+        }
+    })
+});
+
+router.post('', (req: Request, res: Response) => {
+    ArticleController.createArticle(req.body, (error: any, article?: any) => {
+        if (error) {
+            res
+                .status(StatusCodes.INTERNAL_SERVER_ERROR)
+                .json({ error: 'Internal Server Error' });
+        } else {
+            res
+                .status(StatusCodes.CREATED) // You can use 201 for resource creation
+                .json(article);
+        }
+    });
 });
 
 export default router;
