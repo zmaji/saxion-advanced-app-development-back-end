@@ -1,6 +1,6 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
-export interface Article extends Document {
+export interface Article {
     articleID: string;
     name: string;
     description: string;
