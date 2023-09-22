@@ -1,4 +1,8 @@
-USE mydatabase
+GRANT ALL PRIVILEGES ON mydatabase.* TO 'myusername'@'deno-mysql-1';
+
+FLUSH PRIVILEGES;
+
+USE mydatabase;
 
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
