@@ -1,4 +1,4 @@
-import { getAllPosts } from "../Controllers/PostController.ts";
+import { getAllPosts, getPostById } from "../Controllers/PostController.ts";
 import { Router } from "../deps.ts";
 
 const router = new Router();
@@ -13,6 +13,26 @@ router.get('/posts', async (ctx) => {
     } else {
       ctx.response.status = 404;
       ctx.response.body = { message: 'No posts found' };
+    }
+  } catch (error) {
+    ctx.response.status = 500;
+    ctx.response.body = { error: "Internal Server Error" };
+    console.error(error);
+  }
+});
+
+router.get('/posts/:id', async (ctx) => {
+  const { id } = ctx.params;
+
+  try {
+    const post = await getPostById(id);
+
+    if (post) {
+      ctx.response.status = 200;
+      ctx.response.body = post;
+    } else {
+      ctx.response.status = 404;
+      ctx.response.body = { message: `No post found with ID ${id}` };
     }
   } catch (error) {
     ctx.response.status = 500;

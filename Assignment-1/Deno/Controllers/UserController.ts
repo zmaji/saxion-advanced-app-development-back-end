@@ -9,4 +9,17 @@ const getAllUsers = async () => {
   }
 };
 
-export { getAllUsers };
+const getUserById = async (userId: string) => {
+  try {
+    const result = await client.query("SELECT * FROM users WHERE id = ?", [userId]);
+    return result;
+  } catch (error) {
+    console.error(`Error retrieving post with ID ${userId}:`, error);
+    throw error;
+  }
+};
+
+export { 
+  getAllUsers,
+  getUserById
+ };

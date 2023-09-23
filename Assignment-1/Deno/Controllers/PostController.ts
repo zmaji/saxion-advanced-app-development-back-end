@@ -10,4 +10,17 @@ const getAllPosts = async () => {
   }
 };
 
-export { getAllPosts };
+const getPostById = async (postId: string) => {
+  try {
+    const result = await client.query("SELECT * FROM posts WHERE id = ?", [postId]);
+    return result;
+  } catch (error) {
+    console.error(`Error retrieving post with ID ${postId}:`, error);
+    throw error;
+  }
+};
+
+export { 
+  getAllPosts,
+  getPostById
+ };

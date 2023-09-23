@@ -9,4 +9,17 @@ const getAllArticles = async () => {
   }
 };
 
-export { getAllArticles };
+const getArticleById = async (articleId: string) => {
+  try {
+    const result = await client.query("SELECT * FROM articles WHERE id = ?", [articleId]);
+    return result;
+  } catch (error) {
+    console.error(`Error retrieving article with ID ${articleId}:`, error);
+    throw error;
+  }
+};
+
+export { 
+  getAllArticles,
+  getArticleById
+ };
