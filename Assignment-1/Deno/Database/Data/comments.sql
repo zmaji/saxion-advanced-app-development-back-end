@@ -9,4 +9,6 @@ CREATE TABLE IF NOT EXISTS comments (
 
 INSERT INTO comments (userID, postID, content) VALUES
     ('1', '1', 'Content 1'),
-    ('2', '2', 'Content 2');
+    ('2', '2', 'Content 2'),
+    ('1', '1', 'Content 3'),
+    ('2', '2', 'Content 4');    

@@ -44,10 +44,9 @@ const getCommentById = async (commentId: string) => {
   try {
     const query = `
       SELECT * FROM comments
-      INNER JOIN users ON
-        comments.userID = users.id
-      WHERE
-        comments.id = ?`;
+      INNER JOIN users 
+      ON comments.userID = users.id
+      WHERE comments.id = ?`;
         
     const result = await client.query(query, [commentId]);
     
