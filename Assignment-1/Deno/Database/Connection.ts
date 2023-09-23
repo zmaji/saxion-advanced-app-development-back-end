@@ -4,7 +4,7 @@ const client = await new Client().connect({
   hostname: 'mysql',
   username: 'root',
   password: 'myrootpassword',
-  db: 'mydatabase',
+  db: 'fear-of-flight-db',
 });
 
 export default client;

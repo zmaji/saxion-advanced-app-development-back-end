@@ -1,18 +1,18 @@
-import { getAllUsers } from "../Controllers/UserController.ts";
+import { getAllPosts } from "../Controllers/PostController.ts";
 import { Router } from "../deps.ts";
 
 const router = new Router();
 
-router.get('/users', async (ctx) => {
+router.get('/posts', async (ctx) => {
   try {
-    const users = await getAllUsers();
+    const posts = await getAllPosts();
 
-    if (users.length > 0) {
+    if (posts.length > 0) {
       ctx.response.status = 200;
-      ctx.response.body = users;
+      ctx.response.body = posts;
     } else {
       ctx.response.status = 404;
-      ctx.response.body = { message: 'No users found' };
+      ctx.response.body = { message: 'No posts found' };
     }
   } catch (error) {
     ctx.response.status = 500;

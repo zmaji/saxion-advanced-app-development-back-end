@@ -1,4 +1,3 @@
-
 import client from "../Database/Connection.ts";
 
 const getAllUsers = async () => {

@@ -4,13 +4,13 @@ services:
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: myrootpassword
-      MYSQL_DATABASE: mydatabase
+      MYSQL_DATABASE: fear-of-flight-db
       MYSQL_USER: myusername
       MYSQL_PASSWORD: mypassword
     ports:
       - "3306:3306"
     volumes:
-      - ./Database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./Database/Data/init.sql:/docker-entrypoint-initdb.d/init.sql
   deno:
     build:
       context: ./

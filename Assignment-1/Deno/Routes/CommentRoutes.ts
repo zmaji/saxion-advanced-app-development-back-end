@@ -1,18 +1,18 @@
-import { getAllUsers } from "../Controllers/UserController.ts";
+import { getAllComments } from "../Controllers/CommentController.ts";
 import { Router } from "../deps.ts";
 
 const router = new Router();
 
-router.get('/users', async (ctx) => {
+router.get('/comments', async (ctx) => {
   try {
-    const users = await getAllUsers();
+    const comments = await getAllComments();
 
-    if (users.length > 0) {
+    if (comments.length > 0) {
       ctx.response.status = 200;
-      ctx.response.body = users;
+      ctx.response.body = comments;
     } else {
       ctx.response.status = 404;
-      ctx.response.body = { message: 'No users found' };
+      ctx.response.body = { message: 'No comments found' };
     }
   } catch (error) {
     ctx.response.status = 500;

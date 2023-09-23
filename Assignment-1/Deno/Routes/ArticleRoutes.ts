@@ -1,18 +1,18 @@
-import { getAllUsers } from "../Controllers/UserController.ts";
+import { getAllArticles } from "../Controllers/ArticleController.ts";
 import { Router } from "../deps.ts";
 
 const router = new Router();
 
-router.get('/users', async (ctx) => {
+router.get('/articles', async (ctx) => {
   try {
-    const users = await getAllUsers();
+    const articles = await getAllArticles();
 
-    if (users.length > 0) {
+    if (articles.length > 0) {
       ctx.response.status = 200;
-      ctx.response.body = users;
+      ctx.response.body = articles;
     } else {
       ctx.response.status = 404;
-      ctx.response.body = { message: 'No users found' };
+      ctx.response.body = { message: 'No articles found' };
     }
   } catch (error) {
     ctx.response.status = 500;
