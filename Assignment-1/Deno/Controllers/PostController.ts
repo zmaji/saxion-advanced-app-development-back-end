@@ -3,7 +3,6 @@ import client from "../Database/Connection.ts";
  // @ts-ignore
 const mapRowToPost = (row) => ({
   id: row.id,
-  userID: row.userID,
   title: row.title,
   content: row.content,
   category: row.category,
