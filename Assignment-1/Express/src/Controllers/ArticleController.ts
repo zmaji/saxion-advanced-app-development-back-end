@@ -2,12 +2,13 @@ import type { Article } from '../Models/ArticleModel';
 
 import ArticleModel from '../Models/ArticleModel';
 import { v4 as uuidv4 } from 'uuid';
+import { removeIdField } from "../helpers/removeMongoID";
 
 // @ts-ignore
 const getArticles = (cb) => {
     ArticleModel.find()
         .then(results => {
-            cb(results)
+            cb(removeIdField(results))
         })
         .catch(err => {
             console.error(err)
@@ -17,8 +18,12 @@ const getArticles = (cb) => {
 // @ts-ignore
 const getArticle = (articleID: string, cb) => {
     ArticleModel.findOne({articleID})
-        .then(results => {
-            cb(results)
+        .then(result => {
+            if (result) {
+                result = removeIdField(result);
+            }
+
+            cb(result)
         })
         .catch(err => {
             console.error(err)
@@ -32,10 +37,14 @@ const createArticle = (articleData: Article, cb: (error: any, article?: Article)
     newArticle
         .save()
         .then((article: Article) => {
+            if (article) {
+                // @ts-ignore
+                article = removeIdField(article);
+            }
+
             cb(null, article);
         })
         .catch((error: any) => {
-            console.error(error);
             cb(error);
         });
 };

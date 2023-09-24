@@ -24,8 +24,8 @@ router.get('/:articleID',  (req, res) => {
                 .send(response);
         } else {
             res
-                .status(StatusCodes.INTERNAL_SERVER_ERROR)
-                .json({ error: 'Internal Server Error' });
+                .status(StatusCodes.NOT_FOUND)
+                .json({ error: 'Unable to find article' });
         }
     })
 });
@@ -34,11 +34,11 @@ router.post('', (req: Request, res: Response) => {
     ArticleController.createArticle(req.body, (error: any, article?: any) => {
         if (error) {
             res
-                .status(StatusCodes.INTERNAL_SERVER_ERROR)
-                .json({ error: 'Internal Server Error' });
+                .status(StatusCodes.BAD_REQUEST)
+                .json({ error: 'Please make sure to enter all fields correctly' });
         } else {
             res
-                .status(StatusCodes.CREATED) // You can use 201 for resource creation
+                .status(StatusCodes.CREATED)
                 .json(article);
         }
     });
