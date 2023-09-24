@@ -1,11 +1,11 @@
-import { getAllPosts, getPostById } from "../Controllers/PostController.ts";
+import postController from "../Controllers/PostController.ts";
 import { Router } from "../deps.ts";
 
 const router = new Router();
 
 router.get('/posts', async (ctx) => {
   try {
-    const posts = await getAllPosts();
+    const posts = await postController.getAllPosts();
 
     if (posts.length > 0) {
       ctx.response.status = 200;
@@ -25,7 +25,7 @@ router.get('/posts/:id', async (ctx) => {
   const { id } = ctx.params;
 
   try {
-    const post = await getPostById(id);
+    const post = await postController.getPostById(id);
 
     if (post) {
       ctx.response.status = 200;

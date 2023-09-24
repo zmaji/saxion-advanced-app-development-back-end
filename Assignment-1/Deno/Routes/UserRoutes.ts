@@ -1,11 +1,11 @@
-import { getAllUsers, getUserById } from "../Controllers/UserController.ts";
+import userController from "../Controllers/UserController.ts";
 import { Router } from "../deps.ts";
 
 const router = new Router();
 
 router.get('/users', async (ctx) => {
   try {
-    const users = await getAllUsers();
+    const users = await userController.getAllUsers();
 
     if (users.length > 0) {
       ctx.response.status = 200;
@@ -25,7 +25,7 @@ router.get('/users/:id', async (ctx) => {
   const { id } = ctx.params;
 
   try {
-    const user = await getUserById(id);
+    const user = await userController.getUserById(id);
 
     if (user) {
       ctx.response.status = 200;

@@ -1,25 +1,27 @@
-import client from "../Database/Connection.ts";
+import userModel from "../Models/UserModel.ts";
 
 const getAllUsers = async () => {
   try {
-    const result = await client.query("SELECT * FROM users");
-    return result;
+    const articles = await userModel.getAllUsers();
+    return articles;
   } catch (error) {
-    console.error('Error retrieving users:', error);
+    console.error('Error in retrieving users:', error);
   }
 };
 
-const getUserById = async (userId: string) => {
+const getUserById = async (articleId: string) => {
   try {
-    const result = await client.query("SELECT * FROM users WHERE id = ?", [userId]);
+    const result = await userModel.getUserById(articleId);
     return result;
   } catch (error) {
-    console.error(`Error retrieving post with ID ${userId}:`, error);
+    console.error(`Error retrieving user with ID ${articleId}:`, error);
     throw error;
   }
 };
 
-export { 
+const UseerController = {
   getAllUsers,
   getUserById
- };
+};
+
+export default UseerController;

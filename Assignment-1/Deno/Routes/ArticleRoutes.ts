@@ -1,11 +1,11 @@
-import { getAllArticles, getArticleById } from "../Controllers/ArticleController.ts";
+import articleController from "../Controllers/ArticleController.ts";
 import { Router } from "../deps.ts";
 
 const router = new Router();
 
 router.get('/articles', async (ctx) => {
   try {
-    const articles = await getAllArticles();
+    const articles = await articleController.getAllArticles();
 
     if (articles.length > 0) {
       ctx.response.status = 200;
@@ -25,7 +25,7 @@ router.get('/articles/:id', async (ctx) => {
   const { id } = ctx.params;
 
   try {
-    const article = await getArticleById(id);
+    const article = await articleController.getArticleById(id);
 
     if (article) {
       ctx.response.status = 200;

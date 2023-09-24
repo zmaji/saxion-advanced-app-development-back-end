@@ -1,11 +1,11 @@
-import { getAllComments, getCommentById } from "../Controllers/CommentController.ts";
+import commentController from "../Controllers/CommentController.ts";
 import { Router } from "../deps.ts";
 
 const router = new Router();
 
 router.get('/comments', async (ctx) => {
   try {
-    const comments = await getAllComments();
+    const comments = await commentController.getAllComments();
 
     if (comments.length > 0) {
       ctx.response.status = 200;
@@ -25,7 +25,7 @@ router.get('/comments/:id', async (ctx) => {
   const { id } = ctx.params;
 
   try {
-    const comment = await getCommentById(id);
+    const comment = await commentController.getCommentById(id);
 
     if (comment) {
       ctx.response.status = 200;
