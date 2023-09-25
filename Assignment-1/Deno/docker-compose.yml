@@ -1,0 +1,21 @@
+version: '8.1.0'
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: myrootpassword
+      MYSQL_DATABASE: fear-of-flight-db
+      MYSQL_USER: myusername
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./Database/Data/init.sql:/docker-entrypoint-initdb.d/init.sql
+  deno:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
