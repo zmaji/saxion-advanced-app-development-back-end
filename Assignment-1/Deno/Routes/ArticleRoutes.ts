@@ -22,18 +22,18 @@ router.get('/articles', async (ctx) => {
   }
 });
 
-router.get('/articles/:id', async (ctx) => {
-  const { id } = ctx.params;
+router.get('/articles/:articleId', async (ctx) => {
+  const { articleId } = ctx.params;
 
   try {
-    const article: Article | null = await articleController.getArticleById(id);
+    const article: Article | null = await articleController.getArticleById(articleId);
 
     if (article) {
       ctx.response.status = Status.OK;
       ctx.response.body = article;
     } else {
       ctx.response.status = Status.NotFound;
-      ctx.response.body = { message: `No article found with ID ${id}` };
+      ctx.response.body = { message: `No article found with ID ${articleId}` };
     }
   } catch (error) {
     ctx.response.status = Status.InternalServerError;
@@ -56,10 +56,10 @@ router.post("/articles", async (ctx) => {
   }
 });
 
-router.put("/articles/:id", async (ctx) => {
+router.put("/articles/:articleId", async (ctx) => {
   try {
     const articleData: Article = await ctx.request.body().value;
-    const articleId: string = ctx.params.id;
+    const { articleId } = ctx.params;
 
     const updatedArticle: Article | null = await articleController.updateArticle(articleId, articleData);
 
@@ -78,17 +78,17 @@ router.put("/articles/:id", async (ctx) => {
   }
 });
 
-router.delete('/articles/:id', async (ctx) => {
-  const { id } = ctx.params;
+router.delete('/articles/:articleId', async (ctx) => {
+  const { articleId } = ctx.params;
 
   try {
-    const deleteResult: boolean = await articleController.deleteArticleById(id);
+    const deleteResult: boolean = await articleController.deleteArticleById(articleId);
 
     if (deleteResult) {
       ctx.response.status = Status.NoContent;
     } else {
       ctx.response.status = Status.NotFound;
-      ctx.response.body = { message: `No article found with ID ${id}` };
+      ctx.response.body = { message: `No article found with ID ${articleId}` };
     }
   } catch (error) {
     ctx.response.status = Status.InternalServerError;

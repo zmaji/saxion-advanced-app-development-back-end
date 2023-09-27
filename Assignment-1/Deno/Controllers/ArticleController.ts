@@ -1,50 +1,45 @@
+import type {Article} from "../Typings/Article";
+
 import articleModel from "../Models/ArticleModel.ts";
 
-const getAllArticles = async () => {
+const getAllArticles = async (): Promise<Article[]> => {
   try {
-    const articles = await articleModel.getAllArticles();
-    return articles;
+    return await articleModel.getAllArticles();
   } catch (error) {
     console.error('Error in retrieving articles:', error);
   }
 };
 
-const getArticleById = async (articleId: number) => {
+const getArticleById = async (articleId: number): Promise<Article | null> => {
   try {
-    const result = await articleModel.getArticleById(articleId);
-    return result;
+    return await articleModel.getArticleById(articleId);
   } catch (error) {
     console.error(`Error retrieving article with ID ${articleId}:`, error);
     throw error;
   }
 };
 
-// @ts-ignore
-const addArticle = async (articleData) => {
+const addArticle = async (articleData: Article): Promise<Article> => {
   try {
-    const newArticle = await articleModel.addArticle(articleData);
-    return newArticle;
+    return await articleModel.addArticle(articleData);
   } catch (error) {
     console.error('Error adding article:', error);
     throw error;
   }
 };
 
-// @ts-ignore
-const updateArticle = async (articleId: number, articleData) => {
+const updateArticle = async (articleId: number, articleData: Article): Promise<Article> => {
   try {
-    const updatedArticle = await articleModel.updateArticle(articleId, articleData);
-    return updatedArticle;
+    return await articleModel.updateArticle(articleId, articleData);
   } catch (error) {
     console.error('Error updating article:', error);
     throw error;
   }
 };
 
-const deleteArticleById = async (articleId: number) => {
+const deleteArticleById = async (articleId: number): Promise<boolean> => {
   try {
-    const result = await articleModel.deleteArticleById(articleId);
-    return result;
+    return await articleModel.deleteArticleById(articleId);
   } catch (error) {
     console.error(`Error deleting article with ID ${articleId}:`, error);
     throw error;

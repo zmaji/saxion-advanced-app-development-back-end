@@ -1,20 +1,23 @@
 import client from "../Database/Connection.ts";
-import type { Article } from "../Typings/Article.ts";
+import type {Article} from "../Typings/Article.ts";
 
-const getAllArticles = async () => {
+const getAllArticles = async (): Promise<Article[]> => {
   try {
-    const result = await client.query("SELECT * FROM articles");
-    return result;
+    return await client.query("SELECT * FROM articles");
   } catch (error) {
     console.error("Error retrieving all articles:", error);
     throw error;
   }
 };
 
-const getArticleById = async (articleId: number): Promise<Article | null> => {
+const getArticleById = async (articleId: number): Promise<Article> => {
   try {
     const result = await client.query("SELECT * FROM articles WHERE id = ?", [articleId]);
-    return result.rows[0] || null; 
+    if (result && result.length > 0) {
+      return result;
+    } else {
+      return null;
+    }
   } catch (error) {
     console.error(`Error retrieving article with ID ${articleId}:`, error);
     throw error;
@@ -23,15 +26,16 @@ const getArticleById = async (articleId: number): Promise<Article | null> => {
 
 const addArticle = async (articleData: Article): Promise<Article> => {
   try {
-    const { title, description, content } = articleData;
     const result = await client.execute(
       "INSERT INTO articles (title, description, content) VALUES (?, ?, ?)",
-      [title, description, content]
+      [articleData.title, articleData.description, articleData.content]
     );
-
     const insertId = result.lastInsertId;
-    // @ts-ignore
-    return { id: insertId.toString(), ...articleData } as Article; 
+
+    return {
+      id: insertId.toString(),
+      ...articleData
+    };
   } catch (error) {
     console.error("Error adding article:", error);
     throw error;
@@ -40,9 +44,9 @@ const addArticle = async (articleData: Article): Promise<Article> => {
 
 const updateArticle = async (articleId: number, articleData: Article): Promise<Article | null> => {
   try {
-    const existingArticle = await getArticleById(articleId);
+    const existingArticle: Article = await getArticleById(articleId);
 
-    if (existingArticle) {
+    if (!existingArticle) {
       console.log(`No article found with id ${articleId}`);
       return null;
     }
@@ -64,10 +68,7 @@ const updateArticle = async (articleId: number, articleData: Article): Promise<A
       return null;
     }
 
-    const updatedArticle = await client.query(
-      "SELECT * FROM articles WHERE id = ?",
-      [articleId]
-    );
+    const updatedArticle: Article = await client.query("SELECT * FROM articles WHERE id = ?", [articleId]);
 
     return updatedArticle || null;
   } catch (error) {
@@ -78,7 +79,7 @@ const updateArticle = async (articleId: number, articleData: Article): Promise<A
 const deleteArticleById = async (articleId: number): Promise<boolean> => {
   try {
     const result = await client.query("DELETE FROM articles WHERE id = ?", [articleId]);
-    return result.rowCount > 0;
+    return result.affectedRows === 1;
   } catch (error) {
     console.error(`Error deleting article with ID ${articleId}:`, error);
     throw error;
