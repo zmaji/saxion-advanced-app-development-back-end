@@ -41,4 +41,18 @@ router.get('/articles/:id', async (ctx) => {
   }
 });
 
+router.post("/articles", async (ctx) => {
+  try {
+    const articleData = await ctx.request.body().value;
+    const newArticle = await articleController.addArticle(articleData);
+
+    ctx.response.status = 201;
+    ctx.response.body = newArticle;
+  } catch (error) {
+    ctx.response.status = 500;
+    ctx.response.body = { error: "Internal Server Error" };
+    console.error(error);
+  }
+});
+
 export default router;

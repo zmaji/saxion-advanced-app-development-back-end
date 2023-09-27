@@ -6,6 +6,7 @@ const getAllArticles = async () => {
     return result;
   } catch (error) {
     console.error("Error retrieving all articles:", error);
+    throw error;
   }
 };
 
@@ -19,9 +20,26 @@ const getArticleById = async (articleId: string) => {
   }
 };
 
+// @ts-ignore
+const addArticle = async (articleData) => {
+  try {
+    const result = await client.execute(
+      "INSERT INTO articles (title, description, content) VALUES (?, ?, ?)",
+      [articleData.title, articleData.description, articleData.content]
+    );
+    
+    const insertId = result.lastInsertId;
+    return { id: insertId, ...articleData };
+  } catch (error) {
+    console.error("Error adding article:", error);
+    throw error;
+  }
+};
+
 const ArticleModel = {
   getAllArticles,
-  getArticleById
+  getArticleById,
+  addArticle
 };
 
 export default ArticleModel

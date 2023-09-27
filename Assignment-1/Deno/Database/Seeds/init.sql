@@ -17,12 +17,12 @@ INSERT INTO users (firstName, lastName, email, nickName) VALUES
 
 CREATE TABLE IF NOT EXISTS articles (
 id INT AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(255) NOT NULL,
+title VARCHAR(255) NOT NULL,
 description TEXT,
 content TEXT
 );
 
-INSERT INTO articles (name, description, content) VALUES
+INSERT INTO articles (title, description, content) VALUES
     ('Article 1', 'Description 1', 'Content 1'),
     ('Article 2', 'Description 2', 'Content 2');
 
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS comments (
 );
 
 INSERT INTO comments (userID, postID, content) VALUES
-    ('1', '1', 'Content 1'),
-    ('2', '2', 'Content 2'),
-    ('1', '1', 'Content 3'),
-    ('2', '2', 'Content 4');    
+    ('1', '1', 'Comment content 1'),
+    ('2', '2', 'Comment content 2'),
+    ('1', '1', 'Comment content 3'),
+    ('2', '2', 'Comment content 4');    

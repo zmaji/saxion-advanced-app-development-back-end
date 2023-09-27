@@ -2,8 +2,8 @@ import commentModel from "../Models/CommentModel.ts";
 
 const getAllComments = async () => {
   try {
-    const articles = await commentModel.getAllComments();
-    return articles;
+    const comments = await commentModel.getAllComments();
+    return comments;
   } catch (error) {
     console.error('Error in retrieving comments:', error);
   }
@@ -19,9 +19,21 @@ const getCommentById = async (articleId: string) => {
   }
 };
 
+// @ts-ignore
+const addComment = async (commentData) => {
+  try {
+    const newComment = await commentModel.addComment(commentData);
+    return newComment;
+  } catch (error) {
+    console.error('Error adding comment:', error);
+    throw error;
+  }
+};
+
 const CommentController = {
   getAllComments,
-  getCommentById
+  getCommentById,
+  addComment
 };
 
 export default CommentController;

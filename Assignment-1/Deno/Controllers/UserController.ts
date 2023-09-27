@@ -1,10 +1,9 @@
-// @ts-ignore
 import userModel from "../Models/UserModel.ts";
 
 const getAllUsers = async () => {
   try {
-    const articles = await userModel.getAllUsers();
-    return articles;
+    const users = await userModel.getAllUsers();
+    return users;
   } catch (error) {
     console.error('Error in retrieving users:', error);
   }
@@ -20,9 +19,21 @@ const getUserById = async (articleId: string) => {
   }
 };
 
+// @ts-ignore
+const addUser = async (userData) => {
+  try {
+    const newUser = await userModel.addUser(userData);
+    return newUser;
+  } catch (error) {
+    console.error('Error adding user:', error);
+    throw error;
+  }
+};
+
 const UseerController = {
   getAllUsers,
-  getUserById
+  getUserById,
+  addUser
 };
 
 export default UseerController;

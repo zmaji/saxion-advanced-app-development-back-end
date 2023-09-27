@@ -41,4 +41,18 @@ router.get('/comments/:id', async (ctx) => {
   }
 });
 
+router.post("/comments", async (ctx) => {
+  try {
+    const commentData = await ctx.request.body().value;
+    const newComment = await commentController.addComment(commentData);
+
+    ctx.response.status = 201;
+    ctx.response.body = newComment;
+  } catch (error) {
+    ctx.response.status = 500;
+    ctx.response.body = { error: "Internal Server Error" };
+    console.error(error);
+  }
+});
+
 export default router;

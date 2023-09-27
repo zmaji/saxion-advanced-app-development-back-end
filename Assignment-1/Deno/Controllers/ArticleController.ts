@@ -19,9 +19,21 @@ const getArticleById = async (articleId: string) => {
   }
 };
 
+// @ts-ignore
+const addArticle = async (articleData) => {
+  try {
+    const newArticle = await articleModel.addArticle(articleData);
+    return newArticle;
+  } catch (error) {
+    console.error('Error adding article:', error);
+    throw error;
+  }
+};
+
 const ArticleController = {
   getAllArticles,
-  getArticleById
+  getArticleById,
+  addArticle
 };
 
 export default ArticleController;

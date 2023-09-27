@@ -1,4 +1,3 @@
-// @ts-ignore
 import client from "../Database/Connection.ts";
 
 const getAllUsers = async () => {
@@ -20,9 +19,26 @@ const getUserById = async (userId: string) => {
   }
 };
 
+// @ts-ignore
+const addUser = async (userData) => {
+  try {
+    const result = await client.execute(
+      "INSERT INTO users (firstName, lastName, email, nickName) VALUES (?, ?, ?, ?)",
+      [userData.firstName, userData.lastName, userData.email, userData.nickName]
+    );
+
+    const insertId = result.lastInsertId;
+    return { id: insertId, ...userData };
+  } catch (error) {
+    console.error("Error adding user:", error);
+    throw error;
+  }
+};
+
 const UserModel = {
   getAllUsers,
-  getUserById
+  getUserById,
+  addUser
 };
 
 export default UserModel

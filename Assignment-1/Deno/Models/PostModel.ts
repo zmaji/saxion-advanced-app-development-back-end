@@ -1,4 +1,3 @@
-// @ts-ignore
 import client from "../Database/Connection.ts";
 
 // @ts-ignore
@@ -30,29 +29,27 @@ const fetchCommentsById = async (postId: string) => {
   // @ts-ignore
   return commentResults.map((row) => ({
     id: row.id,
-    title: row.title,
     content: row.content,
-    category: row.category,
-    likes: row.likes,
-    dislikes: row.dislikes,
   }));
 };
 
 const getAllPosts = async () => {
   try {
-    const results = await client.query(`
+    const posts = await client.query(`
       SELECT * FROM posts
-      INNER JOIN users 
-      ON posts.userID = users.id
     `);
 
-    const posts = results.map(mapRowToPost);
+    // @ts-ignore
+    const postDataPromises = await posts.map(async (post) => {
+      const comments = await fetchCommentsById(post.id);
+      return {
+        post,
+        comments,
+      };
+    });
 
-    for (const post of posts) {
-      post.comments = await fetchCommentsById(post.id);
-    }
-
-    return posts;
+    const postData = await Promise.all(postDataPromises);
+    return postData;
   } catch (error) {
     console.error('Error retrieving posts:', error);
     throw error;
@@ -79,9 +76,26 @@ const getPostById = async (postId: string) => {
   }
 };
 
+// @ts-ignore
+const addPost = async (postData) => {
+  try {
+    const result = await client.execute(
+      "INSERT INTO posts (userID, title, content, category, likes, dislikes) VALUES (?, ?, ?, ?, ?, ?)",
+      [postData.userID, postData.title, postData.content, postData.category, postData.likes, postData.dislikes]
+    );
+    
+    const insertId = result.lastInsertId;
+    return { id: insertId, ...postData };
+  } catch (error) {
+    console.error("Error adding post:", error);
+    throw error;
+  }
+};
+
 const PostModel = {
   getAllPosts,
-  getPostById
+  getPostById,
+  addPost
 };
 
 export default PostModel
