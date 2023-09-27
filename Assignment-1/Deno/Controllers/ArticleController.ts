@@ -1,4 +1,3 @@
-// @ts-ignore
 import articleModel from "../Models/ArticleModel.ts";
 
 const getAllArticles = async () => {

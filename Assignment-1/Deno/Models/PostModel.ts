@@ -1,6 +1,7 @@
+// @ts-ignore
 import client from "../Database/Connection.ts";
 
- // @ts-ignore
+// @ts-ignore
 const mapRowToPost = (row) => ({
   id: row.id,
   title: row.title,
@@ -19,7 +20,7 @@ const mapRowToPost = (row) => ({
   comments: []
 });
 
-const fetchCommentsById = async (postId:string) => {
+const fetchCommentsById = async (postId: string) => {
   const commentQuery = `
     SELECT * FROM comments
     WHERE postID = ?`;

@@ -1,3 +1,4 @@
+// @ts-ignore
 import postModel from "../Models/PostModel.ts";
 
 const getAllPosts = async () => {
@@ -18,7 +19,7 @@ const getPostById = async (articleId: string) => {
     throw error;
   }
 };
- 
+
 const PostController = {
   getAllPosts,
   getPostById

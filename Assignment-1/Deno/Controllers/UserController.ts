@@ -1,3 +1,4 @@
+// @ts-ignore
 import userModel from "../Models/UserModel.ts";
 
 const getAllUsers = async () => {
