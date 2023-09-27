@@ -45,7 +45,7 @@ const PostController = {
   getAllPosts,
   getPostById,
   addPost,
-  updatePost
+  updatePost,
 };
 
 export default PostController;

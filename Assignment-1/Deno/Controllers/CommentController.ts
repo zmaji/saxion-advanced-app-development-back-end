@@ -45,7 +45,7 @@ const CommentController = {
   getAllComments,
   getCommentById,
   addComment,
-  updateComment
+  updateComment,
 };
 
 export default CommentController;

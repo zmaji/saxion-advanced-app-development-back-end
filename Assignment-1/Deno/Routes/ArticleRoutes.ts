@@ -77,4 +77,23 @@ router.put("/articles/:id", async (ctx) => {
   }
 });
 
+router.delete('/articles/:id', async (ctx) => {
+  const { id } = ctx.params;
+
+  try {
+    const deleteResult = await articleController.deleteArticleById(id);
+
+    if (deleteResult.affectedRows === 1) {
+      ctx.response.status = 204;
+    } else {
+      ctx.response.status = 404;
+      ctx.response.body = { message: `No article found with ID ${id}` };
+    }
+  } catch (error) {
+    ctx.response.status = 500;
+    ctx.response.body = { error: "Internal Server Error" };
+    console.error(error);
+  }
+});
+
 export default router;

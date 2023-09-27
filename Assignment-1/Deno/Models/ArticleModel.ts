@@ -77,11 +77,22 @@ const updateArticle = async (articleId, articleData) => {
   }
 };
 
+const deleteArticleById = async (articleId: string) => {
+  try {
+    const result = await client.query("DELETE FROM articles WHERE id = ?", [articleId]);
+    return result;
+  } catch (error) {
+    console.error(`Error deleting article with ID ${articleId}:`, error);
+    throw error;
+  }
+};
+
 const ArticleModel = {
   getAllArticles,
   getArticleById,
   addArticle,
-  updateArticle
+  updateArticle,
+  deleteArticleById
 };
 
 export default ArticleModel

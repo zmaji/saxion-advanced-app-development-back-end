@@ -136,12 +136,11 @@ const updatePost = async (postId, postData) => {
   }
 };
 
-
 const PostModel = {
   getAllPosts,
   getPostById,
   addPost,
-  updatePost
+  updatePost,
 };
 
 export default PostModel

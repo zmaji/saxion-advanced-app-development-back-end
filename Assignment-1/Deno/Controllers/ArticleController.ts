@@ -41,11 +41,23 @@ const updateArticle = async (articleId, articleData) => {
   }
 };
 
+// @ts-ignore
+const deleteArticleById = async (articleId: string) => {
+  try {
+    const result = await articleModel.deleteArticleById(articleId);
+    return result;
+  } catch (error) {
+    console.error(`Error deleting article with ID ${articleId}:`, error);
+    throw error;
+  }
+};
+
 const ArticleController = {
   getAllArticles,
   getArticleById,
   addArticle,
-  updateArticle
+  updateArticle,
+  deleteArticleById
 };
 
 export default ArticleController;

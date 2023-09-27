@@ -122,7 +122,7 @@ const CommentModel = {
   getCommentById,
   getCommentsByPostId,
   addComment,
-  updateComment
+  updateComment,
 };
 
 export default CommentModel;

@@ -82,7 +82,7 @@ const UserModel = {
   getAllUsers,
   getUserById,
   addUser,
-  updateUser
+  updateUser,
 };
 
 export default UserModel

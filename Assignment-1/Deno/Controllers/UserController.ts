@@ -41,12 +41,11 @@ const updateUser = async (userId, userData) => {
   }
 };
 
-
 const UseerController = {
   getAllUsers,
   getUserById,
   addUser,
-  updateUser
+  updateUser,
 };
 
 export default UseerController;
