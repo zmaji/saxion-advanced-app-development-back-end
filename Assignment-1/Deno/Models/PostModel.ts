@@ -1,4 +1,5 @@
 import client from "../Database/Connection.ts";
+import commentModel from "./CommentModel.ts";
 
 // @ts-ignore
 const mapRowToPost = (row) => ({
@@ -41,7 +42,7 @@ const getAllPosts = async () => {
 
     // @ts-ignore
     const postDataPromises = await posts.map(async (post) => {
-      const comments = await fetchCommentsById(post.id);
+      const comments = await commentModel.getCommentsByPostId(post.id);
       return {
         post,
         comments,
@@ -92,10 +93,55 @@ const addPost = async (postData) => {
   }
 };
 
+// @ts-ignore
+const updatePost = async (postId, postData) => {
+  try {
+    const existingPost = await client.query(
+      "SELECT * FROM posts WHERE id = ?",
+      [postId]
+    );
+
+    if (existingPost.length === 0) {
+      console.log(`No post found with id ${postId}`);
+      return null;
+    }
+
+    const updateFields = [];
+    const updateValues = [];
+
+    postData.title && (updateFields.push("title = ?") && updateValues.push(postData.title));
+    postData.content && (updateFields.push("content = ?") && updateValues.push(postData.content));
+    postData.category && (updateFields.push("category = ?") && updateValues.push(postData.category));
+    postData.likes && (updateFields.push("likes = ?") && updateValues.push(postData.likes));
+    postData.dislikes && (updateFields.push("dislikes = ?") && updateValues.push(postData.dislikes));
+
+    const result = await client.execute(
+      `UPDATE posts SET ${updateFields.join(", ")} WHERE id = ?`,
+      [updateValues, postId]
+    );
+
+    if (result.affectedRows === 0) {
+      console.log(`No post updated with id ${postId}`);
+      return null;
+    }
+
+    const updatedPost = await client.query(
+      "SELECT * FROM posts WHERE id = ?",
+      [postId]
+    );
+
+    return updatedPost[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 const PostModel = {
   getAllPosts,
   getPostById,
-  addPost
+  addPost,
+  updatePost
 };
 
 export default PostModel

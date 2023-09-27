@@ -35,10 +35,54 @@ const addUser = async (userData) => {
   }
 };
 
+// @ts-ignore
+const updateUser = async (userId, userData) => {
+  try {
+    const existingUser = await client.query(
+      "SELECT * FROM users WHERE id = ?",
+      [userId]
+    );
+
+    if (existingUser.length === 0) {
+      console.log(`No user found with id ${userId}`);
+      return null;
+    }
+
+    const updateFields = [];
+    const updateValues = [];
+
+    userData.firstName && (updateFields.push("firstName = ?") && updateValues.push(userData.firstName));
+    userData.lastName && (updateFields.push("lastName = ?") && updateValues.push(userData.lastName));
+    userData.email && (updateFields.push("email = ?") && updateValues.push(userData.email));
+    userData.nickName && (updateFields.push("nickName = ?") && updateValues.push(userData.nickName));
+    userData.avatar && (updateFields.push("avatar = ?") && updateValues.push(userData.avatar));
+
+    const result = await client.execute(
+      `UPDATE users SET ${updateFields.join(", ")} WHERE id = ?`,
+      [updateValues, userId]
+    );
+
+    if (result.affectedRows === 0) {
+      console.log(`No user updated with id ${userId}`);
+      return null;
+    }
+
+    const updatedUser = await client.query(
+      "SELECT * FROM users WHERE id = ?",
+      [userId]
+    );
+
+    return updatedUser[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
 const UserModel = {
   getAllUsers,
   getUserById,
-  addUser
+  addUser,
+  updateUser
 };
 
 export default UserModel

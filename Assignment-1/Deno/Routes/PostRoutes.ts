@@ -55,4 +55,26 @@ router.post("/posts", async (ctx) => {
   }
 });
 
+router.put("/posts/:id", async (ctx) => {
+  try {
+    const postsData = await ctx.request.body().value;
+    const postId = ctx.params.id;
+
+    const updatedPost = await postController.updatePost(postId, postsData);
+
+    if (!updatedPost) {
+      ctx.response.status = 404;
+      ctx.response.body = { error: "Post not found or update failed" };
+      return;
+    }
+
+    ctx.response.status = 200;
+    ctx.response.body = updatedPost;
+  } catch (error) {
+    ctx.response.status = 500;
+    ctx.response.body = { error: "Internal Server Error" };
+    console.error(error);
+  }
+});
+
 export default router;

@@ -55,4 +55,26 @@ router.post("/comments", async (ctx) => {
   }
 });
 
+router.put("/comments/:id", async (ctx) => {
+  try {
+    const commentData = await ctx.request.body().value;
+    const commentId = ctx.params.id;
+
+    const updatedComment = await commentController.updateComment(commentId, commentData);
+
+    if (!updatedComment) {
+      ctx.response.status = 404;
+      ctx.response.body = { error: "Comment not found or update failed" };
+      return;
+    }
+
+    ctx.response.status = 200;
+    ctx.response.body = updatedComment;
+  } catch (error) {
+    ctx.response.status = 500;
+    ctx.response.body = { error: "Internal Server Error" };
+    console.error(error);
+  }
+});
+
 export default router;

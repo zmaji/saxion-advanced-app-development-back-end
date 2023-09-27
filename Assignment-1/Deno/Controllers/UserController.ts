@@ -30,10 +30,23 @@ const addUser = async (userData) => {
   }
 };
 
+// @ts-ignore
+const updateUser = async (userId, userData) => {
+  try {
+    const updatedUser = await userModel.updateUser(userId, userData);
+    return updatedUser;
+  } catch (error) {
+    console.error('Error updating user:', error);
+    throw error;
+  }
+};
+
+
 const UseerController = {
   getAllUsers,
   getUserById,
-  addUser
+  addUser,
+  updateUser
 };
 
 export default UseerController;

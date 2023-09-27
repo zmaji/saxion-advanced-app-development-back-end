@@ -30,10 +30,22 @@ const addComment = async (commentData) => {
   }
 };
 
+// @ts-ignore
+const updateComment = async (commentId, commentData) => {
+  try {
+    const updatedComment = await commentModel.updateComment(commentId, commentData);
+    return updatedComment;
+  } catch (error) {
+    console.error('Error updating article:', error);
+    throw error;
+  }
+};
+
 const CommentController = {
   getAllComments,
   getCommentById,
-  addComment
+  addComment,
+  updateComment
 };
 
 export default CommentController;

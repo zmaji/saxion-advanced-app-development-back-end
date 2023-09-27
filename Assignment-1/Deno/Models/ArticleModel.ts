@@ -36,10 +36,52 @@ const addArticle = async (articleData) => {
   }
 };
 
+// @ts-ignore
+const updateArticle = async (articleId, articleData) => {
+  try {
+    const existingArticle = await client.query(
+      "SELECT * FROM articles WHERE id = ?",
+      [articleId]
+    );
+
+    if (existingArticle.length === 0) {
+      console.log(`No article found with id ${articleId}`);
+      return null;
+    }
+
+    const updateFields = [];
+    const updateValues = [];
+
+    articleData.title && (updateFields.push("title = ?") && updateValues.push(articleData.title));
+    articleData.description && (updateFields.push("description = ?") && updateValues.push(articleData.description));
+    articleData.content && (updateFields.push("content = ?") && updateValues.push(articleData.content));
+
+    const result = await client.execute(
+      `UPDATE articles SET ${updateFields.join(", ")} WHERE id = ?`,
+      [updateValues, articleId]
+    );
+
+    if (result.affectedRows === 0) {
+      console.log(`No article updated with id ${articleId}`);
+      return null;
+    }
+
+    const updatedArticle = await client.query(
+      "SELECT * FROM articles WHERE id = ?",
+      [articleId]
+    );
+
+    return updatedArticle[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
 const ArticleModel = {
   getAllArticles,
   getArticleById,
-  addArticle
+  addArticle,
+  updateArticle
 };
 
 export default ArticleModel

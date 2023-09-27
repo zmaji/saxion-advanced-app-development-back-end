@@ -55,4 +55,26 @@ router.post("/users", async (ctx) => {
   }
 });
 
+router.put("/users/:id", async (ctx) => {
+  try {
+    const userData = await ctx.request.body().value;
+    const userId = ctx.params.id;
+
+    const updatedUser = await userController.updateUser(userId, userData);
+
+    if (!updatedUser) {
+      ctx.response.status = 404;
+      ctx.response.body = { error: "User not found or update failed" };
+      return;
+    }
+
+    ctx.response.status = 200;
+    ctx.response.body = updatedUser;
+  } catch (error) {
+    ctx.response.status = 500;
+    ctx.response.body = { error: "Internal Server Error" };
+    console.error(error);
+  }
+});
+
 export default router;

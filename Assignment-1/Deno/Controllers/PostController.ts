@@ -30,11 +30,22 @@ const addPost = async (postData) => {
   }
 };
 
+// @ts-ignore
+const updatePost = async (postId, postData) => {
+  try {
+    const updatedPost = await postModel.updatePost(postId, postData);
+    return updatedPost;
+  } catch (error) {
+    console.error('Error updating post:', error);
+    throw error;
+  }
+};
 
 const PostController = {
   getAllPosts,
   getPostById,
-  addPost
+  addPost,
+  updatePost
 };
 
 export default PostController;

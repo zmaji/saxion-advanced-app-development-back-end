@@ -55,4 +55,26 @@ router.post("/articles", async (ctx) => {
   }
 });
 
+router.put("/articles/:id", async (ctx) => {
+  try {
+    const articleData = await ctx.request.body().value;
+    const articleId = ctx.params.id;
+
+    const updatedArticle = await articleController.updateArticle(articleId, articleData);
+
+    if (!updatedArticle) {
+      ctx.response.status = 404;
+      ctx.response.body = { error: "Article not found or update failed" };
+      return;
+    }
+
+    ctx.response.status = 200;
+    ctx.response.body = updatedArticle;
+  } catch (error) {
+    ctx.response.status = 500;
+    ctx.response.body = { error: "Internal Server Error" };
+    console.error(error);
+  }
+});
+
 export default router;

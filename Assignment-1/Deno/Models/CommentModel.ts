@@ -45,6 +45,23 @@ const getCommentById = async (commentId: string) => {
   }
 };
 
+const getCommentsByPostId = async (postId: string) => {
+  try {
+    const query = `
+      SELECT * FROM comments
+      WHERE comments.postID = ?`;
+
+    const comments = await client.query(query, [postId]);
+
+    return {
+      comments
+    };
+  } catch (error) {
+    console.error(`Error retrieving comments with ID ${postId}:`, error);
+    throw error;
+  }
+};
+
 // @ts-ignore
 const addComment = async (commentData) => {
   try {
@@ -61,10 +78,51 @@ const addComment = async (commentData) => {
   }
 };
 
+// @ts-ignore
+const updateComment = async (commentId, commentData) => {
+  try {
+    const existingComment = await client.query(
+      "SELECT * FROM comments WHERE id = ?",
+      [commentId]
+    );
+
+    if (existingComment.length === 0) {
+      console.log(`No comment found with id ${commentId}`);
+      return null;
+    }
+
+    const updateFields = [];
+    const updateValues = [];
+
+    commentData.content && (updateFields.push("content = ?") && updateValues.push(commentData.content));
+
+    const result = await client.execute(
+      `UPDATE comments SET ${updateFields.join(', ')} WHERE id = ?`,
+      [updateValues, commentId]
+    );
+
+    if (result.affectedRows === 0) {
+      console.log(`No comment updated with id ${commentId}`);
+      return null;
+    }
+
+    const updatedComment = await client.query(
+      "SELECT * FROM comments WHERE id = ?",
+      [commentId]
+    );
+
+    return updatedComment[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
 const CommentModel = {
   getAllComments,
   getCommentById,
-  addComment
+  getCommentsByPostId,
+  addComment,
+  updateComment
 };
 
 export default CommentModel;
