@@ -31,7 +31,7 @@ const addComment = async (commentData) => {
 };
 
 // @ts-ignore
-const updateComment = async (commentId, commentData) => {
+const updateComment = async (commentId: number, commentData) => {
   try {
     const updatedComment = await commentModel.updateComment(commentId, commentData);
     return updatedComment;

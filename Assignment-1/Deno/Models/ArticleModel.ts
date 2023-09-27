@@ -1,4 +1,5 @@
 import client from "../Database/Connection.ts";
+import type { Article } from "../Typings/Article.ts";
 
 const getAllArticles = async () => {
   try {
@@ -10,41 +11,38 @@ const getAllArticles = async () => {
   }
 };
 
-const getArticleById = async (articleId: string) => {
+const getArticleById = async (articleId: number): Promise<Article | null> => {
   try {
     const result = await client.query("SELECT * FROM articles WHERE id = ?", [articleId]);
-    return result;
+    return result.rows[0] || null; 
   } catch (error) {
     console.error(`Error retrieving article with ID ${articleId}:`, error);
     throw error;
   }
 };
 
-// @ts-ignore
-const addArticle = async (articleData) => {
+const addArticle = async (articleData: Article): Promise<Article> => {
   try {
+    const { title, description, content } = articleData;
     const result = await client.execute(
       "INSERT INTO articles (title, description, content) VALUES (?, ?, ?)",
-      [articleData.title, articleData.description, articleData.content]
+      [title, description, content]
     );
-    
+
     const insertId = result.lastInsertId;
-    return { id: insertId, ...articleData };
+    // @ts-ignore
+    return { id: insertId.toString(), ...articleData } as Article; 
   } catch (error) {
     console.error("Error adding article:", error);
     throw error;
   }
 };
 
-// @ts-ignore
-const updateArticle = async (articleId, articleData) => {
+const updateArticle = async (articleId: number, articleData: Article): Promise<Article | null> => {
   try {
-    const existingArticle = await client.query(
-      "SELECT * FROM articles WHERE id = ?",
-      [articleId]
-    );
+    const existingArticle = await getArticleById(articleId);
 
-    if (existingArticle.length === 0) {
+    if (existingArticle) {
       console.log(`No article found with id ${articleId}`);
       return null;
     }
@@ -71,16 +69,16 @@ const updateArticle = async (articleId, articleData) => {
       [articleId]
     );
 
-    return updatedArticle[0];
+    return updatedArticle || null;
   } catch (error) {
     throw error;
   }
 };
 
-const deleteArticleById = async (articleId: string) => {
+const deleteArticleById = async (articleId: number): Promise<boolean> => {
   try {
     const result = await client.query("DELETE FROM articles WHERE id = ?", [articleId]);
-    return result;
+    return result.rowCount > 0;
   } catch (error) {
     console.error(`Error deleting article with ID ${articleId}:`, error);
     throw error;

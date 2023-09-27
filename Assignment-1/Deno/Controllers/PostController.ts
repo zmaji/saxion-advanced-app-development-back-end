@@ -31,7 +31,7 @@ const addPost = async (postData) => {
 };
 
 // @ts-ignore
-const updatePost = async (postId, postData) => {
+const updatePost = async (postId: number, postData) => {
   try {
     const updatedPost = await postModel.updatePost(postId, postData);
     return updatedPost;

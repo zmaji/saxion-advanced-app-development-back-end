@@ -9,7 +9,7 @@ const getAllArticles = async () => {
   }
 };
 
-const getArticleById = async (articleId: string) => {
+const getArticleById = async (articleId: number) => {
   try {
     const result = await articleModel.getArticleById(articleId);
     return result;
@@ -31,7 +31,7 @@ const addArticle = async (articleData) => {
 };
 
 // @ts-ignore
-const updateArticle = async (articleId, articleData) => {
+const updateArticle = async (articleId: number, articleData) => {
   try {
     const updatedArticle = await articleModel.updateArticle(articleId, articleData);
     return updatedArticle;
@@ -41,8 +41,7 @@ const updateArticle = async (articleId, articleData) => {
   }
 };
 
-// @ts-ignore
-const deleteArticleById = async (articleId: string) => {
+const deleteArticleById = async (articleId: number) => {
   try {
     const result = await articleModel.deleteArticleById(articleId);
     return result;
