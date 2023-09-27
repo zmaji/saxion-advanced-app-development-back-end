@@ -1,8 +1,8 @@
 import http from 'http';
 import request from 'supertest';
 import { StatusCodes } from 'http-status-codes';
-import mockApp from './mocks/http';
-import { articleIndexData } from './mocks/http/articles/data';
+import mockApp from './http';
+import { articleIndexData } from './http/articles/data';
 
 let server: http.Server | undefined;
 

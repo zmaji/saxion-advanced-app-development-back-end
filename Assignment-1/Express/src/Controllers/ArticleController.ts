@@ -1,58 +1,72 @@
-import type { Article } from '../Models/ArticleModel';
-
+import { Article } from '../Models/ArticleModel';
 import ArticleModel from '../Models/ArticleModel';
 import { v4 as uuidv4 } from 'uuid';
-import { removeIdField } from "../helpers/removeMongoID";
+import { removeIdField } from '../helpers/removeMongoID';
 
-// @ts-ignore
-const getArticles = (cb) => {
-    ArticleModel.find()
-        .then(results => {
-            cb(removeIdField(results))
-        })
-        .catch(err => {
-            console.error(err)
-        })
+const getArticles = async (): Promise<Article[]> => {
+    try {
+        const results = await ArticleModel.find();
+        return removeIdField(results);
+    } catch (error) {
+        throw error;
+    }
 };
 
-// @ts-ignore
-const getArticle = (articleID: string, cb) => {
-    ArticleModel.findOne({articleID})
-        .then(result => {
-            if (result) {
-                result = removeIdField(result);
-            }
-
-            cb(result)
-        })
-        .catch(err => {
-            console.error(err)
-        })
+const getArticle = async (articleID: string): Promise<Article | null> => {
+    try {
+        const result = await ArticleModel.findOne({ articleID });
+        if (result) {
+            return removeIdField(result);
+        }
+        return null;
+    } catch (error) {
+        throw error;
+    }
 };
 
-const createArticle = (articleData: Article, cb: (error: any, article?: Article) => void) => {
-    articleData.articleID = uuidv4();
-    const newArticle = new ArticleModel(articleData);
+const createArticle = async (articleData: Article): Promise<Article> => {
+    try {
+        articleData.articleID = uuidv4();
+        const newArticle = new ArticleModel(articleData);
+        const article = await newArticle.save();
+        return removeIdField(article);
+    } catch (error) {
+        throw error;
+    }
+};
 
-    newArticle
-        .save()
-        .then((article: Article) => {
-            if (article) {
-                // @ts-ignore
-                article = removeIdField(article);
-            }
+const updateArticle = async (articleID: string, articleData: Article): Promise<Article | null> => {
+    try {
+        const updatedArticle = await ArticleModel.findOneAndUpdate(
+            { articleID },
+            articleData,
+            { new: true }
+        );
 
-            cb(null, article);
-        })
-        .catch((error: any) => {
-            cb(error);
-        });
+        if (updatedArticle) {
+            return removeIdField(updatedArticle);
+        }
+        return null;
+    } catch (error) {
+        throw error;
+    }
+};
+
+const deleteArticle = async (articleID: string): Promise<boolean> => {
+    try {
+        const result = await ArticleModel.deleteOne({ articleID });
+        return result.deletedCount === 1;
+    } catch (error) {
+        throw error;
+    }
 };
 
 const ArticleController = {
     getArticles,
     getArticle,
-    createArticle
+    createArticle,
+    updateArticle,
+    deleteArticle
 };
 
 export default ArticleController;

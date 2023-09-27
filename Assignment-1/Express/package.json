@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Starting Jest tests\" && jest --detectOpenHandles",
-    "test:watch": "echo \"Starting Jest tests in watch mode\" && jest --detectOpenHandles --watch",
+    "test:watch": "echo \"Starting Jest tests in watch mode\" && jest --detectOpenHandles --watchAll",
     "start": "echo \\\"Starting index.js\\\" && nodemon src/index.ts"
   },
   "author": "",

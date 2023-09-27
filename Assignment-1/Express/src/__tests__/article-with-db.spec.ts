@@ -39,8 +39,6 @@ describe('article', () => {
     describe('GET /articles', () => {
         it('should return a list of articles', async () => {
             const response = await request(app).get('/articles');
-            // @ts-ignore
-            const expectedData = articleIndexData.map(({ _id, ...rest }) => rest);
 
             expect(response.status).toBe(StatusCodes.OK);
             expect(response.body).toEqual(articleIndexData);
@@ -53,7 +51,7 @@ describe('article', () => {
             const response = await request(app).get(`/articles/${articleID}`);
 
             expect(response.status).toBe(StatusCodes.OK);
-            // expect(response.body).toEqual(articleIndexData.find((article) => article.articleID === articleID));
+            expect(response.body).toEqual(articleIndexData.find((article) => article.articleID === articleID));
         });
 
         it('should handle an invalid articleID', async () => {
