@@ -27,8 +27,7 @@ To get this project up and running, follow these steps:
 
 1. Unzip the project
 2. Navigate to the project's root directory
-3. Dockerize the back-end application and MongoDB database using: 'docker compose
-   build'
+3. Dockerize the back-end application and MongoDB database using: 'docker compose build'
 4. Run the application using 'docker compose up'
 5. Once the containers are running, you can access the application in your web
    browser at `http://localhost:3000/`.
@@ -52,7 +51,7 @@ collection file provided in the zip.
 
 1. Click on the hamburger menu in the top left corner.
 2. Click on "File" and then "Import.."
-3. Choose the Postman collection file (`Express-Fear-of-Flight.postman_collection`)
+3. Choose the Postman collection file (`fear-of-flight-express.postman_collection`)
 
 ## Running tests
 The project includes Jest tests to ensure the API endpoints work as expected. To run these tests, use the following command:

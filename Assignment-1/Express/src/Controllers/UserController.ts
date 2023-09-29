@@ -2,8 +2,6 @@ import type { User } from '../Typings/User';
 import UserModel from '../Models/UserModel';
 import { v4 as uuidv4 } from 'uuid';
 import { removeIdField } from '../helpers/removeMongoID';
-import {Article} from "../Typings/Article";
-import ArticleModel from "../Models/ArticleModel";
 
 const getUsers = async (): Promise<User[]> => {
   try {
@@ -21,17 +19,6 @@ const getUser = async (userID: string): Promise<User | null> => {
       return removeIdField(result);
     }
     return null;
-  } catch (error) {
-    throw error;
-  }
-};
-
-const createArticle = async (articleData: Article): Promise<Article> => {
-  try {
-    articleData.articleID = uuidv4();
-    const newArticle = new ArticleModel(articleData);
-    const article = await newArticle.save();
-    return removeIdField(article);
   } catch (error) {
     throw error;
   }
