@@ -11,7 +11,7 @@ const getAllUsers = async (): Promise<User[]> => {
   }
 };
 
-const getUserById = async (userId: string): Promise<User> => {
+const getUserById = async (userId: string | number): Promise<User> => {
   try {
     const result = await client.query("SELECT * FROM users WHERE id = ?", [userId]);
     if (result && result.length > 0) {

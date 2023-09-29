@@ -27,10 +27,11 @@ const getAllComments = async (): Promise<{ comment: Comment; user: User}[]> => {
 const getCommentById = async (commentId: number): Promise<{ comment: Comment; user: User}> => {
   try {
     const comment: Comment = await client.query(`
-    SELECT * FROM comments
-    WHERE comments.id = ${commentId}`);
+      SELECT * FROM comments
+      WHERE comments.id = ${commentId}
+    `);
 
-    const user: User = await userModel.getUserById(comment.userID);
+    const user: User = await userModel.getUserById(comment[0].userID);
 
     return {
       comment,
