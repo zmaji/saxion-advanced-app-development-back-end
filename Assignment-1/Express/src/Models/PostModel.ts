@@ -9,7 +9,7 @@ const postSchema: Schema<Post> = new Schema({
         unique: true,
     },
     user: {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'User',
         required: true,
     },

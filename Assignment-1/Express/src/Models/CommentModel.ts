@@ -9,12 +9,12 @@ const commentSchema: Schema<Comment> = new Schema({
         unique: true,
     },
     user: {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'User',
         required: true,
     },
     post: {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'Post',
         required: true,
     },
