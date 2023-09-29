@@ -13,15 +13,6 @@ Before you begin, ensure you have met the following requirements:
 - **Docker**: You should have Docker installed on your system. If not, you can
   download it from
   [Docker's official website](https://www.docker.com/products/docker-desktop/).
-- **Deno**: If you don't have Deno installed, you can install it by following
-  the instructions at
-  [Deno's official website](https://docs.deno.com/runtime/manual/getting_started/installation).
-  We recommend installing it using Windows PowerShell
-  ('`irm https://deno.land/install.ps1 | iex`') or using
-  [Scoop](https://scoop.sh/) ('`scoop install deno`').
-- **Deno extention**: Install the Deno extension from your IDE's Marketplace.
-  - Enable the extension by going to the extension settings and ticking "Deno:
-    Enable" (it controls if the Deno language server is enabled).
 - **(Optional) Postman**: To test the API endpoints, you can install
   [Postman](https://www.postman.com/downloads/). Postman is optional, but it
   makes testing easier.
@@ -57,4 +48,4 @@ collection file provided in the zip.
 
 1. Click on the hamburger menu in the top left corner.
 2. Click on "File" and then "Import.."
-3. Choose the Postman collection file (`Fear of Flight.postman_collection`)
+3. Choose the Postman collection file (`Deno-Fear-of-Flight.postman_collection`)
