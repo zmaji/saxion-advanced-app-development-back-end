@@ -1,13 +1,13 @@
 [
   {
-    "id": "1",
+    "userID": "7d61aa4c-c80c-4b88-89a4-6d6f19623858",
     "firstName": "Maurice",
     "lastName": "ten Teije",
     "nickName": "zmaji",
     "avatar": "test"
   },
   {
-    "id": "2",
+    "userID": "a1e4ef19-93c5-415a-8420-1f4173d1531f",
     "firstName": "Nils",
     "lastName": "Kimenai",
     "nickName": "Gardif",

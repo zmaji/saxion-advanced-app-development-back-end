@@ -1,6 +1,6 @@
 [
   {
-    "id": "1",
+    "postID": "7d61aa4c-c80c-4b88-89a4-6d6f19623858",
     "title": "Post Title 1",
     "content": "Post Content 1",
     "category": "Post Category 1",
@@ -8,7 +8,7 @@
     "dislikes": 1
   },
   {
-    "id": "2",
+    "postID": "a1e4ef19-93c5-415a-8420-1f4173d1531f",
     "title": "Post Title 2",
     "content": "Post Content 2",
     "category": "Post Category 2",
