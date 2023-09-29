@@ -1,5 +1,6 @@
+import type { User } from '../Typings/User';
+
 import mongoose, { Schema } from 'mongoose';
-import { User } from '../Typings/User';
 
 const userSchema: Schema<User> = new Schema({
   userID: {

@@ -1,27 +1,88 @@
-import express from 'express';
+import { Router, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import CommentController from '../Controllers/CommentController';
 
-const router = express.Router();
+const router = Router();
 
-router.get('/', (req, res) => {
-  const comments = CommentController.getComments();
-
-  if (comments.length > 0) {
-    res.status(StatusCodes.OK).send(comments);
-  } else {
-    res.status(StatusCodes.NOT_FOUND).send('No comments found');
+router.get('', async (req: Request, res: Response) => {
+  try {
+    const result = await CommentController.getComments();
+    res
+        .status(StatusCodes.OK)
+        .send(result);
+  } catch (error) {
+    res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'An error occurred' });
   }
 });
 
-router.get('/:commentID', (req, res) => {
-  const commentID = req.params.commentID;
-  const comment = CommentController.getCommentByID(commentID);
+router.get('/:commentID', async (req: Request, res: Response) => {
+  try {
+    const result = await CommentController.getComment(req.params.commentID);
+    if (result) {
+      res
+          .status(StatusCodes.OK)
+          .send(result);
+    } else {
+      res
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: 'Unable to find comment' });
+    }
+  } catch (error) {
+    res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'An error occurred' });
+  }
+});
 
-  if (comment) {
-    res.status(StatusCodes.OK).send([comment]);
-  } else {
-    res.status(StatusCodes.NOT_FOUND).send('Comment not found');
+router.post('', async (req: Request, res: Response) => {
+  try {
+    const comment = await CommentController.createComment(req.body);
+    res
+        .status(StatusCodes.CREATED)
+        .json(comment);
+  } catch (error) {
+    res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: 'Please make sure to enter all fields correctly' });
+  }
+});
+
+router.put('/:commentID', async (req: Request, res: Response) => {
+  try {
+    const updatedComment = await CommentController.updateComment(req.params.commentID, req.body);
+    if (updatedComment) {
+      res
+          .status(StatusCodes.OK)
+          .json(updatedComment);
+    } else {
+      res
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: 'Unable to find comment' });
+    }
+  } catch (error) {
+    res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'An error occurred' });
+  }
+});
+
+router.delete('/:commentID', async (req: Request, res: Response) => {
+  try {
+    const result = await CommentController.deleteComment(req.params.commentID);
+    if (result) {
+      res
+          .sendStatus(StatusCodes.NO_CONTENT)
+    } else {
+      res
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: 'Unable to find comment' });
+    }
+  } catch (error) {
+    res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'An error occurred' });
   }
 });
 
