@@ -36,10 +36,10 @@ web browser.
 
 The following entities are included in this project:
 
-1. Article
-2. Post
-3. Comment
-4. User
+1. Article (/articles)
+2. Post (/posts)
+3. Comment (/comments)
+4. User (/users)
 
 A post can have one or more comments. A comment always belongs to one user.
 
