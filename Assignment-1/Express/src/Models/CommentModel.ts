@@ -1,19 +1,21 @@
-import type { Article } from "../Typings/Article";
+import type { Comment } from "../Typings/Comment";
 
 import mongoose, { Schema } from 'mongoose';
 
-const articleSchema: Schema<Article> = new Schema({
-    articleID: {
+const commentSchema: Schema<Comment> = new Schema({
+    commentID: {
         type: String,
         required: true,
         unique: true,
     },
-    name: {
+    user: {
         type: String,
+        ref: 'User',
         required: true,
     },
-    description: {
+    post: {
         type: String,
+        ref: 'Post',
         required: true,
     },
     content: {
@@ -21,10 +23,10 @@ const articleSchema: Schema<Article> = new Schema({
         required: true,
     },
 }, {
-    collection: 'articles',
+    collection: 'comments',
     versionKey: false
 });
 
-const ArticleModel = mongoose.model<Article>('Article', articleSchema);
+const CommentModel = mongoose.model<Comment>('Comment', commentSchema);
 
-export default ArticleModel;
+export default CommentModel;

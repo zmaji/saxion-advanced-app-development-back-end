@@ -3,12 +3,12 @@ services:
     image: mongo:latest
 
   mongo-seed:
-    build: ./mongo-seed
+    build: src/Database/mongo-seed
     depends_on:
       - mongo
 
   backend:
-    build: ./Express
+    build: ./
     environment:
       DB_HOST: mongo
       DB_PORT: 27017
