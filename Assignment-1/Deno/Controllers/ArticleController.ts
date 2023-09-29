@@ -7,6 +7,7 @@ const getAllArticles = async (): Promise<Article[]> => {
     return await articleModel.getAllArticles();
   } catch (error) {
     console.error('Error in retrieving articles:', error);
+    return [];
   }
 };
 

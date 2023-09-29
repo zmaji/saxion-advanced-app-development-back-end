@@ -16,7 +16,7 @@ const getArticleById = async (articleId: number): Promise<Article> => {
     if (result && result.length > 0) {
       return result;
     } else {
-      return null;
+      throw new Error(`Article with ID ${articleId} not found`);
     }
   } catch (error) {
     console.error(`Error retrieving article with ID ${articleId}:`, error);
@@ -32,10 +32,14 @@ const addArticle = async (articleData: Article): Promise<Article> => {
     );
     const insertId = result.lastInsertId;
 
-    return {
-      id: insertId.toString(),
-      ...articleData
-    };
+    if (typeof insertId === 'number') {
+      return {
+        id: insertId,
+        ...articleData,
+      };
+    } else {
+      throw new Error('Failed to retrieve the inserted ID');
+    }
   } catch (error) {
     console.error("Error adding article:", error);
     throw error;
