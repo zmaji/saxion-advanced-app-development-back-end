@@ -66,7 +66,7 @@ const updatePost = async (postId: number, postData: Post) => {
     const existingPost: { post: Post; comments: Comment[] } = await getPostById(postId);
 
     if (!existingPost) {
-      console.log(`No article found with id ${postId}`);
+      console.log(`No post found with id ${postId}`);
       return null;
     }
 
@@ -89,7 +89,7 @@ const updatePost = async (postId: number, postData: Post) => {
       return null;
     }
 
-    const updatedPost: Post = await client.query("SELECT * FROM articles WHERE id = ?", [postId]);
+    const updatedPost: Post = await client.query("SELECT * FROM posts WHERE id = ?", [postId]);
 
     return updatedPost || null;
   } catch (error) {
