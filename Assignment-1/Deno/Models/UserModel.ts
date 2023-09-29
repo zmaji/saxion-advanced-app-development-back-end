@@ -1,49 +1,57 @@
 import client from "../Database/Connection.ts";
+import type { User } from "../Typings/User.ts";
 
-const getAllUsers = async () => {
+const getAllUsers = async (): Promise<User[]> => {
   try {
     const result = await client.query("SELECT * FROM users");
     return result;
   } catch (error) {
     console.error('Error retrieving users:', error);
+    throw error;
   }
 };
 
-const getUserById = async (userId: string) => {
+const getUserById = async (userId: string): Promise<User> => {
   try {
     const result = await client.query("SELECT * FROM users WHERE id = ?", [userId]);
-    return result;
+    if (result && result.length > 0) {
+      return result;
+    } else {
+      throw new Error(`User with ID ${userId} not found`);
+    }
   } catch (error) {
-    console.error(`Error retrieving post with ID ${userId}:`, error);
+    console.error(`Error retrieving user with ID ${userId}:`, error);
     throw error;
   }
 };
 
-// @ts-ignore
-const addUser = async (userData) => {
+const addUser = async (userData: User): Promise<User> => {
   try {
     const result = await client.execute(
-      "INSERT INTO users (firstName, lastName, email, nickName) VALUES (?, ?, ?, ?)",
-      [userData.firstName, userData.lastName, userData.email, userData.nickName]
+      "INSERT INTO users (firstName, lastName, email, nickName, avatar) VALUES (?, ?, ?, ?, ?)",
+      [userData.firstName, userData.lastName, userData.email, userData.nickName, userData.avatar]
     );
-
     const insertId = result.lastInsertId;
-    return { id: insertId, ...userData };
+
+ if (typeof insertId === 'number') {
+      return {
+        id: insertId,
+        ...userData,
+      };
+    } else {
+      throw new Error('Failed to retrieve the inserted ID');
+    }
   } catch (error) {
-    console.error("Error adding user:", error);
+    console.error("Error adding article:", error);
     throw error;
   }
 };
 
-// @ts-ignore
-const updateUser = async (userId, userData) => {
+const updateUser = async (userId: string, userData: Partial<User>): Promise<User | null> => {
   try {
-    const existingUser = await client.query(
-      "SELECT * FROM users WHERE id = ?",
-      [userId]
-    );
+    const existingUser = await getUserById(userId);
 
-    if (existingUser.length === 0) {
+    if (!existingUser) {
       console.log(`No user found with id ${userId}`);
       return null;
     }
@@ -59,7 +67,7 @@ const updateUser = async (userId, userData) => {
 
     const result = await client.execute(
       `UPDATE users SET ${updateFields.join(", ")} WHERE id = ?`,
-      [updateValues, userId]
+      [...updateValues, userId]
     );
 
     if (result.affectedRows === 0) {
@@ -67,12 +75,8 @@ const updateUser = async (userId, userData) => {
       return null;
     }
 
-    const updatedUser = await client.query(
-      "SELECT * FROM users WHERE id = ?",
-      [userId]
-    );
-
-    return updatedUser[0];
+    const updatedUser = await getUserById(userId);
+    return updatedUser;
   } catch (error) {
     throw error;
   }

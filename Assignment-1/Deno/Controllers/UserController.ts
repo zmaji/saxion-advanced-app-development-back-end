@@ -1,51 +1,47 @@
 import userModel from "../Models/UserModel.ts";
+import type { User } from "../Typings/User.ts";
 
-const getAllUsers = async () => {
+const getAllUsers = async (): Promise<User[]> => {
   try {
-    const users = await userModel.getAllUsers();
-    return users;
+    return await userModel.getAllUsers();
   } catch (error) {
     console.error('Error in retrieving users:', error);
+    return [];
   }
 };
 
-const getUserById = async (articleId: string) => {
+const getUserById = async (userId: number): Promise<User | null> => {
   try {
-    const result = await userModel.getUserById(articleId);
-    return result;
+    return await userModel.getUserById(userId);
   } catch (error) {
-    console.error(`Error retrieving user with ID ${articleId}:`, error);
+    console.error(`Error retrieving user with ID ${userId}:`, error);
     throw error;
   }
 };
 
-// @ts-ignore
-const addUser = async (userData) => {
+const addUser = async (userData: User): Promise<User> => {
   try {
-    const newUser = await userModel.addUser(userData);
-    return newUser;
+    return await userModel.addUser(userData);
   } catch (error) {
     console.error('Error adding user:', error);
     throw error;
   }
 };
 
-// @ts-ignore
-const updateUser = async (userId, userData) => {
+const updateUser = async (userId: number, userData: Partial<User>): Promise<User | null> => {
   try {
-    const updatedUser = await userModel.updateUser(userId, userData);
-    return updatedUser;
+    return await userModel.updateUser(userId, userData);
   } catch (error) {
     console.error('Error updating user:', error);
     throw error;
   }
 };
 
-const UseerController = {
+const UserController = {
   getAllUsers,
   getUserById,
   addUser,
   updateUser,
 };
 
-export default UseerController;
+export default UserController;
