@@ -19,6 +19,9 @@ Before you begin, ensure you have met the following requirements:
   We recommend installing it using Windows PowerShell
   ('`irm https://deno.land/install.ps1 | iex`') or using
   [Scoop](https://scoop.sh/) ('`scoop install deno`').
+- **Deno extention**: Install the Deno extension from your IDE's Marketplace.
+  - Enable the extension by going to the extension settings and ticking "Deno:
+    Enable" (it controls if the Deno language server is enabled).
 - **(Optional) Postman**: To test the API endpoints, you can install
   [Postman](https://www.postman.com/downloads/). Postman is optional, but it
   makes testing easier.
