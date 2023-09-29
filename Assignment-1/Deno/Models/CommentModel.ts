@@ -1,6 +1,7 @@
 import client from "../Database/Connection.ts";
 import userModel from "./UserModel.ts";
 import postModel from "./PostModel.ts";
+import { Comment } from "../Typings/Comment.ts";
 
 const getAllComments = async () => {
   try {
@@ -45,23 +46,20 @@ const getCommentById = async (commentId: string) => {
   }
 };
 
-const getCommentsByPostId = async (postId: string) => {
+const getCommentsByPostId = async (postId: string): Promise<Comment[]> => {
   try {
     const query = `
       SELECT * FROM comments
       WHERE comments.postID = ?`;
 
-    const comments = await client.query(query, [postId]);
+    const comments: Comment[] = await client.query(query, [postId]);
 
-    return {
-      comments
-    };
+    return comments;
   } catch (error) {
     console.error(`Error retrieving comments with ID ${postId}:`, error);
     throw error;
   }
 };
-
 // @ts-ignore
 const addComment = async (commentData) => {
   try {

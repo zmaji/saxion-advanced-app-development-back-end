@@ -32,14 +32,10 @@ const addArticle = async (articleData: Article): Promise<Article> => {
     );
     const insertId = result.lastInsertId;
 
-    if (typeof insertId === 'number') {
-      return {
-        id: insertId,
-        ...articleData,
-      };
-    } else {
-      throw new Error('Failed to retrieve the inserted ID');
-    }
+    return {
+      id: insertId,
+      ...articleData,
+    };
   } catch (error) {
     console.error("Error adding article:", error);
     throw error;

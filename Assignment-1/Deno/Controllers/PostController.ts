@@ -1,39 +1,42 @@
 import postModel from "../Models/PostModel.ts";
+import { Comment } from "../Typings/Comment.ts";
+import { Post } from "../Typings/Post.ts";
 
-const getAllPosts = async () => {
+const getAllPosts = async (): Promise<{ post: Post; comments: Comment[] }[]> => {
   try {
-    const posts = await postModel.getAllPosts();
-    return posts;
+    return await postModel.getAllPosts();
   } catch (error) {
     console.error('Error in retrieving posts:', error);
+    return [];
   }
 };
 
-const getPostById = async (articleId: string) => {
+const getPostById = async (postId: number): Promise<{ post: Post; comments: Comment[] } | null> => {
   try {
-    const result = await postModel.getPostById(articleId);
-    return result;
+    return await postModel.getPostById(postId);
   } catch (error) {
-    console.error(`Error retrieving post with ID ${articleId}:`, error);
+    console.error(`Error retrieving post with ID ${postId}:`, error);
     throw error;
   }
 };
 
-// @ts-ignore
-const addPost = async (postData) => {
+const addPost = async (postData: Post): Promise<Post> => {
   try {
-    const newPost = await postModel.addPost(postData);
-    return newPost;
+    return await postModel.addPost(postData);
   } catch (error) {
     console.error('Error adding post:', error);
     throw error;
   }
 };
 
-// @ts-ignore
-const updatePost = async (postId: number, postData) => {
+const updatePost = async (postId: number, postData: Post): Promise<Post> => {
   try {
     const updatedPost = await postModel.updatePost(postId, postData);
+
+    if (updatedPost === null) {
+      throw new Error('Post not found or update failed');
+    }
+
     return updatedPost;
   } catch (error) {
     console.error('Error updating post:', error);
