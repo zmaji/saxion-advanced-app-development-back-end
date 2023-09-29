@@ -48,7 +48,7 @@ router.post("/posts", async (ctx) => {
     const postData: Post = await ctx.request.body().value;
     const newPost: Post = await postController.addPost(postData);
 
-    ctx.response.status = Status.OK;
+    ctx.response.status = Status.Created;
     ctx.response.body = newPost;
   } catch (error) {
     ctx.response.status = Status.InternalServerError;

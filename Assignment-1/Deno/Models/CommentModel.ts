@@ -1,21 +1,18 @@
 import client from "../Database/Connection.ts";
 import userModel from "./UserModel.ts";
-import postModel from "./PostModel.ts";
 import { Comment } from "../Typings/Comment.ts";
+import { User } from "../Typings/User.ts";
 
-const getAllComments = async () => {
+const getAllComments = async (): Promise<{ comment: Comment; user: User}[]> => {
   try {
     const comments = await client.query(`
       SELECT * FROM comments`);
 
-    // @ts-ignore
-    const commentDataPromises = await comments.map(async (comment) => {
+    const commentDataPromises = comments.map(async (comment: Comment) => {
       const user = await userModel.getUserById(comment.userID);
-      const post = await postModel.getPostById(comment.postID);
       return {
         comment,
         user,
-        post,
       };
     });
 
@@ -27,18 +24,17 @@ const getAllComments = async () => {
   }
 };
 
-const getCommentById = async (commentId: string) => {
+const getCommentById = async (commentId: number): Promise<{ comment: Comment; user: User}> => {
   try {
-    const query = `
-      SELECT * FROM comments
-      WHERE comments.id = ?`;
+    const comment: Comment = await client.query(`
+    SELECT * FROM comments
+    WHERE comments.id = ${commentId}`);
 
-    const comment = await client.query(query, [commentId]);
-    const user = await userModel.getUserById(comment[0].userID);
+    const user: User = await userModel.getUserById(comment.userID);
 
     return {
-      comment: comment[0],
-      user,
+      comment,
+      user
     };
   } catch (error) {
     console.error(`Error retrieving comment with ID ${commentId}:`, error);
@@ -46,7 +42,7 @@ const getCommentById = async (commentId: string) => {
   }
 };
 
-const getCommentsByPostId = async (postId: string): Promise<Comment[]> => {
+const getCommentsByPostId = async (postId: number): Promise<Comment[]> => {
   try {
     const query = `
       SELECT * FROM comments
@@ -60,8 +56,8 @@ const getCommentsByPostId = async (postId: string): Promise<Comment[]> => {
     throw error;
   }
 };
-// @ts-ignore
-const addComment = async (commentData) => {
+
+const addComment = async (commentData: Comment): Promise<Comment> => {
   try {
     const result = await client.execute(
       "INSERT INTO comments (userID, postID, content) VALUES (?, ?, ?)",
@@ -69,22 +65,22 @@ const addComment = async (commentData) => {
     );
     
     const insertId = result.lastInsertId;
-    return { id: insertId, ...commentData };
+
+    return { 
+      id: insertId,
+      ...commentData 
+      };
   } catch (error) {
     console.error("Error adding comment:", error);
     throw error;
   }
 };
 
-// @ts-ignore
-const updateComment = async (commentId, commentData) => {
+const updateComment = async (commentId: number, commentData: Comment) => {
   try {
-    const existingComment = await client.query(
-      "SELECT * FROM comments WHERE id = ?",
-      [commentId]
-    );
+    const existingComment: { comment: Comment; user: User } = await getCommentById(commentId);
 
-    if (existingComment.length === 0) {
+    if (!existingComment) {
       console.log(`No comment found with id ${commentId}`);
       return null;
     }
@@ -104,12 +100,9 @@ const updateComment = async (commentId, commentData) => {
       return null;
     }
 
-    const updatedComment = await client.query(
-      "SELECT * FROM comments WHERE id = ?",
-      [commentId]
-    );
+    const updatedComment: Comment = await client.query("SELECT * FROM comments WHERE id = ?", [commentId]);
 
-    return updatedComment[0];
+    return updatedComment || null;
   } catch (error) {
     throw error;
   }
