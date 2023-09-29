@@ -1,11 +1,6 @@
-import mongoose, { Schema } from 'mongoose';
+import type { Article } from "../Typings/Article";
 
-export interface Article {
-    articleID: string;
-    name: string;
-    description: string;
-    content: string;
-}
+import mongoose, { Schema } from 'mongoose';
 
 const articleSchema: Schema<Article> = new Schema({
     articleID: {
