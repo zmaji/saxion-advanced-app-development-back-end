@@ -1,10 +1,12 @@
 import { Router, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import UserController from '../Controllers/UserController';
+import isLoggedIn from '../Middleware/is-logged-in';
+import isAdmin from '../Middleware/is-admin';
 
 const router = Router();
 
-router.get('', async (req: Request, res: Response) => {
+router.get('', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
   try {
     const result = await UserController.getUsers();
     res
@@ -36,7 +38,7 @@ router.get('/:userID', async (req: Request, res: Response) => {
   }
 });
 
-router.post('', async (req: Request, res: Response) => {
+router.post('/register', async (req: Request, res: Response) => {
   try {
     const user = await UserController.createUser(req.body);
     res

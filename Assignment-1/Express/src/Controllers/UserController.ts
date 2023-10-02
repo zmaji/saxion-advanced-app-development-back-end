@@ -1,7 +1,8 @@
 import type { User } from '../Typings/User';
-import UserModel from '../Models/UserModel';
+
 import { v4 as uuidv4 } from 'uuid';
 import { removeIdField } from '../helpers/removeMongoID';
+import UserModel from '../Models/UserModel';
 
 const getUsers = async (): Promise<User[]> => {
   try {
@@ -27,6 +28,7 @@ const getUser = async (userID: string): Promise<User | null> => {
 const createUser = async (userData: User): Promise<User> => {
   try {
     userData.userID = uuidv4();
+    userData.secret = uuidv4();
     const newUser = new UserModel(userData);
     const user = await newUser.save();
     return removeIdField(user);
