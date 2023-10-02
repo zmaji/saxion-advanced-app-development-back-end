@@ -17,10 +17,23 @@ const isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
 
   const token = getTokenFromRequest(req);
 
+  console.log(`Token from request:`)
+  console.log(`Token from request:`)
+  console.log(token)
+
   if (token) {
     const payload = await verifyToken(token);
+
+    console.log(`Payload:`)
+    console.log(`Payload:`)
+    console.log(payload)
+
     if (payload) {
       req.user = payload as User;
+
+      console.log(`User:`)
+      console.log(`User:`)
+      console.log(req.user)
       return next();
     }
   }
@@ -32,13 +45,10 @@ const getTokenFromRequest = (req: Request) => {
   const authHeader = req.headers['authorization'];
 
   if (authHeader) {
-    const tokenParts = authHeader.split(' ');
-    if (tokenParts.length === 2 && tokenParts[0].toLowerCase() === 'bearer') {
-      return tokenParts[1];
-    }
+    return authHeader.split(' ')[1];
   }
 
-  return null;
+  return false;
 };
 
 const verifyToken = async (token: string) => {
@@ -49,7 +59,7 @@ const verifyToken = async (token: string) => {
       const user: User | null = await userController.getUser(tokenPayload.userID);
       if (user) {
         try {
-          return jwt.verify(token, user.userID);
+          return jwt.verify(token, user.secret);
         } catch (error) {
           console.log(error)
           return null;

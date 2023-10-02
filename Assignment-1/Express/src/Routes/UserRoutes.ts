@@ -1,10 +1,11 @@
 import { Router, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import UserController from '../Controllers/UserController';
+import isLoggedIn from '../Middleware/is-logged-in';
 
 const router = Router();
 
-router.get('', async (req: Request, res: Response) => {
+router.get('', isLoggedIn, async (req: Request, res: Response) => {
   try {
     const result = await UserController.getUsers();
     res
