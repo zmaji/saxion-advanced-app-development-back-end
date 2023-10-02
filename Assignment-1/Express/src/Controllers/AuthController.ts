@@ -1,11 +1,12 @@
-import { User } from '../Typings/User';
-import UserModel from '../Models/UserModel';
+import type { User } from '../Typings/User';
+
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import UserModel from '../Models/UserModel';
 
-export const authenticateUser = async (nickName: string, password: string): Promise<string | null> => {
+export const authenticateUser = async (userName: string, password: string): Promise<string | null> => {
   try {
-    const user: User | null = await UserModel.findOne({ nickName });
+    const user: User | null = await UserModel.findOne({ userName });
 
     if (user) {
       const result = await bcrypt.compare(password, user.password);

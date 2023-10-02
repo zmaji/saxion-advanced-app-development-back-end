@@ -3,7 +3,7 @@
     "userID": "5459313b-7db5-4565-8710-8aeece7c7f79",
     "firstName": "Maurice",
     "lastName": "ten Teije",
-    "nickName": "zmaji",
+    "userName": "zmaji",
     "password": "Password1",
     "avatar": "test",
     "roles": [
@@ -15,7 +15,7 @@
     "userID": "a913eae9-0dd5-4a3e-8b5e-e72ba158bedf",
     "firstName": "Nils",
     "lastName": "Kimenai",
-    "nickName": "Gardif",
+    "userName": "Gardif",
     "password": "Password2",
     "avatar": "test",
     "roles": [

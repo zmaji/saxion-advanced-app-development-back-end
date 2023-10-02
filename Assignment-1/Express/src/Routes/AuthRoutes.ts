@@ -6,8 +6,8 @@ const router = Router();
 
 router.post('/login', async (req: Request, res: Response) => {
   try {
-    const { nickName, password } = req.body;
-    const token = await AuthController.authenticateUser(nickName, password);
+    const { userName, password } = req.body;
+    const token = await AuthController.authenticateUser(userName, password);
 
     if (token) {
       return res.status(StatusCodes.OK).json({ token });

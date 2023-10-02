@@ -1,6 +1,7 @@
+import type { User } from '../Typings/User';
+
 import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { User } from '../Typings/User';
 
 const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   const user: User = req.user as User;

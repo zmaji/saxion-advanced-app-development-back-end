@@ -1,6 +1,7 @@
+import type { User } from '../Typings/User';
+
 import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import type { User } from '../Typings/User';
 import jwt from 'jsonwebtoken';
 import userController from '../Controllers/UserController';
 
