@@ -36,7 +36,7 @@ router.get('/:userID', async (req: Request, res: Response) => {
   }
 });
 
-router.post('', async (req: Request, res: Response) => {
+router.post('/register', async (req: Request, res: Response) => {
   try {
     const user = await UserController.createUser(req.body);
     res

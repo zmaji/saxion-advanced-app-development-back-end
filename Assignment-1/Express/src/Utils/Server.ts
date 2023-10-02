@@ -5,22 +5,24 @@ import ArticleRoutes from "../Routes/ArticlesRoutes";
 import PostRoutes from "../Routes/PostRoutes";
 import CommentRoutes from "../Routes/CommentRoutes";
 import UserRoutes from "../Routes/UserRoutes";
+import AuthRoutes from "../Routes/AuthRoutes";
 
 const createServer = () => {
-    const app: Express = express();
+  const app: Express = express();
 
-    app.use(express.urlencoded({
-        extended: true
-    }))
+  app.use(express.urlencoded({
+    extended: true
+  }))
 
-    app.use(express.json());
+  app.use(express.json());
 
-    app.use('/articles', ArticleRoutes);
-    app.use('/posts', PostRoutes);
-    app.use('/comments', CommentRoutes);
-    app.use('/users', UserRoutes);
+  app.use('/articles', ArticleRoutes);
+  app.use('/posts', PostRoutes);
+  app.use('/comments', CommentRoutes);
+  app.use('/users', UserRoutes);
+  app.use('/credentials', AuthRoutes)
 
-    return app;
+  return app;
 }
 
 export default createServer;

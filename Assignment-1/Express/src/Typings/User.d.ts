@@ -4,5 +4,8 @@ export interface User {
   lastName: string,
   nickName: string,
   email: string,
+  password: string,
+  secret: string,
   avatar?: string,
+  roles?: [] | null,
 }

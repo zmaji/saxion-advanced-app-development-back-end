@@ -27,6 +27,7 @@ const getUser = async (userID: string): Promise<User | null> => {
 const createUser = async (userData: User): Promise<User> => {
   try {
     userData.userID = uuidv4();
+    userData.secret = uuidv4();
     const newUser = new UserModel(userData);
     const user = await newUser.save();
     return removeIdField(user);
