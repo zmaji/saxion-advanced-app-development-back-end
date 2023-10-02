@@ -1,10 +1,11 @@
 import { Router, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import AuthController from '../Controllers/AuthController';
+import isLoggedIn from '../Middleware/is-logged-in';
 
 const router = Router();
 
-router.post('', async (req: Request, res: Response) => {
+router.post('/login', async (req: Request, res: Response) => {
   try {
     const { nickName, password } = req.body;
     const token = await AuthController.authenticateUser(nickName, password);
@@ -22,4 +23,5 @@ router.post('', async (req: Request, res: Response) => {
       .json({ error: 'An error occurred' });
   }
 });
+
 export default router;

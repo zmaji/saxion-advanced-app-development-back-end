@@ -17,23 +17,11 @@ const isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
 
   const token = getTokenFromRequest(req);
 
-  console.log(`Token from request:`)
-  console.log(`Token from request:`)
-  console.log(token)
-
   if (token) {
     const payload = await verifyToken(token);
 
-    console.log(`Payload:`)
-    console.log(`Payload:`)
-    console.log(payload)
-
     if (payload) {
       req.user = payload as User;
-
-      console.log(`User:`)
-      console.log(`User:`)
-      console.log(req.user)
       return next();
     }
   }
