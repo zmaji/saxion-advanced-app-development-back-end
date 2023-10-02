@@ -9,7 +9,9 @@ const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   if (user && user.roles.includes('admin')) {
     return next();
   } else {
-    res.status(StatusCodes.UNAUTHORIZED).send('This action needs admin privileges.');
+    res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({ error: 'This action needs admin privileges.' });
   };
 }
 
