@@ -19,7 +19,7 @@ router.get('', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
   }
 });
 
-router.get('/:userID', async (req: Request, res: Response) => {
+router.get('/:userID', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
   try {
     const result = await UserController.getUser(req.params.userID);
     if (result) {
@@ -51,7 +51,7 @@ router.post('/register', async (req: Request, res: Response) => {
   }
 });
 
-router.put('/:userID', async (req: Request, res: Response) => {
+router.put('/:userID', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
   try {
     const updatedUser = await UserController.updateUser(req.params.userID, req.body);
     if (updatedUser) {
@@ -70,7 +70,7 @@ router.put('/:userID', async (req: Request, res: Response) => {
   }
 });
 
-router.delete('/:userID', async (req: Request, res: Response) => {
+router.delete('/:userID', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
   try {
     const result = await UserController.deleteUser(req.params.userID);
     if (result) {
