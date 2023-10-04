@@ -1,4 +1,5 @@
-import { Comment } from '../Typings/Comment';
+import type { Comment } from '../Typings/Comment';
+
 import CommentModel from '../Models/CommentModel';
 import { v4 as uuidv4 } from 'uuid';
 import { removeIdField } from '../helpers/removeMongoID';

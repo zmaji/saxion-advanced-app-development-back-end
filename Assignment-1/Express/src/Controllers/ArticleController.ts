@@ -1,4 +1,5 @@
-import { Article } from '../Typings/Article';
+import type { Article } from '../Typings/Article';
+
 import ArticleModel from '../Models/ArticleModel';
 import { v4 as uuidv4 } from 'uuid';
 import { removeIdField } from '../helpers/removeMongoID';

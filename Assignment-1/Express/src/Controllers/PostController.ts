@@ -1,4 +1,5 @@
-import { Post } from '../Typings/Post';
+import type { Post } from '../Typings/Post';
+
 import PostModel from '../Models/PostModel';
 import { v4 as uuidv4 } from 'uuid';
 import { removeIdField } from '../helpers/removeMongoID';
