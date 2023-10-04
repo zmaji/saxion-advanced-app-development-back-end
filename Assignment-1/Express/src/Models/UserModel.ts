@@ -26,6 +26,7 @@ const userSchema: Schema<User> = new Schema({
   secret: {
     type: String,
     required: true,
+    immutable: true
   },
   avatar: {
     type: String,
