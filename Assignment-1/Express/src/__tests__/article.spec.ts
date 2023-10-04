@@ -6,9 +6,11 @@ import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { articleIndexData } from './mocks/data/articles';
 import ArticleModel from '../Models/ArticleModel';
+import UserModel from '../Models/UserModel';
 
 let mongoServer: MongoMemoryServer;
 let server: http.Server;
+let adminToken: "";
 
 const login = async (userName: string, password: string) => {
   const loginCredentials = {
@@ -32,13 +34,35 @@ beforeAll(async () => {
     // @ts-ignore
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  }).then(async () => {
-    for (let article of articleIndexData) {
-      const newArticle = new ArticleModel(article);
-      await newArticle.save();
-    }
   });
+
+  for (let article of articleIndexData) {
+    const newArticle = new ArticleModel(article);
+    await newArticle.save();
+  }
+
+  const testUser = new UserModel({
+    userID: 'a913eae9-0dd5-4a3e-8b5e-e72ba158bedf',
+    userName: 'Gardif',
+    email: 'test2@test.com',
+    password: 'Password2',
+    secret: 'OuHRdKDQuu',
+    avatar: 'test',
+  });
+  await testUser.save();
+
+  const testAdmin = new UserModel({
+    userID: '5459313b-7db5-4565-8710-8aeece7c7f79',
+    userName: 'zmaji',
+    email: 'test@test.com',
+    password: 'Password1',
+    secret: 'lxziOo8CIq',
+    avatar: 'test',
+    roles: ['user', 'admin'],
+  });
+  await testAdmin.save();
 });
+
 
 afterAll(async () => {
   await mongoose.disconnect();
@@ -79,6 +103,7 @@ describe('article', () => {
   describe('POST /articles', () => {
     it('should create a new article', async () => {
       const admin = await login('zmaji', 'Password1');
+      adminToken = admin.body.token;
 
       const newArticleData = {
         name: 'New Article',
@@ -88,7 +113,7 @@ describe('article', () => {
 
       const response = await request(app)
         .post('/articles')
-        // .set('Authorization', `Bearer ${token}`)
+        .set('Authorization', `Bearer ${adminToken}`)
         .send(newArticleData);
       const { articleID } = response.body;
 
@@ -109,11 +134,11 @@ describe('article', () => {
 
       const response = await request(app)
         .post('/articles')
-        // .set('Authorization', `Bearer ${token}`)
+        .set('Authorization', `Bearer ${adminToken}`)
         .send(newArticleData);
 
       expect(response.status).toBe(StatusCodes.BAD_REQUEST);
-      expect(response.body).toEqual({ error: 'Please make sure to enter all fields correctly' });
+      expect(response.body).toEqual({ error: 'Fields were not filled in properly' });
     });
   });
 });

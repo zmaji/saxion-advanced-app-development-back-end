@@ -1,13 +1,11 @@
 import type { User } from '../Typings/User';
 
 import mongoose, { Schema } from 'mongoose';
-import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt'
 
 const userSchema: Schema<User> = new Schema({
   userID: {
     type: String,
-    default: uuidv4(),
     unique: true,
     immutable: true
   },
@@ -27,7 +25,6 @@ const userSchema: Schema<User> = new Schema({
   },
   secret: {
     type: String,
-    default: uuidv4(),
     immutable: true
   },
   avatar: {

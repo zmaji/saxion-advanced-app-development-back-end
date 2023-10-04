@@ -1,5 +1,6 @@
 import type { User } from '../Typings/User';
 
+import { v4 as uuidv4 } from 'uuid';
 import { removeIdField } from '../helpers/removeMongoID';
 import UserModel from '../Models/UserModel';
 
