@@ -25,7 +25,6 @@ const userSchema: Schema<User> = new Schema({
   },
   secret: {
     type: String,
-    required: true,
     immutable: true
   },
   avatar: {
@@ -35,7 +34,8 @@ const userSchema: Schema<User> = new Schema({
   roles: {
     type: [String],
     default: [],
-    immutable: true
+    immutable: true,
+    required: false
   },
 }, {
   collection: 'users',
