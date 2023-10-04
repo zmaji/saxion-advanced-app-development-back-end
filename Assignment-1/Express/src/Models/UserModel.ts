@@ -35,7 +35,6 @@ const userSchema: Schema<User> = new Schema({
   roles: {
     type: [String],
     default: [],
-    required: true,
     immutable: true
   },
 }, {
