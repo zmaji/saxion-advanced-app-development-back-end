@@ -3,6 +3,8 @@ import CommentModel from '../Models/CommentModel';
 import { v4 as uuidv4 } from 'uuid';
 import { removeIdField } from '../helpers/removeMongoID';
 
+const requiredCommentFields = ["user", "post", "content"];
+
 const getComments = async (): Promise<Comment[]> => {
   try {
     const results = await CommentModel.find();
@@ -26,6 +28,12 @@ const getComment = async (commentID: string): Promise<Comment | null> => {
 
 const createComment = async (commentData: Comment): Promise<Comment> => {
   try {
+    for (const field of requiredCommentFields) {
+      if (!commentData[field as keyof Comment]) {
+        throw new Error(`${field} is a required field.`);
+      }
+    }
+
     commentData.commentID = uuidv4();
     const newComment = new CommentModel(commentData);
     const comment = await newComment.save();
@@ -37,16 +45,20 @@ const createComment = async (commentData: Comment): Promise<Comment> => {
 
 const updateComment = async (commentID: string, commentData: Comment): Promise<Comment | null> => {
   try {
-    const updatedComment = await CommentModel.findOneAndUpdate(
+    if (commentData.hasOwnProperty('content')) {
+      const updatedComment = await CommentModel.findOneAndUpdate(
         { commentID },
         commentData,
         { new: true }
-    );
+      );
 
-    if (updatedComment) {
-      return removeIdField(updatedComment);
+      if (updatedComment) {
+        return removeIdField(updatedComment);
+      }
+      return null;
+    } else {
+      return null;
     }
-    return null;
   } catch (error) {
     throw error;
   }

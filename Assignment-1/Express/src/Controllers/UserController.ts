@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { removeIdField } from '../helpers/removeMongoID';
 import UserModel from '../Models/UserModel';
 
+const requiredUserFields = ["userName", "email", "password", "roles"];
+
 const getUsers = async (): Promise<User[]> => {
   try {
     const results = await UserModel.find();
@@ -26,7 +28,16 @@ const getUser = async (userID: string): Promise<User | null> => {
 };
 
 const createUser = async (userData: User): Promise<User> => {
+  console.log('userData')
+  console.log('userData')
+  console.log(userData)
   try {
+    for (const field of requiredUserFields) {
+      if (!userData[field as keyof User]) {
+        throw new Error(`${field} is a required field.`);
+      }
+    }
+
     userData.userID = uuidv4();
     userData.secret = uuidv4();
     const newUser = new UserModel(userData);
@@ -39,6 +50,12 @@ const createUser = async (userData: User): Promise<User> => {
 
 const updateUser = async (userID: string, userData: User): Promise<User | null> => {
   try {
+    for (const field of requiredUserFields) {
+      if (!userData[field as keyof User]) {
+        throw new Error(`${field} is a required field.`);
+      }
+    }
+
     const updatedUser = await UserModel.findOneAndUpdate(
       { userID },
       userData,

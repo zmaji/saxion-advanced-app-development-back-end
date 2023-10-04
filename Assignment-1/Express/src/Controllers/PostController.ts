@@ -3,6 +3,9 @@ import PostModel from '../Models/PostModel';
 import { v4 as uuidv4 } from 'uuid';
 import { removeIdField } from '../helpers/removeMongoID';
 
+const requiredPostCreateFields = ["user", "title", "content", "category"];
+const requiredPostPutFields = ["title", "content", "category"];
+
 const getPosts = async (): Promise<Post[]> => {
   try {
     const results = await PostModel.find();
@@ -26,6 +29,12 @@ const getPost = async (postID: string): Promise<Post | null> => {
 
 const createPost = async (postData: Post): Promise<Post> => {
   try {
+    for (const field of requiredPostCreateFields) {
+      if (!postData[field as keyof Post]) {
+        throw new Error(`${field} is a required field.`);
+      }
+    }
+
     postData.postID = uuidv4();
     const newPost = new PostModel(postData);
     const post = await newPost.save();
@@ -37,10 +46,16 @@ const createPost = async (postData: Post): Promise<Post> => {
 
 const updatePost = async (postID: string, postData: Post): Promise<Post | null> => {
   try {
+    for (const field of requiredPostPutFields) {
+      if (!postData[field as keyof Post]) {
+        throw new Error(`${field} is a required field.`);
+      }
+    }
+
     const updatedPost = await PostModel.findOneAndUpdate(
-        { postID },
-        postData,
-        { new: true }
+      { postID },
+      postData,
+      { new: true }
     );
 
     if (updatedPost) {

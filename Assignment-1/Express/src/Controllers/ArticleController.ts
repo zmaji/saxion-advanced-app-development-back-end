@@ -3,6 +3,8 @@ import ArticleModel from '../Models/ArticleModel';
 import { v4 as uuidv4 } from 'uuid';
 import { removeIdField } from '../helpers/removeMongoID';
 
+const requiredArticleFields = ["name", "description", "content"];
+
 const getArticles = async (): Promise<Article[]> => {
   try {
     const results = await ArticleModel.find();
@@ -26,6 +28,12 @@ const getArticle = async (articleID: string): Promise<Article | null> => {
 
 const createArticle = async (articleData: Article): Promise<Article> => {
   try {
+    for (const field of requiredArticleFields) {
+      if (!articleData[field as keyof Article]) {
+        throw new Error(`${field} is a required field.`);
+      }
+    }
+
     articleData.articleID = uuidv4();
     const newArticle = new ArticleModel(articleData);
     const article = await newArticle.save();
@@ -37,6 +45,12 @@ const createArticle = async (articleData: Article): Promise<Article> => {
 
 const updateArticle = async (articleID: string, articleData: Article): Promise<Article | null> => {
   try {
+    for (const field of requiredArticleFields) {
+      if (articleData[field as keyof Article]) {
+        throw new Error(`${field} is a required field.`);
+      }
+    }
+
     const updatedArticle = await ArticleModel.findOneAndUpdate(
       { articleID },
       articleData,

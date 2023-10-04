@@ -8,9 +8,19 @@ const router = Router();
 router.get('', async (req: Request, res: Response) => {
   try {
     const result = await PostController.getPosts();
-    res
-      .status(StatusCodes.OK)
-      .send(result);
+
+    if (result) {
+      res
+        .status(StatusCodes.OK)
+        .json({
+          message: `Successfully found posts`,
+          posts: result,
+        });
+    } else {
+      res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: 'Unable to find posts' });
+    }
   } catch (error) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -24,11 +34,14 @@ router.get('/:postID', async (req: Request, res: Response) => {
     if (result) {
       res
         .status(StatusCodes.OK)
-        .send(result);
+        .json({
+          message: `Successfully found post with ID ${req.params.postID}`,
+          post: result,
+        });
     } else {
       res
         .status(StatusCodes.NOT_FOUND)
-        .json({ error: 'Unable to find post' });
+        .json({ error: `Unable to find post with ID ${req.params.postID}` });
     }
   } catch (error) {
     res
@@ -40,27 +53,38 @@ router.get('/:postID', async (req: Request, res: Response) => {
 router.post('', isLoggedIn, async (req: Request, res: Response) => {
   try {
     const post = await PostController.createPost(req.body);
-    res
-      .status(StatusCodes.CREATED)
-      .json(post);
+
+    if (post) {
+      res
+        .status(StatusCodes.CREATED)
+        .status(StatusCodes.OK)
+        .json({
+          message: `Successfully created post`,
+          post: post,
+        });
+    }
   } catch (error) {
     res
       .status(StatusCodes.BAD_REQUEST)
-      .json({ error: 'Please make sure to enter all fields correctly' });
+      .json({ error: 'Fields were not filled in properly' });
   }
 });
 
 router.put('/:postID', isLoggedIn, async (req: Request, res: Response) => {
   try {
     const updatedPost = await PostController.updatePost(req.params.postID, req.body);
+
     if (updatedPost) {
       res
         .status(StatusCodes.OK)
-        .json(updatedPost);
+        .json({
+          message: `Successfully updated post with ID ${req.params.postID}`,
+          post: updatedPost,
+        });
     } else {
       res
         .status(StatusCodes.NOT_FOUND)
-        .json({ error: 'Unable to find post' });
+        .json({ error: `Unable to update post with ID ${req.params.postID}` });
     }
   } catch (error) {
     res
@@ -75,10 +99,11 @@ router.delete('/:postID', isLoggedIn, async (req: Request, res: Response) => {
     if (result) {
       res
         .sendStatus(StatusCodes.NO_CONTENT)
+        .json(`Successfully deleted post with ID ${req.params.postID}`);
     } else {
       res
         .status(StatusCodes.NOT_FOUND)
-        .json({ error: 'Unable to find post' });
+        .json({ error: `Unable to find post with ID ${req.params.postID}` });
     }
   } catch (error) {
     res

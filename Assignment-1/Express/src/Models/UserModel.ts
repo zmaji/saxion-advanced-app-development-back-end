@@ -21,11 +21,11 @@ const userSchema: Schema<User> = new Schema({
   },
   password: {
     type: String,
-    required: false,
+    required: true,
   },
   secret: {
     type: String,
-    required: false,
+    required: true,
   },
   avatar: {
     type: String,
@@ -33,7 +33,8 @@ const userSchema: Schema<User> = new Schema({
   },
   roles: {
     type: [String],
-    default: []
+    default: [],
+    required: true,
   },
 }, {
   collection: 'users',
