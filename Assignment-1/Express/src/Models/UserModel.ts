@@ -6,8 +6,8 @@ import bcrypt from 'bcrypt'
 const userSchema: Schema<User> = new Schema({
   userID: {
     type: String,
-    required: true,
     unique: true,
+    immutable: true
   },
   userName: {
     type: String,

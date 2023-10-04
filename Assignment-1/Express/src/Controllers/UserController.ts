@@ -28,16 +28,7 @@ const getUser = async (userID: string): Promise<User | null> => {
 };
 
 const createUser = async (userData: User): Promise<User> => {
-  console.log('userData')
-  console.log('userData')
-  console.log(userData)
   try {
-    for (const field of requiredUserFields) {
-      if (!userData[field as keyof User]) {
-        throw new Error(`${field} is a required field.`);
-      }
-    }
-
     userData.userID = uuidv4();
     userData.secret = uuidv4();
     const newUser = new UserModel(userData);
