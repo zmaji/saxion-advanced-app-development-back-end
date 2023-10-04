@@ -12,10 +12,7 @@ router.get('', async (req: Request, res: Response) => {
     if (result) {
       res
         .status(StatusCodes.OK)
-        .json({
-          message: `Successfully found comments`,
-          comments: result,
-        });
+        .json(result);
     } else {
       res
         .status(StatusCodes.NOT_FOUND)
@@ -35,10 +32,7 @@ router.get('/:commentID', async (req: Request, res: Response) => {
     if (result) {
       res
         .status(StatusCodes.OK)
-        .json({
-          message: `Successfully found comment with ID ${req.params.commentID}`,
-          article: result,
-        });
+        .json(result);
     } else {
       res
         .status(StatusCodes.NOT_FOUND)
@@ -58,10 +52,7 @@ router.post('', isLoggedIn, async (req: Request, res: Response) => {
     if (comment) {
       res
         .status(StatusCodes.CREATED)
-        .json({
-          message: `Successfully created comment`,
-          comment: comment,
-        });
+        .json(comment);
     }
   } catch (error) {
     res
@@ -77,10 +68,7 @@ router.put('/:commentID', isLoggedIn, async (req: Request, res: Response) => {
     if (updatedComment) {
       res
         .status(StatusCodes.OK)
-        .json({
-          message: `Successfully updated comment with ID ${req.params.commentID}`,
-          comment: updatedComment,
-        });
+        .json(updatedComment);
     } else {
       res
         .status(StatusCodes.NOT_FOUND)

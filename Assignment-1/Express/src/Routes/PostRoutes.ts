@@ -12,10 +12,7 @@ router.get('', async (req: Request, res: Response) => {
     if (result) {
       res
         .status(StatusCodes.OK)
-        .json({
-          message: `Successfully found posts`,
-          posts: result,
-        });
+        .json(result);
     } else {
       res
         .status(StatusCodes.NOT_FOUND)
@@ -34,10 +31,7 @@ router.get('/:postID', async (req: Request, res: Response) => {
     if (result) {
       res
         .status(StatusCodes.OK)
-        .json({
-          message: `Successfully found post with ID ${req.params.postID}`,
-          post: result,
-        });
+        .json(result);
     } else {
       res
         .status(StatusCodes.NOT_FOUND)
@@ -58,10 +52,7 @@ router.post('', isLoggedIn, async (req: Request, res: Response) => {
       res
         .status(StatusCodes.CREATED)
         .status(StatusCodes.OK)
-        .json({
-          message: `Successfully created post`,
-          post: post,
-        });
+        .json(post);
     }
   } catch (error) {
     res
@@ -77,10 +68,7 @@ router.put('/:postID', isLoggedIn, async (req: Request, res: Response) => {
     if (updatedPost) {
       res
         .status(StatusCodes.OK)
-        .json({
-          message: `Successfully updated post with ID ${req.params.postID}`,
-          post: updatedPost,
-        });
+        .json(updatedPost);
     } else {
       res
         .status(StatusCodes.NOT_FOUND)
