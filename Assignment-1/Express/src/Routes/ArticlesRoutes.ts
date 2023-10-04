@@ -13,10 +13,7 @@ router.get('', async (req: Request, res: Response) => {
     if (result) {
       res
         .status(StatusCodes.OK)
-        .json({
-          message: `Successfully found articles`,
-          articles: result,
-        });
+        .json(result);
     } else {
       res
         .status(StatusCodes.NOT_FOUND)
@@ -36,10 +33,7 @@ router.get('/:articleID', async (req: Request, res: Response) => {
     if (result) {
       res
         .status(StatusCodes.OK)
-        .json({
-          message: `Successfully found article with ID ${req.params.articleID}`,
-          article: result,
-        });
+        .json(result);
     } else {
       res
         .status(StatusCodes.NOT_FOUND)
@@ -59,10 +53,7 @@ router.post('', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
     if (article) {
       res
         .status(StatusCodes.CREATED)
-        .json({
-          message: `Successfully created article`,
-          article: article,
-        });
+        .json(article);
     }
   } catch (error) {
     res
@@ -78,10 +69,7 @@ router.put('/:articleID', isLoggedIn, isAdmin, async (req: Request, res: Respons
     if (updatedArticle) {
       res
         .status(StatusCodes.OK)
-        .json({
-          message: `Successfully updated article with ID ${req.params.articleID}`,
-          article: updatedArticle,
-        });
+        .json(updatedArticle);
     } else {
       res
         .status(StatusCodes.NOT_FOUND)

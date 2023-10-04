@@ -27,7 +27,7 @@ router.get('', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: 'An error occurred' });
   }
-});;
+});
 
 router.get('/:userID', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
   try {
@@ -35,10 +35,7 @@ router.get('/:userID', isLoggedIn, isAdmin, async (req: Request, res: Response) 
     if (result) {
       res
         .status(StatusCodes.OK)
-        .json({
-          message: `Successfully found user with ID ${req.params.userID}`,
-          user: result,
-        });
+        .json(result);
     } else {
       res
         .status(StatusCodes.NOT_FOUND)
@@ -51,17 +48,14 @@ router.get('/:userID', isLoggedIn, isAdmin, async (req: Request, res: Response) 
   }
 });
 
-router.post('/register', async (req: Request, res: Response) => {
+router.post('', async (req: Request, res: Response) => {
   try {
     const user = await UserController.createUser(req.body);
 
     if (user) {
       res
         .status(StatusCodes.CREATED)
-        .json({
-          message: `Successfully created user`,
-          user: user,
-        });
+        .json(user);
     }
   } catch (error) {
     res
@@ -77,10 +71,7 @@ router.put('/:userID', isLoggedIn, isAdmin, async (req: Request, res: Response) 
     if (updatedUser) {
       res
         .status(StatusCodes.OK)
-        .json({
-          message: `Successfully updated article with ID ${req.params.userID}`,
-          user: updatedUser,
-        });
+        .json(updatedUser);
     } else {
       res
         .status(StatusCodes.NOT_FOUND)

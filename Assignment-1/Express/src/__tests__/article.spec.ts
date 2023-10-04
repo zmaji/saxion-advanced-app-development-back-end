@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import app from './mocks/http/app';
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import { articleIndexData } from './mocks/http/articles/data';
+import { articleIndexData } from './mocks/data/articles';
 import ArticleModel from '../Models/ArticleModel';
 
 let mongoServer: MongoMemoryServer;
@@ -59,7 +59,7 @@ describe('article', () => {
             const response = await request(app).get(`/articles/${invalidArticleID}`);
 
             expect(response.status).toBe(StatusCodes.NOT_FOUND);
-            expect(response.body).toEqual({ error: 'Unable to find article' });
+            expect(response.body).toEqual({ error: 'Unable to find article with ID invalid-id' });
         });
     });
 
