@@ -33,7 +33,7 @@ const userSchema: Schema<User> = new Schema({
   },
   roles: {
     type: [String],
-    default: [],
+    default: ['user'],
     immutable: true,
     required: false
   },
