@@ -36,6 +36,7 @@ const userSchema: Schema<User> = new Schema({
     type: [String],
     default: [],
     required: true,
+    immutable: true
   },
 }, {
   collection: 'users',
