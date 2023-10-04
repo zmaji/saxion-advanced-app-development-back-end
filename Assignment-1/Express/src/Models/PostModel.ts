@@ -1,10 +1,12 @@
 import type { Post } from "../Typings/Post";
 
 import mongoose, { Schema } from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 
 const postSchema: Schema<Post> = new Schema({
   postID: {
     type: String,
+    default: uuidv4(),
     unique: true,
     immutable: true
   },

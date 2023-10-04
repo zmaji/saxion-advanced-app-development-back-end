@@ -1,7 +1,6 @@
 import type { Article } from '../Typings/Article';
 
 import ArticleModel from '../Models/ArticleModel';
-import { v4 as uuidv4 } from 'uuid';
 import { removeIdField } from '../helpers/removeMongoID';
 
 const getArticles = async (): Promise<Article[]> => {
@@ -27,7 +26,6 @@ const getArticle = async (articleID: string): Promise<Article | null> => {
 
 const createArticle = async (articleData: Article): Promise<Article> => {
   try {
-    articleData.articleID = uuidv4();
     const newArticle = new ArticleModel(articleData);
     const article = await newArticle.save();
     return removeIdField(article);

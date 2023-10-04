@@ -1,7 +1,6 @@
 import type { Post } from '../Typings/Post';
 
 import PostModel from '../Models/PostModel';
-import { v4 as uuidv4 } from 'uuid';
 import { removeIdField } from '../helpers/removeMongoID';
 
 const requiredPostPutFields = ["title", "content", "category"];
@@ -29,7 +28,6 @@ const getPost = async (postID: string): Promise<Post | null> => {
 
 const createPost = async (postData: Post): Promise<Post> => {
   try {
-    postData.postID = uuidv4();
     const newPost = new PostModel(postData);
     const post = await newPost.save();
     return removeIdField(post);

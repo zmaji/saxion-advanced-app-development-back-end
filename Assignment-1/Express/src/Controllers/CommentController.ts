@@ -1,7 +1,6 @@
 import type { Comment } from '../Typings/Comment';
 
 import CommentModel from '../Models/CommentModel';
-import { v4 as uuidv4 } from 'uuid';
 import { removeIdField } from '../helpers/removeMongoID';
 
 const getComments = async (): Promise<Comment[]> => {
@@ -27,7 +26,6 @@ const getComment = async (commentID: string): Promise<Comment | null> => {
 
 const createComment = async (commentData: Comment): Promise<Comment> => {
   try {
-    commentData.commentID = uuidv4();
     const newComment = new CommentModel(commentData);
     const comment = await newComment.save();
     return removeIdField(comment);
