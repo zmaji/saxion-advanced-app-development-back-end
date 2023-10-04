@@ -10,9 +10,15 @@ export const authenticateUser = async (userName: string, password: string): Prom
       const user: User | null = await UserModel.findOne({ userName });
 
       if (user) {
+        console.log('Has user')
+        console.log('Has user')
+        console.log('Has user')
         const result = await bcrypt.compare(password, user.password);
 
         if (result) {
+          console.log('Has result')
+          console.log('Has result')
+          console.log('Has result')
           const token = jwt.sign({
             userID: user.userID,
             email: user.email,

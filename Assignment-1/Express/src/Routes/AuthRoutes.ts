@@ -13,7 +13,6 @@ router.post('/login', async (req: Request, res: Response) => {
       res
         .status(StatusCodes.OK)
         .json({ token })
-        .json('Successfully logged in');
     } else {
       res
         .status(StatusCodes.UNAUTHORIZED)
