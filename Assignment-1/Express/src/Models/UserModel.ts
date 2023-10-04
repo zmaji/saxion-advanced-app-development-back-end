@@ -1,13 +1,15 @@
 import type { User } from '../Typings/User';
 
 import mongoose, { Schema } from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt'
 
 const userSchema: Schema<User> = new Schema({
   userID: {
     type: String,
-    required: true,
+    default: uuidv4(),
     unique: true,
+    immutable: true
   },
   userName: {
     type: String,
@@ -21,11 +23,12 @@ const userSchema: Schema<User> = new Schema({
   },
   password: {
     type: String,
-    required: false,
+    required: true,
   },
   secret: {
     type: String,
-    required: false,
+    default: uuidv4(),
+    immutable: true
   },
   avatar: {
     type: String,
@@ -33,7 +36,9 @@ const userSchema: Schema<User> = new Schema({
   },
   roles: {
     type: [String],
-    default: []
+    default: ['user'],
+    immutable: true,
+    required: false
   },
 }, {
   collection: 'users',

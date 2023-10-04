@@ -10,14 +10,17 @@ router.post('/login', async (req: Request, res: Response) => {
     const token = await AuthController.authenticateUser(userName, password);
 
     if (token) {
-      return res.status(StatusCodes.OK).json({ token });
+      res
+        .status(StatusCodes.OK)
+        .json({ token })
+        .json('Successfully logged in');
     } else {
-      return res
+      res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ error: 'Authentication failed' });
+        .json({ error: 'Authentication failed: Wrong username and/or password' });
     }
   } catch (error) {
-    return res
+    res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: 'An error occurred' });
   }

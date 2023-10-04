@@ -9,9 +9,19 @@ const router = Router();
 router.get('', async (req: Request, res: Response) => {
   try {
     const result = await ArticleController.getArticles();
-    res
-      .status(StatusCodes.OK)
-      .send(result);
+
+    if (result) {
+      res
+        .status(StatusCodes.OK)
+        .json({
+          message: `Successfully found articles`,
+          articles: result,
+        });
+    } else {
+      res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: 'Unable to find articles' });
+    }
   } catch (error) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -22,14 +32,18 @@ router.get('', async (req: Request, res: Response) => {
 router.get('/:articleID', async (req: Request, res: Response) => {
   try {
     const result = await ArticleController.getArticle(req.params.articleID);
+
     if (result) {
       res
         .status(StatusCodes.OK)
-        .send(result);
+        .json({
+          message: `Successfully found article with ID ${req.params.articleID}`,
+          article: result,
+        });
     } else {
       res
         .status(StatusCodes.NOT_FOUND)
-        .json({ error: 'Unable to find article' });
+        .json({ error: `Unable to find article with ID ${req.params.articleID}` });
     }
   } catch (error) {
     res
@@ -41,45 +55,57 @@ router.get('/:articleID', async (req: Request, res: Response) => {
 router.post('', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
   try {
     const article = await ArticleController.createArticle(req.body);
-    res
-      .status(StatusCodes.CREATED)
-      .json(article);
+
+    if (article) {
+      res
+        .status(StatusCodes.CREATED)
+        .json({
+          message: `Successfully created article`,
+          article: article,
+        });
+    }
   } catch (error) {
     res
       .status(StatusCodes.BAD_REQUEST)
-      .json({ error: 'Please make sure to enter all fields correctly' });
+      .json({ error: 'Fields were not filled in properly' });
   }
 });
 
 router.put('/:articleID', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
   try {
     const updatedArticle = await ArticleController.updateArticle(req.params.articleID, req.body);
+
     if (updatedArticle) {
       res
         .status(StatusCodes.OK)
-        .json(updatedArticle);
+        .json({
+          message: `Successfully updated article with ID ${req.params.articleID}`,
+          article: updatedArticle,
+        });
     } else {
       res
         .status(StatusCodes.NOT_FOUND)
-        .json({ error: 'Unable to find article' });
+        .json({ error: `Unable to update article with ID ${req.params.articleID}` });
     }
   } catch (error) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'An error occurred' });
+      .json({ error: 'Field were not filled in properly' });
   }
 });
 
 router.delete('/:articleID', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
   try {
     const result = await ArticleController.deleteArticle(req.params.articleID);
+
     if (result) {
       res
         .sendStatus(StatusCodes.NO_CONTENT)
+        .json(`Successfully deleted article with ID ${req.params.articleID}`);
     } else {
       res
         .status(StatusCodes.NOT_FOUND)
-        .json({ error: 'Unable to find article' });
+        .json({ error: `Unable to find article with ID ${req.params.articleID}` });
     }
   } catch (error) {
     res
