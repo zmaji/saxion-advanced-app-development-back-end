@@ -46,7 +46,7 @@ router.get('/:postID', async (req: Request, res: Response) => {
 
 router.post('', isLoggedIn, async (req: Request, res: Response) => {
   try {
-    const post = await PostController.createPost(req.body);
+    const post = await PostController.createPost(req.body, req.headers.authorization);
 
     if (post) {
       res

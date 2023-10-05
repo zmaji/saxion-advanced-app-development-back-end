@@ -1,8 +1,9 @@
 import type { Post } from '../Typings/Post';
 
-import PostModel from '../Models/PostModel';
 import { removeIdField } from '../helpers/removeMongoID';
-import { request } from 'http';
+import jwt from 'jsonwebtoken';
+import PostModel from '../Models/PostModel';
+import UserController from './UserController';
 
 const requiredPostPutFields = ["title", "content", "category"];
 
@@ -27,8 +28,20 @@ const getPost = async (postID: string): Promise<Post | null> => {
   }
 };
 
-const createPost = async (postData: Post): Promise<Post> => {
+// @ts-ignore
+const createPost = async (postData: Post, headers): Promise<Post> => {
   try {
+
+    const token = jwt.decode(headers['authorization'].split(' ')[1]);
+    // @ts-ignore
+    const tokenPayload = jwt.decode(token);
+    // @ts-ignore
+    console.log('tokenPayload.userID')
+    console.log('tokenPayload.userID')
+        // @ts-ignore
+    console.log(tokenPayload.userID)
+        // @ts-ignore
+    postData.user = tokenPayload.userID
     const newPost = new PostModel(postData);
     const post = await newPost.save();
     return removeIdField(post);
