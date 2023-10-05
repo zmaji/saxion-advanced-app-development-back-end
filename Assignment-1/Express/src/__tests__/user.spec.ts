@@ -59,8 +59,8 @@ describe('user', () => {
       expect(response.status).toBe(StatusCodes.CREATED);
       expect(response.body).toEqual({
         userID: response.body.userID,
-        userName: response.body.userName,
-        email: response.body.email,
+        userName: 'pieterPost',
+        email: 'pieter@post.nl',
         password: response.body.password,
         secret: response.body.secret,
         roles: response.body.roles,
