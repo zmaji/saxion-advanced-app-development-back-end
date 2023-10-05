@@ -63,7 +63,7 @@ router.post('', isLoggedIn, async (req: Request, res: Response) => {
 
 router.put('/:postID', isLoggedIn, async (req: Request, res: Response) => {
   try {
-    const updatedPost = await PostController.updatePost(req.params.postID, req.body);
+    const updatedPost = await PostController.updatePost(req.params.postID, req.body, req.headers.authorization);
 
     if (updatedPost) {
       res

@@ -2,6 +2,7 @@ import type { Post } from '../Typings/Post';
 
 import PostModel from '../Models/PostModel';
 import { removeIdField } from '../helpers/removeMongoID';
+import { request } from 'http';
 
 const requiredPostPutFields = ["title", "content", "category"];
 
@@ -36,8 +37,11 @@ const createPost = async (postData: Post): Promise<Post> => {
   }
 };
 
-const updatePost = async (postID: string, postData: Post): Promise<Post | null> => {
+// @ts-ignore
+const updatePost = async (postID: string, postData: Post, headers): Promise<Post | null> => {
   try {
+    console.log(headers);
+
     for (const field of requiredPostPutFields) {
       if (!postData[field as keyof Post]) {
         throw new Error(`${field} is a required field.`);
