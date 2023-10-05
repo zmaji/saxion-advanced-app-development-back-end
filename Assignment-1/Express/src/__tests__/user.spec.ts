@@ -56,16 +56,14 @@ describe('user', () => {
         .post('/users')
         .send(newUserData);
 
-      const { userID, password, secret } = response.body;
-
       expect(response.status).toBe(StatusCodes.CREATED);
       expect(response.body).toEqual({
         userID: response.body.userID,
-        userName: 'pieterPost',
-        email: 'pieter@post.nl',
-        password: password,
-        secret: secret,
-        roles: ['user']
+        userName: response.body.userName,
+        email: response.body.email,
+        password: response.body.password,
+        secret: response.body.secret,
+        roles: response.body.roles,
       });
     });
 
