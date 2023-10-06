@@ -11,6 +11,7 @@ import UserModel from '../Models/UserModel';
 let mongoServer: MongoMemoryServer;
 let server: http.Server;
 let adminToken: "";
+let createdArticleID: "";
 
 const login = async (userName: string, password: string) => {
   const loginCredentials = {
@@ -116,6 +117,7 @@ describe('article', () => {
         .set('Authorization', `Bearer ${adminToken}`)
         .send(newArticleData);
       const { articleID } = response.body;
+      createdArticleID = articleID;
 
       expect(response.status).toBe(StatusCodes.CREATED);
       expect(response.body).toEqual({
@@ -139,6 +141,81 @@ describe('article', () => {
 
       expect(response.status).toBe(StatusCodes.BAD_REQUEST);
       expect(response.body).toEqual({ error: 'Fields were not filled in properly' });
+    });
+  });
+
+  describe('PUT /articles', () => {
+    beforeAll(async () => {
+      const admin = await login('zmaji', 'Password1');
+      adminToken = admin.body.token;
+    });
+
+    it('should update an existing article', async () => {
+      const updatedArticleData = {
+        name: 'Updated Article Name',
+        description: 'Updated description',
+        content: 'Updated content',
+      };
+
+      const updateResponse = await request(app)
+        .put(`/articles/${createdArticleID}`)
+        .set('Authorization', `Bearer ${adminToken}`)
+        .send(updatedArticleData);
+
+      expect(updateResponse.status).toBe(StatusCodes.OK);
+      expect(updateResponse.body).toEqual({
+        articleID: createdArticleID,
+        name: 'Updated Article Name',
+        description: 'Updated description',
+        content: 'Updated content',
+      });
+    });
+
+    it('should handle updating a non-existent article', async () => {
+      const nonExistentArticleID = 'nonExistentID';
+
+      const updatedArticleData = {
+        name: 'Updated Article Name',
+        description: 'Updated description',
+        content: 'Updated content',
+      };
+
+      const updateResponse = await request(app)
+        .put(`/articles/${nonExistentArticleID}`)
+        .set('Authorization', `Bearer ${adminToken}`)
+        .send(updatedArticleData);
+
+      expect(updateResponse.status).toBe(StatusCodes.NOT_FOUND);
+      expect(updateResponse.body).toEqual({ error: `Unable to update article with ID ${nonExistentArticleID}` });
+    });
+  });
+
+  describe('DELETE /articles/:articleID', () => {
+    beforeAll(async () => {
+      const admin = await login('zmaji', 'Password1');
+      adminToken = admin.body.token;
+    });
+
+    it('should delete an existing article', async () => {
+      const response = await request(app)
+        .delete(`/articles/${createdArticleID}`)
+        .set('Authorization', `Bearer ${adminToken}`);
+
+      expect(response.status).toBe(StatusCodes.NO_CONTENT);
+
+      const deletedArticle = await ArticleModel.findOne({ articleID: createdArticleID });
+      expect(deletedArticle).toBeNull();
+    });
+
+    it('should handle deleting a non-existent article', async () => {
+      const nonExistentArticleID = 'nonExistentID';
+
+      const response = await request(app)
+        .delete(`/articles/${nonExistentArticleID}`)
+        .set('Authorization', `Bearer ${adminToken}`);
+
+      expect(response.status).toBe(StatusCodes.NOT_FOUND);
+      expect(response.body).toEqual({ error: `Unable to find article with ID ${nonExistentArticleID}` });
     });
   });
 });

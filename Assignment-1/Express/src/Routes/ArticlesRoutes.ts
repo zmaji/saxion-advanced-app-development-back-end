@@ -98,7 +98,6 @@ router.delete('/:articleID', isLoggedIn, isAdmin, async (req: Request, res: Resp
   } catch (error) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'An error occurred' });
   }
 });
 

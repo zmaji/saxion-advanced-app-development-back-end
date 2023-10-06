@@ -32,6 +32,7 @@ const createComment = async (commentData: Comment, headers: string): Promise<Com
     const user = jwt.decode(token) as User | null;
 
     if (user) {
+      // @ts-ignore
       commentData.user = user.userID
       const newComment = new CommentModel(commentData);
       const comment = await newComment.save();

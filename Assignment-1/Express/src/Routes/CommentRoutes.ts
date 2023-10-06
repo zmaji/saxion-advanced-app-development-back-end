@@ -100,7 +100,6 @@ router.delete('/:commentID', isLoggedIn, async (req: Request, res: Response) => 
   } catch (error) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'An error occurred' });
   }
 });
 
