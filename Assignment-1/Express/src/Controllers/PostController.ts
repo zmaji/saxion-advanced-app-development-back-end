@@ -50,21 +50,15 @@ const updatePost = async (postID: string, postData: Post, headers: string): Prom
     const user = jwt.decode(token) as User | null;
 
     if (user) {
-      const existingPost = await getPost(postID);
+      const updatedPost = await PostModel.findOneAndUpdate(
+        { postID, user: user.userID },
+        postData,
+        { new: true }
+      );
 
-      // @ts-ignore
-      if (existingPost && existingPost.user === user.userID) {
-        const updatedPost = await PostModel.findOneAndUpdate(
-          { postID },
-          postData,
-          { new: true }
-        );
-
-        if (updatedPost) {
-          return removeIdField(updatedPost);
-        }
+      if (updatedPost) {
+        return removeIdField(updatedPost);
       }
-      return null;
     }
     return null;
   } catch (error) {
