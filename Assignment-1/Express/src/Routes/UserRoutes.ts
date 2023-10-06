@@ -13,10 +13,7 @@ router.get('', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
     if (result) {
       res
         .status(StatusCodes.OK)
-        .json({
-          message: `Successfully found users`,
-          users: result,
-        });
+        .json(result);
     } else {
       res
         .status(StatusCodes.NOT_FOUND)
