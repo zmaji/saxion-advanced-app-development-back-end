@@ -46,13 +46,18 @@ router.get('/:postID', async (req: Request, res: Response) => {
 
 router.post('', isLoggedIn, async (req: Request, res: Response) => {
   try {
-    const post = await PostController.createPost(req.body, req.headers.authorization);
+    if (req.headers.authorization) {
+      const post = await PostController.createPost(req.body, req.headers.authorization);
 
-    if (post) {
+      if (post) {
+        res
+          .status(StatusCodes.CREATED)
+          .json(post);
+      }
+    } else {
       res
-        .status(StatusCodes.CREATED)
-        .status(StatusCodes.OK)
-        .json(post);
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: 'Authorization header is missing' });
     }
   } catch (error) {
     res
@@ -63,16 +68,18 @@ router.post('', isLoggedIn, async (req: Request, res: Response) => {
 
 router.put('/:postID', isLoggedIn, async (req: Request, res: Response) => {
   try {
-    const updatedPost = await PostController.updatePost(req.params.postID, req.body, req.headers.authorization);
+    if (req.headers.authorization) {
+      const updatedPost = await PostController.updatePost(req.params.postID, req.body, req.headers.authorization);
 
-    if (updatedPost) {
-      res
-        .status(StatusCodes.OK)
-        .json(updatedPost);
-    } else {
-      res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: `Unable to update post with ID ${req.params.postID}` });
+      if (updatedPost) {
+        res
+          .status(StatusCodes.OK)
+          .json(updatedPost);
+      } else {
+        res
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: `Unable to update post with ID ${req.params.postID}` });
+      }
     }
   } catch (error) {
     res

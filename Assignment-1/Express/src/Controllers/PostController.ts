@@ -1,11 +1,9 @@
 import type { Post } from '../Typings/Post';
+import type { User } from '../Typings/User';
 
 import { removeIdField } from '../helpers/removeMongoID';
 import jwt from 'jsonwebtoken';
 import PostModel from '../Models/PostModel';
-import UserController from './UserController';
-
-const requiredPostPutFields = ["title", "content", "category"];
 
 const getPosts = async (): Promise<Post[]> => {
   try {
@@ -28,47 +26,45 @@ const getPost = async (postID: string): Promise<Post | null> => {
   }
 };
 
-// @ts-ignore
-const createPost = async (postData: Post, headers): Promise<Post> => {
+const createPost = async (postData: Post, headers: string): Promise<Post | null> => {
   try {
+    const token = headers.split(' ')[1];
+    const user = jwt.decode(token) as User | null;
 
-    const token = jwt.decode(headers['authorization'].split(' ')[1]);
-    // @ts-ignore
-    const tokenPayload = jwt.decode(token);
-    // @ts-ignore
-    console.log('tokenPayload.userID')
-    console.log('tokenPayload.userID')
-        // @ts-ignore
-    console.log(tokenPayload.userID)
-        // @ts-ignore
-    postData.user = tokenPayload.userID
-    const newPost = new PostModel(postData);
-    const post = await newPost.save();
-    return removeIdField(post);
+    if (user) {
+      // @ts-ignore
+      postData.user = user.userID
+      const newPost = new PostModel(postData);
+      const post = await newPost.save();
+      return removeIdField(post);
+    }
+    return null;
   } catch (error) {
     throw error;
   }
 };
 
-// @ts-ignore
-const updatePost = async (postID: string, postData: Post, headers): Promise<Post | null> => {
+const updatePost = async (postID: string, postData: Post, headers: string): Promise<Post | null> => {
   try {
-    console.log(headers);
+    const token = headers.split(' ')[1];
+    const user = jwt.decode(token) as User | null;
 
-    for (const field of requiredPostPutFields) {
-      if (!postData[field as keyof Post]) {
-        throw new Error(`${field} is a required field.`);
+    if (user) {
+      const existingPost = await getPost(postID);
+
+      // @ts-ignore
+      if (existingPost && existingPost.user === user.userID) {
+        const updatedPost = await PostModel.findOneAndUpdate(
+          { postID },
+          postData,
+          { new: true }
+        );
+
+        if (updatedPost) {
+          return removeIdField(updatedPost);
+        }
       }
-    }
-
-    const updatedPost = await PostModel.findOneAndUpdate(
-      { postID },
-      postData,
-      { new: true }
-    );
-
-    if (updatedPost) {
-      return removeIdField(updatedPost);
+      return null;
     }
     return null;
   } catch (error) {

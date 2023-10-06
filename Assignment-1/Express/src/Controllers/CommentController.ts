@@ -1,7 +1,9 @@
 import type { Comment } from '../Typings/Comment';
+import type { User } from '../Typings/User';
 
-import CommentModel from '../Models/CommentModel';
 import { removeIdField } from '../helpers/removeMongoID';
+import jwt from 'jsonwebtoken';
+import CommentModel from '../Models/CommentModel';
 
 const getComments = async (): Promise<Comment[]> => {
   try {
@@ -24,26 +26,43 @@ const getComment = async (commentID: string): Promise<Comment | null> => {
   }
 };
 
-const createComment = async (commentData: Comment): Promise<Comment> => {
+const createComment = async (commentData: Comment, headers: string): Promise<Comment | null> => {
   try {
-    const newComment = new CommentModel(commentData);
-    const comment = await newComment.save();
-    return removeIdField(comment);
+    const token = headers.split(' ')[1];
+    const user = jwt.decode(token) as User | null;
+
+    if (user) {
+      commentData.user = user.userID
+      const newComment = new CommentModel(commentData);
+      const comment = await newComment.save();
+      return removeIdField(comment);
+    }
+    return null;
   } catch (error) {
     throw error;
   }
 };
 
-const updateComment = async (commentID: string, commentData: Comment): Promise<Comment | null> => {
+const updateComment = async (commentID: string, commentData: Comment, headers: string): Promise<Comment | null> => {
   try {
-    const updatedComment = await CommentModel.findOneAndUpdate(
-      { commentID },
-      commentData,
-      { new: true }
-    );
+    const token = headers.split(' ')[1];
+    const user = jwt.decode(token) as User | null;
 
-    if (updatedComment) {
-      return removeIdField(updatedComment);
+    if (user) {
+      const existingComment = await getComment(commentID);
+
+      if (existingComment && existingComment.user === user.userID) {
+        const updatedComment = await CommentModel.findOneAndUpdate(
+          { commentID },
+          commentData,
+          { new: true }
+        );
+
+        if (updatedComment) {
+          return removeIdField(updatedComment);
+        }
+      }
+      return null;
     }
     return null;
   } catch (error) {
