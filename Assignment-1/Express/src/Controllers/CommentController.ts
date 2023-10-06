@@ -49,20 +49,15 @@ const updateComment = async (commentID: string, commentData: Comment, headers: s
     const user = jwt.decode(token) as User | null;
 
     if (user) {
-      const existingComment = await getComment(commentID);
+      const updatedComment = await CommentModel.findOneAndUpdate(
+        { commentID, user: user.userID },
+        commentData,
+        { new: true }
+      );
 
-      if (existingComment && existingComment.user === user.userID) {
-        const updatedComment = await CommentModel.findOneAndUpdate(
-          { commentID },
-          commentData,
-          { new: true }
-        );
-
-        if (updatedComment) {
-          return removeIdField(updatedComment);
-        }
+      if (updatedComment) {
+        return removeIdField(updatedComment);
       }
-      return null;
     }
     return null;
   } catch (error) {
