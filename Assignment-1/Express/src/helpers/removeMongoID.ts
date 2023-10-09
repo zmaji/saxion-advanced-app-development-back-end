@@ -1,4 +1,4 @@
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
 
 /**
  * Remove the _id field from a document or an array of mongoDB documents.
@@ -7,6 +7,7 @@ import { Document, Types } from 'mongoose';
 export function removeIdField<T extends Document | Document[]>(docOrArray: T): T {
     const removeId = (doc: Document) => {
         if (doc && doc._id) {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const { _id, ...rest } = doc.toObject();
             return rest;
         }

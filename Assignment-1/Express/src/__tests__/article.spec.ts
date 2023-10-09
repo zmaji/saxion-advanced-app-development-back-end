@@ -1,11 +1,11 @@
 import http from 'http';
 import request from 'supertest';
-import { StatusCodes } from 'http-status-codes';
-import app from './mocks/http/app';
 import mongoose from 'mongoose';
+import { StatusCodes } from 'http-status-codes';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import { articleIndexData } from './mocks/http/articles/data';
 import ArticleModel from '../Models/ArticleModel';
+import app from './mocks/http/app';
+import { articleIndexData } from './mocks/http/articles/data';
 
 let mongoServer: MongoMemoryServer;
 let server: http.Server;
@@ -20,7 +20,7 @@ beforeAll(async () => {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     }).then(async () => {
-        for (let article of articleIndexData) {
+        for (const article of articleIndexData) {
             const newArticle = new ArticleModel(article);
             await newArticle.save();
         }

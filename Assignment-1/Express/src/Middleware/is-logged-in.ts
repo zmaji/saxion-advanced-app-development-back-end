@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import userController from '../Controllers/UserController';
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     interface Request {
       user?: User;

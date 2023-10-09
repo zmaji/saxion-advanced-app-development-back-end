@@ -46,15 +46,13 @@ const userSchema: Schema<User> = new Schema({
 });
 
 userSchema.pre('save', async function (next) {
-  const user = this;
-
-  if (!user.isModified('password') || !user.password) {
+  if (!this.isModified('password') || !this.password) {
     return next();
   }
 
   const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(user.password, salt);
-  user.password = hash;
+  const hash = bcrypt.hashSync(this.password, salt);
+  this.password = hash;
   next();
 });
 

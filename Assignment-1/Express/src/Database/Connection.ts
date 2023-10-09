@@ -13,6 +13,7 @@ class Database {
     private connect() {
         const mongoURI = `mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`;
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         mongoose.connect(mongoURI, { useNewUrlParser: true })
             .then(() => {
