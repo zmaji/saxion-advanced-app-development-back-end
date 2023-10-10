@@ -13,7 +13,7 @@ image: node:latest
 cache:
   key: $CI_COMMIT_REF_SLUG
   paths:
-    - node_modules/
+    - Assignment-1/Express/node_modules/
 
 stages:
   - build
@@ -22,6 +22,7 @@ stages:
 build:
   stage: build
   script:
+    - cd Assignment-1/Express
     - npm install
 
 test_lint:
@@ -29,8 +30,9 @@ test_lint:
   cache:
     key: $CI_COMMIT_REF_SLUG
     paths:
-      - node_modules/
+      - Assignment-1/Express/node_modules/
   script:
+    - cd Assignment-1/Express
     - npm run lint
   needs:
     - build
