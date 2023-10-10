@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { StatusCodes} from 'http-status-codes';
+import { StatusCodes } from 'http-status-codes';
 import ArticleController from '../Controllers/ArticleController';
 import isAdmin from '../Middleware/is-admin';
 import isLoggedIn from '../Middleware/is-logged-in';

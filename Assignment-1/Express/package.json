@@ -8,8 +8,7 @@
     "test:watch": "echo \"Starting Jest tests in watch mode\" && jest --detectOpenHandles --watchAll",
     "start": "echo \"Starting index.js\" && ts-node src/index.ts",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix src/**/*.ts",
-    "lint:watch": "eslint . --ext .ts --watch"
+    "lint:fix": "eslint . --fix src/**/*.ts"
   },
   "author": "",
   "license": "ISC",
