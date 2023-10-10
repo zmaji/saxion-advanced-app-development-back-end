@@ -4,8 +4,8 @@ import ArticleRouter from './articles/ArticleRouter';
 const mockApp = express();
 
 mockApp.use(express.urlencoded({
-    extended: true
-}))
+  extended: true,
+}));
 
 mockApp.use(express.json());
 

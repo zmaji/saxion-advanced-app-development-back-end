@@ -10,9 +10,9 @@ const isAdmin = (req: Request, res: Response, next: NextFunction) => {
     return next();
   } else {
     res
-      .status(StatusCodes.UNAUTHORIZED)
-      .json({ error: 'This action needs admin privileges.' });
+        .status(StatusCodes.UNAUTHORIZED)
+        .json({ error: 'This action needs admin privileges.' });
   }
-}
+};
 
 export default isAdmin;

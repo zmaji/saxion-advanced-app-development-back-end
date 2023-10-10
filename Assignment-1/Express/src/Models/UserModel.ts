@@ -1,15 +1,17 @@
+/* eslint-disable no-invalid-this */
+
 import type { User } from '../Typings/User';
 
 import mongoose, { Schema } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
 
 const userSchema: Schema<User> = new Schema({
   userID: {
     type: String,
     default: uuidv4(),
     unique: true,
-    immutable: true
+    immutable: true,
   },
   userName: {
     type: String,
@@ -28,7 +30,7 @@ const userSchema: Schema<User> = new Schema({
   secret: {
     type: String,
     default: uuidv4(),
-    immutable: true
+    immutable: true,
   },
   avatar: {
     type: String,
@@ -38,14 +40,14 @@ const userSchema: Schema<User> = new Schema({
     type: [String],
     default: ['user'],
     immutable: true,
-    required: false
+    required: false,
   },
 }, {
   collection: 'users',
-  versionKey: false
+  versionKey: false,
 });
 
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function(next) {
   if (!this.isModified('password') || !this.password) {
     return next();
   }

@@ -51,12 +51,12 @@ const verifyToken = async (token: string) => {
         try {
           return jwt.verify(token, user.secret);
         } catch (error) {
-          console.log(error)
+          console.log(error);
           return null;
         }
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return null;
     }
   }

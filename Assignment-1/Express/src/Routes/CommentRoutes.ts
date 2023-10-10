@@ -11,20 +11,20 @@ router.get('', async (req: Request, res: Response) => {
 
     if (result) {
       res
-        .status(StatusCodes.OK)
-        .json({
-          message: `Successfully found comments`,
-          comments: result,
-        });
+          .status(StatusCodes.OK)
+          .json({
+            message: `Successfully found comments`,
+            comments: result,
+          });
     } else {
       res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: 'Unable to find comments' });
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: 'Unable to find comments' });
     }
   } catch (error) {
     res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'An error occurred' });
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'An error occurred' });
   }
 });
 
@@ -34,20 +34,20 @@ router.get('/:commentID', async (req: Request, res: Response) => {
 
     if (result) {
       res
-        .status(StatusCodes.OK)
-        .json({
-          message: `Successfully found comment with ID ${req.params.commentID}`,
-          article: result,
-        });
+          .status(StatusCodes.OK)
+          .json({
+            message: `Successfully found comment with ID ${req.params.commentID}`,
+            article: result,
+          });
     } else {
       res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: `Unable to find comment with ID ${req.params.commentID}` });
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: `Unable to find comment with ID ${req.params.commentID}` });
     }
   } catch (error) {
     res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'An error occurred' });
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'An error occurred' });
   }
 });
 
@@ -57,16 +57,16 @@ router.post('', isLoggedIn, async (req: Request, res: Response) => {
 
     if (comment) {
       res
-        .status(StatusCodes.CREATED)
-        .json({
-          message: `Successfully created comment`,
-          comment: comment,
-        });
+          .status(StatusCodes.CREATED)
+          .json({
+            message: `Successfully created comment`,
+            comment: comment,
+          });
     }
   } catch (error) {
     res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: 'Fields were not filled in properly' });
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: 'Fields were not filled in properly' });
   }
 });
 
@@ -76,20 +76,20 @@ router.put('/:commentID', isLoggedIn, async (req: Request, res: Response) => {
 
     if (updatedComment) {
       res
-        .status(StatusCodes.OK)
-        .json({
-          message: `Successfully updated comment with ID ${req.params.commentID}`,
-          comment: updatedComment,
-        });
+          .status(StatusCodes.OK)
+          .json({
+            message: `Successfully updated comment with ID ${req.params.commentID}`,
+            comment: updatedComment,
+          });
     } else {
       res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: `Unable to update comment with ID ${req.params.commentID}` });
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: `Unable to update comment with ID ${req.params.commentID}` });
     }
   } catch (error) {
     res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'Field were not filled in properly' });
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'Field were not filled in properly' });
   }
 });
 
@@ -98,17 +98,17 @@ router.delete('/:commentID', isLoggedIn, async (req: Request, res: Response) => 
     const result = await CommentController.deleteComment(req.params.commentID);
     if (result) {
       res
-        .sendStatus(StatusCodes.NO_CONTENT)
-        .json(`Successfully deleted comment with ID ${req.params.commentID}`);
+          .sendStatus(StatusCodes.NO_CONTENT)
+          .json(`Successfully deleted comment with ID ${req.params.commentID}`);
     } else {
       res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: `Unable to find comment with ID ${req.params.commentID}` });
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: `Unable to find comment with ID ${req.params.commentID}` });
     }
   } catch (error) {
     res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'An error occurred' });
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'An error occurred' });
   }
 });
 
