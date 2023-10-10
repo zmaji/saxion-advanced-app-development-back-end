@@ -3,6 +3,7 @@ import type { User } from '../Typings/User';
 
 import { removeIdField } from '../helpers/removeMongoID';
 import jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
 import CommentModel from '../Models/CommentModel';
 
 const getComments = async (): Promise<Comment[]> => {
@@ -32,6 +33,7 @@ const createComment = async (commentData: Comment, headers: string): Promise<Com
     const user = jwt.decode(token) as User | null;
 
     if (user) {
+      commentData.commentID = uuidv4();
       // @ts-ignore
       commentData.user = user.userID
       const newComment = new CommentModel(commentData);

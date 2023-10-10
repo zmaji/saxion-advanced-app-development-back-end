@@ -4,13 +4,13 @@ import { StatusCodes } from 'http-status-codes';
 import app from './mocks/http/app';
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import { commentIndexData } from './mocks/data/comments';
+import { postIndexData } from './mocks/data/posts';
+import PostModel from '../Models/PostModel';
 import UserModel from '../Models/UserModel';
-import CommentModel from '../Models/CommentModel';
 
 let mongoServer: MongoMemoryServer;
 let server: http.Server;
-let createdCommentID: string;
+let createdPostID: string;
 let adminToken = "";
 
 const login = async (userName: string, password: string) => {
@@ -37,9 +37,9 @@ beforeAll(async () => {
     useUnifiedTopology: true,
   });
 
-  for (let comment of commentIndexData) {
-    const newComment = new CommentModel(comment);
-    await newComment.save();
+  for (let post of postIndexData) {
+    const newPost = new PostModel(post);
+    await newPost.save();
   }
 
   const testUser = new UserModel({
@@ -72,54 +72,59 @@ afterAll(async () => {
   }
 });
 
-describe('comment', () => {
+describe('post', () => {
   beforeAll(async () => {
     const admin = await login('zmaji', 'Password1');
     adminToken = admin.body.token;
   });
 
-  describe('GET /comments', () => {
-    it('should return a list of comments', async () => {
+  describe('GET /posts', () => {
+    it('should return a list of posts', async () => {
       const response = await request(app)
-        .get('/comments')
+        .get('/posts')
 
       expect(response.status).toBe(StatusCodes.OK);
-      expect(response.body).toEqual(commentIndexData);
+      expect(response.body).toEqual(postIndexData);
     });
   });
 
-  // describe('POST /comments', () => {
-  //   it('should create a new comment', async () => {
-  //     const newCommentData = {
-  //       post: 'd209c8db-30dc-404c-a36b-4a8be95e482d',
-  //       content: 'Content of Test Comment',
+  // describe('POST /posts', () => {
+  //   it('should create a new post', async () => {
+  //     const newPostData = {
+  //       title: 'Test Post',
+  //       content: 'Content of Test Post',
+  //       category: 'Category of Test Post',
   //     };
 
   //     const response = await request(app)
-  //       .post('/comments')
+  //       .post('/posts')
   //       .set('Authorization', `Bearer ${adminToken}`)
-  //       .send(newCommentData);
+  //       .send(newPostData);
 
-  //     const { commentID, user, post } = response.body
+  //     const { postID, user, dislikes, likes } = response.body
 
   //     expect(response.status).toBe(StatusCodes.CREATED);
   //     expect(response.body).toEqual({
-  //       commentID: commentID,
+  //       postID: postID,
   //       user: user,
-  //       post: 'd209c8db-30dc-404c-a36b-4a8be95e482d',
-  //       content: 'Content of Test Comment',
+  //       title: 'Test Post',
+  //       content: 'Content of Test Post',
+  //       category: 'Category of Test Post',
+  //       dislikes: dislikes,
+  //       likes: likes
   //     });
-  //     createdCommentID = commentID;
+  //     createdPostID = postID;
   //   });
 
-  //   it('should handle errors during comment creation', async () => {
-  //     const invalidCommentData = {
+  //   it('should handle errors during post creation', async () => {
+  //     const invalidPostData = {
+  //       title: 'New Post Title',
   //     };
 
   //     const response = await request(app)
-  //       .post('/comments')
+  //       .post('/posts')
   //       .set('Authorization', `Bearer ${adminToken}`)
-  //       .send(invalidCommentData);
+  //       .send(invalidPostData);
 
   //     expect(response.status).toBe(StatusCodes.BAD_REQUEST);
   //     expect(response.body).toEqual({ error: 'Fields were not filled in properly' });
@@ -127,95 +132,105 @@ describe('comment', () => {
   // });
 
 
-  // describe('GET /comments/:commentID', () => {
-  //   it('should return a specific comment', async () => {
+  // describe('GET /posts/:postID', () => {
+  //   it('should return a specific post', async () => {
 
   //     const response = await request(app)
-  //       .get(`/comments/${createdCommentID}`)
+  //       .get(`/posts/${createdPostID}`)
   //       .set('Authorization', `Bearer ${adminToken}`);
 
-  //     const { commentID, user, post } = response.body
+  //     const { postID, user, dislikes, likes } = response.body
 
   //     expect(response.status).toBe(StatusCodes.OK);
   //     expect(response.body).toEqual({
-  //       commentID: commentID,
+  //       postID: postID,
   //       user: user,
-  //       post: post,
-  //       content: 'Content of Test Comment',
+  //       title: 'Test Post',
+  //       content: 'Content of Test Post',
+  //       category: 'Category of Test Post',
+  //       dislikes: dislikes,
+  //       likes: likes
   //     });
   //   });
 
-  //   it('should handle an invalid commentID', async () => {
-  //     const invalidCommentID = 'invalid-id';
+  //   it('should handle an invalid postID', async () => {
+  //     const invalidPostID = 'invalid-id';
   //     const response = await request(app)
-  //       .get(`/comments/${invalidCommentID}`)
+  //       .get(`/posts/${invalidPostID}`)
   //       .set('Authorization', `Bearer ${adminToken}`);
 
   //     expect(response.status).toBe(StatusCodes.NOT_FOUND);
-  //     expect(response.body).toEqual({ error: 'Unable to find comment with ID invalid-id' });
+  //     expect(response.body).toEqual({ error: 'Unable to find post with ID invalid-id' });
   //   });
   // });
 
-  // describe('PUT /comments', () => {
-  //   it('should update an existing comment', async () => {
-  //     const updatedCommentData = {
-  //       content: 'Updated Content of Test Comment',
+  // describe('PUT /posts', () => {
+  //   it('should update an existing post', async () => {
+  //     const updatedPostData = {
+  //       title: 'Updated Post Title',
+  //       content: 'Updated Post Content',
+  //       category: 'Updated Post Category',
   //     };
 
   //     const updateResponse = await request(app)
-  //       .put(`/comments/${createdCommentID}`)
+  //       .put(`/posts/${createdPostID}`)
   //       .set('Authorization', `Bearer ${adminToken}`)
-  //       .send(updatedCommentData);
+  //       .send(updatedPostData);
 
-  //     const { commentID, user, post } = updateResponse.body
+  //     const { postID, user, dislikes, likes } = updateResponse.body
 
   //     expect(updateResponse.status).toBe(StatusCodes.OK);
   //     expect(updateResponse.body).toEqual({
-  //       commentID: commentID,
+  //       postID: postID,
   //       user: user,
-  //       post: post,
-  //       content: 'Updated Content of Test Comment',
+  //       title: 'Updated Post Title',
+  //       content: 'Updated Post Content',
+  //       category: 'Updated Post Category',
+  //       dislikes: dislikes,
+  //       likes: likes
   //     });
   //   });
 
-  //   it('should handle updating a non-existent comment', async () => {
-  //     const nonExistentCommentID = 'nonExistentID';
+  //   it('should handle updating a non-existent post', async () => {
+  //     const nonExistentPostID = 'nonExistentID';
 
-  //     const updatedCommentData = {
-  //       content: 'Updated Comment Content',
+  //     const updatedPostData = {
+  //       title: 'Updated Post Title',
+  //       content: 'Updated Post Content',
+  //       category: 'Updated Post Category',
   //     };
 
   //     const updateResponse = await request(app)
-  //       .put(`/comments/${nonExistentCommentID}`)
+  //       .put(`/posts/${nonExistentPostID}`)
   //       .set('Authorization', `Bearer ${adminToken}`)
-  //       .send(updatedCommentData);
+  //       .send(updatedPostData);
 
   //     expect(updateResponse.status).toBe(StatusCodes.NOT_FOUND);
-  //     expect(updateResponse.body).toEqual({ error: `Unable to update comment with ID ${nonExistentCommentID}` });
+  //     expect(updateResponse.body).toEqual({ error: `Unable to update post with ID ${nonExistentPostID}` });
   //   });
   // });
 
-  // describe('DELETE /comments/:commentID', () => {
-  //   it('should delete an existing comment', async () => {
+  // describe('DELETE /posts/:postID', () => {
+  //   it('should delete an existing post', async () => {
   //     const response = await request(app)
-  //       .delete(`/comments/${createdCommentID}`)
+  //       .delete(`/posts/${createdPostID}`)
   //       .set('Authorization', `Bearer ${adminToken}`);
 
   //     expect(response.status).toBe(StatusCodes.NO_CONTENT);
 
-  //     const deletedComment = await CommentModel.findOne({ commentID: createdCommentID });
-  //     expect(deletedComment).toBeNull();
+  //     const deletedPost = await PostModel.findOne({ postID: createdPostID });
+  //     expect(deletedPost).toBeNull();
   //   });
 
-  //   it('should handle deleting a non-existent comment', async () => {
-  //     const nonExistentCommentID = 'nonExistentID';
+  //   it('should handle deleting a non-existent post', async () => {
+  //     const nonExistentPostID = 'nonExistentID';
 
   //     const response = await request(app)
-  //       .delete(`/comments/${nonExistentCommentID}`)
+  //       .delete(`/posts/${nonExistentPostID}`)
   //       .set('Authorization', `Bearer ${adminToken}`);
 
   //     expect(response.status).toBe(StatusCodes.NOT_FOUND);
-  //     expect(response.body).toEqual({ error: `Unable to find comment with ID ${nonExistentCommentID}` });
+  //     expect(response.body).toEqual({ error: `Unable to find post with ID ${nonExistentPostID}` });
   //   });
   // });
 });

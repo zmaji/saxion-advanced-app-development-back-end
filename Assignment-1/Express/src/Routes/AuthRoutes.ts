@@ -12,7 +12,7 @@ router.post('/login', async (req: Request, res: Response) => {
     if (token) {
       res
         .status(StatusCodes.OK)
-        .json({ token })
+        .json({ token });
     } else {
       res
         .status(StatusCodes.UNAUTHORIZED)

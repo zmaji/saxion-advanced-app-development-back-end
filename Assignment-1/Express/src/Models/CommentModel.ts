@@ -1,12 +1,10 @@
 import type { Comment } from '../Typings/Comment';
 
 import mongoose, { Schema } from 'mongoose';
-import { v4 as uuidv4 } from 'uuid';
 
 const commentSchema: Schema<Comment> = new Schema({
   commentID: {
     type: String,
-    default: uuidv4(),
     unique: true,
     immutable: true,
   },

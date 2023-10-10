@@ -3,6 +3,7 @@ import type { User } from '../Typings/User';
 
 import { removeIdField } from '../helpers/removeMongoID';
 import jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
 import PostModel from '../Models/PostModel';
 
 const getPosts = async (): Promise<Post[]> => {
@@ -32,6 +33,7 @@ const createPost = async (postData: Post, headers: string): Promise<Post | null>
     const user = jwt.decode(token) as User | null;
 
     if (user) {
+      postData.postID = uuidv4();
       // @ts-ignore
       postData.user = user.userID
       const newPost = new PostModel(postData);

@@ -27,7 +27,7 @@ const userSchema: Schema<User> = new Schema({
   },
   secret: {
     type: String,
-    immutable: true
+    immutable: true,
   },
   avatar: {
     type: String,
@@ -43,6 +43,18 @@ const userSchema: Schema<User> = new Schema({
   collection: 'users',
   versionKey: false,
 });
+
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password') || !this.password) {
+    return next();
+  }
+
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(this.password, salt);
+  this.password = hash;
+  next();
+});
+
 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password') || !this.password) {

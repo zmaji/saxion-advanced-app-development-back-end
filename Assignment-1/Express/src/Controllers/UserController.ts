@@ -27,6 +27,8 @@ const getUser = async (userID: string): Promise<User | null> => {
 
 const createUser = async (userData: User): Promise<User> => {
   try {
+    userData.userID = uuidv4();
+    userData.secret = uuidv4();
     const newUser = new UserModel(userData);
     const user = await newUser.save();
     return removeIdField(user);
@@ -38,9 +40,9 @@ const createUser = async (userData: User): Promise<User> => {
 const updateUser = async (userID: string, userData: User): Promise<User | null> => {
   try {
     const updatedUser = await UserModel.findOneAndUpdate(
-        { userID },
-        userData,
-        { new: true },
+      { userID },
+      userData,
+      { new: true },
     );
 
     if (updatedUser) {
