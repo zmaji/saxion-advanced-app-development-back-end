@@ -49,3 +49,12 @@ test_api:
     - npm run test
   needs:
     - build
+
+deploy_dockerhub:
+  stage: deploy
+  script:
+    - cd Assignment-1/Express
+    - echo "$DOCKER_ACCESS_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker build -t "$DOCKER_USERNAME"/fly-with-confidence:latest .
+    - docker push "$DOCKER_USERNAME"/fly-with-confidence:latest
+  when: manual
