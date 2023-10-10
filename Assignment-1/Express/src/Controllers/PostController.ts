@@ -3,7 +3,7 @@ import type { Post } from '../Typings/Post';
 import PostModel from '../Models/PostModel';
 import { removeIdField } from '../helpers/removeMongoID';
 
-const requiredPostPutFields = ["title", "content", "category"];
+const requiredPostPutFields = ['title', 'content', 'category'];
 
 const getPosts = async (): Promise<Post[]> => {
   try {
@@ -45,9 +45,9 @@ const updatePost = async (postID: string, postData: Post): Promise<Post | null> 
     }
 
     const updatedPost = await PostModel.findOneAndUpdate(
-      { postID },
-      postData,
-      { new: true }
+        { postID },
+        postData,
+        { new: true },
     );
 
     if (updatedPost) {
@@ -73,7 +73,7 @@ const PostController = {
   getPost,
   createPost,
   updatePost,
-  deletePost
+  deletePost,
 };
 
 export default PostController;

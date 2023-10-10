@@ -37,9 +37,9 @@ const createComment = async (commentData: Comment): Promise<Comment> => {
 const updateComment = async (commentID: string, commentData: Comment): Promise<Comment | null> => {
   try {
     const updatedComment = await CommentModel.findOneAndUpdate(
-      { commentID },
-      commentData,
-      { new: true }
+        { commentID },
+        commentData,
+        { new: true },
     );
 
     if (updatedComment) {
@@ -65,7 +65,7 @@ const CommentController = {
   getComment,
   createComment,
   updateComment,
-  deleteComment
+  deleteComment,
 };
 
 export default CommentController;

@@ -1,4 +1,4 @@
-import type { Comment } from "../Typings/Comment";
+import type { Comment } from '../Typings/Comment';
 
 import mongoose, { Schema } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,7 +8,7 @@ const commentSchema: Schema<Comment> = new Schema({
     type: String,
     default: uuidv4(),
     unique: true,
-    immutable: true
+    immutable: true,
   },
   user: {
     type: String,
@@ -26,7 +26,7 @@ const commentSchema: Schema<Comment> = new Schema({
   },
 }, {
   collection: 'comments',
-  versionKey: false
+  versionKey: false,
 });
 
 const CommentModel = mongoose.model<Comment>('Comment', commentSchema);

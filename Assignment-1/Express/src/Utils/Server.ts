@@ -1,18 +1,18 @@
-import type { Express } from "express";
+import type { Express } from 'express';
 
 import express from 'express';
-import ArticleRoutes from "../Routes/ArticlesRoutes";
-import PostRoutes from "../Routes/PostRoutes";
-import CommentRoutes from "../Routes/CommentRoutes";
-import UserRoutes from "../Routes/UserRoutes";
-import AuthRoutes from "../Routes/AuthRoutes";
+import ArticleRoutes from '../Routes/ArticlesRoutes';
+import PostRoutes from '../Routes/PostRoutes';
+import CommentRoutes from '../Routes/CommentRoutes';
+import UserRoutes from '../Routes/UserRoutes';
+import AuthRoutes from '../Routes/AuthRoutes';
 
 const createServer = () => {
   const app: Express = express();
 
   app.use(express.urlencoded({
-    extended: true
-  }))
+    extended: true,
+  }));
 
   app.use(express.json());
 
@@ -20,9 +20,9 @@ const createServer = () => {
   app.use('/posts', PostRoutes);
   app.use('/comments', CommentRoutes);
   app.use('/users', UserRoutes);
-  app.use('/credentials', AuthRoutes)
+  app.use('/credentials', AuthRoutes);
 
   return app;
-}
+};
 
 export default createServer;

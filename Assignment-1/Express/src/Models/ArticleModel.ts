@@ -1,4 +1,4 @@
-import type { Article } from "../Typings/Article";
+import type { Article } from '../Typings/Article';
 
 import mongoose, { Schema } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,7 +8,7 @@ const articleSchema: Schema<Article> = new Schema({
     type: String,
     default: uuidv4(),
     unique: true,
-    immutable: true
+    immutable: true,
   },
   name: {
     type: String,
@@ -24,7 +24,7 @@ const articleSchema: Schema<Article> = new Schema({
   },
 }, {
   collection: 'articles',
-  versionKey: false
+  versionKey: false,
 });
 
 const ArticleModel = mongoose.model<Article>('Article', articleSchema);
