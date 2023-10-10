@@ -49,6 +49,7 @@ test_api:
     - npm run test
   needs:
     - build
+  when: manual
 
 deploy_dockerhub:
   stage: deploy
