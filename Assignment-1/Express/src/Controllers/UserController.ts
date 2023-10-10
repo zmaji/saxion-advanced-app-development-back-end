@@ -38,9 +38,9 @@ const createUser = async (userData: User): Promise<User> => {
 const updateUser = async (userID: string, userData: User): Promise<User | null> => {
   try {
     const updatedUser = await UserModel.findOneAndUpdate(
-      { userID },
-      userData,
-      { new: true }
+        { userID },
+        userData,
+        { new: true },
     );
 
     if (updatedUser) {
@@ -66,7 +66,7 @@ const UserController = {
   getUser,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
 };
 
 export default UserController;

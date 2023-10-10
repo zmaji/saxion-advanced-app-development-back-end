@@ -1,4 +1,4 @@
-import type  { Article } from "../../../Typings/Article";
+import type { Article } from "../../../Typings/Article";
 
 export const articleIndexData: Article[] = [
   {

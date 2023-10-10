@@ -25,6 +25,7 @@ router.get('', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
       .json({ error: 'An error occurred' });
   }
 });
+});
 
 router.get('/:userID', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
   try {

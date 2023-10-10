@@ -1,4 +1,4 @@
-import type { Post } from "../Typings/Post";
+import type { Post } from '../Typings/Post';
 
 import mongoose, { Schema } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,7 +8,7 @@ const postSchema: Schema<Post> = new Schema({
     type: String,
     default: uuidv4(),
     unique: true,
-    immutable: true
+    immutable: true,
   },
   user: {
     type: String,
@@ -34,10 +34,10 @@ const postSchema: Schema<Post> = new Schema({
   dislikes: {
     type: Number,
     default: 0,
-  }
+  },
 }, {
   collection: 'posts',
-  versionKey: false
+  versionKey: false,
 });
 
 const PostModel = mongoose.model<Post>('Post', postSchema);

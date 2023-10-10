@@ -80,7 +80,7 @@ const CommentController = {
   getComment,
   createComment,
   updateComment,
-  deleteComment
+  deleteComment,
 };
 
 export default CommentController;

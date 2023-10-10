@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import userController from '../Controllers/UserController';
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     interface Request {
       user?: User;
@@ -50,12 +51,12 @@ const verifyToken = async (token: string) => {
         try {
           return jwt.verify(token, user.secret);
         } catch (error) {
-          console.log(error)
+          console.log(error);
           return null;
         }
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return null;
     }
   }

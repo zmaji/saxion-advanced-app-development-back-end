@@ -80,7 +80,7 @@ const PostController = {
   getPost,
   createPost,
   updatePost,
-  deletePost
+  deletePost,
 };
 
 export default PostController;

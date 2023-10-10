@@ -16,7 +16,7 @@ export const authenticateUser = async (userName: string, password: string): Prom
           const token = jwt.sign({
             userID: user.userID,
             email: user.email,
-            roles: user.roles
+            roles: user.roles,
           }, user.secret);
 
           return token;
@@ -35,7 +35,7 @@ export const authenticateUser = async (userName: string, password: string): Prom
 };
 
 const AuthController = {
-  authenticateUser
+  authenticateUser,
 };
 
 export default AuthController;

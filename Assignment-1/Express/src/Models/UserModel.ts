@@ -1,3 +1,5 @@
+/* eslint-disable no-invalid-this */
+
 import type { User } from '../Typings/User';
 
 import mongoose, { Schema } from 'mongoose';
@@ -7,7 +9,7 @@ const userSchema: Schema<User> = new Schema({
   userID: {
     type: String,
     unique: true,
-    immutable: true
+    immutable: true,
   },
   userName: {
     type: String,
@@ -35,23 +37,21 @@ const userSchema: Schema<User> = new Schema({
     type: [String],
     default: ['user'],
     immutable: true,
-    required: false
+    required: false,
   },
 }, {
   collection: 'users',
-  versionKey: false
+  versionKey: false,
 });
 
 userSchema.pre('save', async function (next) {
-  const user = this;
-
-  if (!user.isModified('password') || !user.password) {
+  if (!this.isModified('password') || !this.password) {
     return next();
   }
 
   const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(user.password, salt);
-  user.password = hash;
+  const hash = bcrypt.hashSync(this.password, salt);
+  this.password = hash;
   next();
 });
 
