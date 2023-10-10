@@ -18,6 +18,7 @@ cache:
 stages:
   - build
   - test
+  - deploy
 
 build:
   stage: build
@@ -34,5 +35,17 @@ test_lint:
   script:
     - cd Assignment-1/Express
     - npm run lint
+  needs:
+    - build
+
+test_api:
+  stage: test
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - Assignment-1/Express/node_modules/
+  script:
+    - cd Assignment-1/Express
+    - npm run test
   needs:
     - build
