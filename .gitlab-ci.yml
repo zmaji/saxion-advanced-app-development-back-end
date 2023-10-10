@@ -52,6 +52,10 @@ test_api:
   when: manual
 
 deploy_dockerhub:
+  image: $CI_REGISTRY/group/project/docker:latest
+  services:
+    - name: $CI_REGISTRY/group/project/docker:latest
+      alias: docker
   stage: deploy
   script:
     - cd Assignment-1/Express
