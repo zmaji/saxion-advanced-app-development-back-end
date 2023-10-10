@@ -1,19 +1,12 @@
-# This file is a template, and might need editing before it works on your project.
-# To contribute improvements to CI/CD templates, please follow the Development guide at:
-# https://docs.gitlab.com/ee/development/cicd/templates.html
-# This specific template is located at:
-# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Nodejs.gitlab-ci.yml
+image: docker:20.10
 
-# Official framework image. Look for the different tagged releases at:
-# https://hub.docker.com/r/library/node/tags/
-image: node:latest
-
-# This folder is cached between builds
-# https://docs.gitlab.com/ee/ci/yaml/index.html#cache
 cache:
   key: $CI_COMMIT_REF_SLUG
   paths:
     - Assignment-1/Express/node_modules/
+
+services:
+  - docker:20.10-dind
 
 stages:
   - build
@@ -21,7 +14,7 @@ stages:
   - deploy
 
 variables:
-  DOCKER_DRIVER: overlay2
+  DOCKER_HOST: tcp://docker:2375
 
 before_script:
   - docker info
@@ -29,8 +22,12 @@ before_script:
 build:
   stage: build
   script:
-    - cd Assignment-1/Express
-    - npm install
+    - cd Assignment-1/Express/
+    - docker build -t fly-with-confidence -f Dockerfile.build .
+  artifacts:
+    paths:
+      - Assignment-1/Express/build
+    expire_in: 1 week
 
 test_lint:
   stage: test
@@ -39,10 +36,8 @@ test_lint:
     paths:
       - Assignment-1/Express/node_modules/
   script:
-    - cd Assignment-1/Express
-    - npm run lint
-  needs:
-    - build
+    - docker build -t fly-with-confidence -f Dockerfile.test .
+    - docker run fly-with-confidence npm run lint
 
 test_api:
   stage: test
@@ -51,17 +46,14 @@ test_api:
     paths:
       - Assignment-1/Express/node_modules/
   script:
-    - cd Assignment-1/Express
-    - npm run test
-  needs:
-    - build
+    - docker build -t fly-with-confidence -f Dockerfile.test .
+    - docker run fly-with-confidence npm run test
   when: manual
 
 deploy_dockerhub:
   stage: deploy
   script:
-    - cd Assignment-1/Express
-    - echo "$DOCKER_ACCESS_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    - docker build -t "$DOCKER_USERNAME"/fly-with-confidence:latest .
-    - docker push "$DOCKER_USERNAME"/fly-with-confidence:latest
+    - echo "$DOCKER_ACCESS_TOKEN" | docker login -u "$CI_REGISTRY_USER" --password-stdin
+    - docker build -t "$CI_REGISTRY_IMAGE" -f Dockerfile.deploy .
+    - docker push "$CI_REGISTRY_IMAGE"
   when: manual
