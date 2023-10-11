@@ -107,7 +107,7 @@ describe('article', () => {
   //     adminToken = admin.body.token;
 
   //     const newArticleData = {
-  //       name: 'New Article',
+  //       title: 'New Article',
   //       description: 'Description of the new article',
   //       content: 'Content of the new article',
   //     };
@@ -122,7 +122,7 @@ describe('article', () => {
   //     expect(response.status).toBe(StatusCodes.CREATED);
   //     expect(response.body).toEqual({
   //       articleID: articleID,
-  //       name: 'New Article',
+  //       title: 'New Article',
   //       description: 'Description of the new article',
   //       content: 'Content of the new article',
   //     });
@@ -130,7 +130,7 @@ describe('article', () => {
 
   //   it('should handle errors during article creation', async () => {
   //     const newArticleData = {
-  //       name: 'New Article',
+  //       title: 'New Article',
   //       description: 'Description of the new article',
   //     };
 
@@ -152,7 +152,7 @@ describe('article', () => {
 
   //   it('should update an existing article', async () => {
   //     const updatedArticleData = {
-  //       name: 'Updated Article Name',
+  //       title: 'Updated Article Title',
   //       description: 'Updated description',
   //       content: 'Updated content',
   //     };
@@ -165,7 +165,7 @@ describe('article', () => {
   //     expect(updateResponse.status).toBe(StatusCodes.OK);
   //     expect(updateResponse.body).toEqual({
   //       articleID: createdArticleID,
-  //       name: 'Updated Article Name',
+  //       title: 'Updated Article Title',
   //       description: 'Updated description',
   //       content: 'Updated content',
   //     });
@@ -175,7 +175,7 @@ describe('article', () => {
   //     const nonExistentArticleID = 'nonExistentID';
 
   //     const updatedArticleData = {
-  //       name: 'Updated Article Name',
+  //       title: 'Updated Article Title',
   //       description: 'Updated description',
   //       content: 'Updated content',
   //     };

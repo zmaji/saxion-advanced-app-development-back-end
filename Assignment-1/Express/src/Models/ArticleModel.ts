@@ -8,7 +8,7 @@ const articleSchema: Schema<Article> = new Schema({
     unique: true,
     immutable: true,
   },
-  name: {
+  title: {
     type: String,
     required: true,
   },
