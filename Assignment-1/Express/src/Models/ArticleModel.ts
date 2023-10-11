@@ -20,6 +20,10 @@ const articleSchema: Schema<Article> = new Schema({
     type: String,
     required: true,
   },
+  category: {
+    type: String,
+    required: true,
+  },
 }, {
   collection: 'articles',
   versionKey: false,
