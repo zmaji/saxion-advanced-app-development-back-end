@@ -22,8 +22,8 @@ const login = async (userName: string, password: string) => {
   };
 
   const response = await request(app)
-    .post('/credentials/login')
-    .send(loginCredentials);
+      .post('/credentials/login')
+      .send(loginCredentials);
 
   return response;
 };
@@ -83,7 +83,7 @@ describe('comment', () => {
   describe('GET /comments', () => {
     it('should return a list of comments', async () => {
       const response = await request(app)
-        .get('/comments');
+          .get('/comments');
 
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toEqual(commentIndexData);

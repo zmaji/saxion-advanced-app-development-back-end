@@ -23,8 +23,8 @@ const login = async (userName: string, password: string) => {
   };
 
   const response = await request(app)
-    .post('/credentials/login')
-    .send(loginCredentials);
+      .post('/credentials/login')
+      .send(loginCredentials);
 
   return response;
 };
