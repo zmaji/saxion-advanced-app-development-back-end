@@ -3,13 +3,11 @@
 import type { User } from '../Typings/User';
 
 import mongoose, { Schema } from 'mongoose';
-import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
 
 const userSchema: Schema<User> = new Schema({
   userID: {
     type: String,
-    default: uuidv4(),
     unique: true,
     immutable: true,
   },
@@ -29,7 +27,6 @@ const userSchema: Schema<User> = new Schema({
   },
   secret: {
     type: String,
-    default: uuidv4(),
     immutable: true,
   },
   avatar: {
@@ -46,6 +43,18 @@ const userSchema: Schema<User> = new Schema({
   collection: 'users',
   versionKey: false,
 });
+
+userSchema.pre('save', async function(next) {
+  if (!this.isModified('password') || !this.password) {
+    return next();
+  }
+
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(this.password, salt);
+  this.password = hash;
+  next();
+});
+
 
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password') || !this.password) {

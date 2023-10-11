@@ -12,10 +12,7 @@ router.get('', async (req: Request, res: Response) => {
     if (result) {
       res
           .status(StatusCodes.OK)
-          .json({
-            message: `Successfully found comments`,
-            comments: result,
-          });
+          .json(result);
     } else {
       res
           .status(StatusCodes.NOT_FOUND)
@@ -35,10 +32,7 @@ router.get('/:commentID', async (req: Request, res: Response) => {
     if (result) {
       res
           .status(StatusCodes.OK)
-          .json({
-            message: `Successfully found comment with ID ${req.params.commentID}`,
-            article: result,
-          });
+          .json(result);
     } else {
       res
           .status(StatusCodes.NOT_FOUND)
@@ -53,15 +47,14 @@ router.get('/:commentID', async (req: Request, res: Response) => {
 
 router.post('', isLoggedIn, async (req: Request, res: Response) => {
   try {
-    const comment = await CommentController.createComment(req.body);
+    if (req.headers.authorization) {
+      const comment = await CommentController.createComment(req.body, req.headers.authorization);
 
-    if (comment) {
-      res
-          .status(StatusCodes.CREATED)
-          .json({
-            message: `Successfully created comment`,
-            comment: comment,
-          });
+      if (comment) {
+        res
+            .status(StatusCodes.CREATED)
+            .json(comment);
+      }
     }
   } catch (error) {
     res
@@ -72,19 +65,22 @@ router.post('', isLoggedIn, async (req: Request, res: Response) => {
 
 router.put('/:commentID', isLoggedIn, async (req: Request, res: Response) => {
   try {
-    const updatedComment = await CommentController.updateComment(req.params.commentID, req.body);
+    if (req.headers.authorization) {
+      const updatedComment = await CommentController.updateComment(
+          req.params.commentID,
+          req.body,
+          req.headers.authorization,
+      );
 
-    if (updatedComment) {
-      res
-          .status(StatusCodes.OK)
-          .json({
-            message: `Successfully updated comment with ID ${req.params.commentID}`,
-            comment: updatedComment,
-          });
-    } else {
-      res
-          .status(StatusCodes.NOT_FOUND)
-          .json({ error: `Unable to update comment with ID ${req.params.commentID}` });
+      if (updatedComment) {
+        res
+            .status(StatusCodes.OK)
+            .json(updatedComment);
+      } else {
+        res
+            .status(StatusCodes.NOT_FOUND)
+            .json({ error: `Unable to update comment with ID ${req.params.commentID}` });
+      }
     }
   } catch (error) {
     res
@@ -107,8 +103,7 @@ router.delete('/:commentID', isLoggedIn, async (req: Request, res: Response) => 
     }
   } catch (error) {
     res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ error: 'An error occurred' });
+        .status(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 });
 

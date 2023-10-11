@@ -1,9 +1,10 @@
 import type { Post } from '../Typings/Post';
+import type { User } from '../Typings/User';
 
-import PostModel from '../Models/PostModel';
 import { removeIdField } from '../helpers/removeMongoID';
-
-const requiredPostPutFields = ['title', 'content', 'category'];
+import jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
+import PostModel from '../Models/PostModel';
 
 const getPosts = async (): Promise<Post[]> => {
   try {
@@ -26,32 +27,41 @@ const getPost = async (postID: string): Promise<Post | null> => {
   }
 };
 
-const createPost = async (postData: Post): Promise<Post> => {
+const createPost = async (postData: Post, headers: string): Promise<Post | null> => {
   try {
-    const newPost = new PostModel(postData);
-    const post = await newPost.save();
-    return removeIdField(post);
+    const token = headers.split(' ')[1];
+    const user = jwt.decode(token) as User | null;
+
+    if (user) {
+      postData.postID = uuidv4();
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      postData.user = user.userID;
+      const newPost = new PostModel(postData);
+      const post = await newPost.save();
+      return removeIdField(post);
+    }
+    return null;
   } catch (error) {
     throw error;
   }
 };
 
-const updatePost = async (postID: string, postData: Post): Promise<Post | null> => {
+const updatePost = async (postID: string, postData: Post, headers: string): Promise<Post | null> => {
   try {
-    for (const field of requiredPostPutFields) {
-      if (!postData[field as keyof Post]) {
-        throw new Error(`${field} is a required field.`);
+    const token = headers.split(' ')[1];
+    const user = jwt.decode(token) as User | null;
+
+    if (user) {
+      const updatedPost = await PostModel.findOneAndUpdate(
+          { postID, user: user.userID },
+          postData,
+          { new: true },
+      );
+
+      if (updatedPost) {
+        return removeIdField(updatedPost);
       }
-    }
-
-    const updatedPost = await PostModel.findOneAndUpdate(
-        { postID },
-        postData,
-        { new: true },
-    );
-
-    if (updatedPost) {
-      return removeIdField(updatedPost);
     }
     return null;
   } catch (error) {
