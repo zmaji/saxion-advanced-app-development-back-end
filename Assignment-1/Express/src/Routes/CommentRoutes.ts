@@ -66,7 +66,11 @@ router.post('', isLoggedIn, async (req: Request, res: Response) => {
 router.put('/:commentID', isLoggedIn, async (req: Request, res: Response) => {
   try {
     if (req.headers.authorization) {
-      const updatedComment = await CommentController.updateComment(req.params.commentID, req.body, req.headers.authorization);
+      const updatedComment = await CommentController.updateComment(
+          req.params.commentID,
+          req.body,
+          req.headers.authorization,
+      );
 
       if (updatedComment) {
         res
