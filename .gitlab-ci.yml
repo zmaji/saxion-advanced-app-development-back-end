@@ -59,9 +59,10 @@ deploy_dockerhub:
     - docker:20.10.16-dind
   script:
     - cd Assignment-1/Express
-    - docker build -t gardif/fly-with-confidence .
-    - docker login -u $DOCKER_USERNAME -p $DOCKER_ACCESS_TOKEN
-    - docker push gardif/fly-with-confidence
+    - echo $DOCKER_ACCESS_TOKEN | docker login $DOCKER_USERNAME --password-stdin
+#    - docker login -u $DOCKER_USERNAME -p $DOCKER_ACCESS_TOKEN
+    - docker build -t "$DOCKER_USERNAME"/fly-with-confidence .
+    - docker push "$DOCKER_USERNAME"/fly-with-confidence
 #    - docker build -t $CI_REGISTRY/saxion.nl/hbo-ict/aad/backend/07/fly-with-confidence .
 #    - docker push $CI_REGISTRY/saxion.nl/hbo-ict/aad/backend/07/fly-with-confidence
 #    - docker build -t $CI_REGISTRY/fly-with-confidence:latest .
