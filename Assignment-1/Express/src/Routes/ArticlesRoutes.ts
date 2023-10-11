@@ -10,7 +10,7 @@ router.get('', async (req: Request, res: Response) => {
   try {
     const category = req.query.category as string | undefined;
 
-    const result = category ? await ArticleController.getArticles(category) : await ArticleController.getArticles();
+    const result = await ArticleController.getArticles(category)
     if (result) {
       res
         .status(StatusCodes.OK)
