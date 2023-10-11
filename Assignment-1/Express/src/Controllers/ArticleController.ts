@@ -4,9 +4,9 @@ import ArticleModel from '../Models/ArticleModel';
 import { removeIdField } from '../helpers/removeMongoID';
 import { v4 as uuidv4 } from 'uuid';
 
-const getArticles = async (): Promise<Article[]> => {
+const getArticles = async (category: string): Promise<Article[]> => {
   try {
-    const results = await ArticleModel.find();
+    const results = await ArticleModel.find({ category: category });
     return removeIdField(results);
   } catch (error) {
     throw error;
@@ -39,9 +39,9 @@ const createArticle = async (articleData: Article): Promise<Article> => {
 const updateArticle = async (articleID: string, articleData: Article): Promise<Article | null> => {
   try {
     const updatedArticle = await ArticleModel.findOneAndUpdate(
-        { articleID },
-        articleData,
-        { new: true },
+      { articleID },
+      articleData,
+      { new: true },
     );
 
     if (updatedArticle) {

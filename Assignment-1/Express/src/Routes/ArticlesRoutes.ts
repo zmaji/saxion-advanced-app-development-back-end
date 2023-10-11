@@ -8,23 +8,31 @@ const router = Router();
 
 router.get('', async (req: Request, res: Response) => {
   try {
-    const result = await ArticleController.getArticles();
+    const category = req.query.category as string | undefined;
 
-    if (result) {
-      res
+    if (category) {
+      const result = await ArticleController.getArticles(category);
+      if (result) {
+        res
           .status(StatusCodes.OK)
           .json(result);
-    } else {
-      res
+      } else {
+        res
           .status(StatusCodes.NOT_FOUND)
           .json({ error: 'Unable to find articles' });
+      }
+    } else {
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: 'Category parameter is missing or invalid' });
     }
   } catch (error) {
     res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ error: 'An error occurred' });
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: 'An error occurred' });
   }
 });
+
 
 router.get('/:articleID', async (req: Request, res: Response) => {
   try {
@@ -32,17 +40,17 @@ router.get('/:articleID', async (req: Request, res: Response) => {
 
     if (result) {
       res
-          .status(StatusCodes.OK)
-          .json(result);
+        .status(StatusCodes.OK)
+        .json(result);
     } else {
       res
-          .status(StatusCodes.NOT_FOUND)
-          .json({ error: `Unable to find article with ID ${req.params.articleID}` });
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: `Unable to find article with ID ${req.params.articleID}` });
     }
   } catch (error) {
     res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ error: 'An error occurred' });
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: 'An error occurred' });
   }
 });
 
@@ -52,13 +60,13 @@ router.post('', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
 
     if (article) {
       res
-          .status(StatusCodes.CREATED)
-          .json(article);
+        .status(StatusCodes.CREATED)
+        .json(article);
     }
   } catch (error) {
     res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ error: 'Fields were not filled in properly' });
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ error: 'Fields were not filled in properly' });
   }
 });
 
@@ -68,17 +76,17 @@ router.put('/:articleID', isLoggedIn, isAdmin, async (req: Request, res: Respons
 
     if (updatedArticle) {
       res
-          .status(StatusCodes.OK)
-          .json(updatedArticle);
+        .status(StatusCodes.OK)
+        .json(updatedArticle);
     } else {
       res
-          .status(StatusCodes.NOT_FOUND)
-          .json({ error: `Unable to update article with ID ${req.params.articleID}` });
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: `Unable to update article with ID ${req.params.articleID}` });
     }
   } catch (error) {
     res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ error: 'Field were not filled in properly' });
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: 'Field were not filled in properly' });
   }
 });
 
@@ -88,16 +96,16 @@ router.delete('/:articleID', isLoggedIn, isAdmin, async (req: Request, res: Resp
 
     if (result) {
       res
-          .sendStatus(StatusCodes.NO_CONTENT)
-          .json(`Successfully deleted article with ID ${req.params.articleID}`);
+        .sendStatus(StatusCodes.NO_CONTENT)
+        .json(`Successfully deleted article with ID ${req.params.articleID}`);
     } else {
       res
-          .status(StatusCodes.NOT_FOUND)
-          .json({ error: `Unable to find article with ID ${req.params.articleID}` });
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: `Unable to find article with ID ${req.params.articleID}` });
     }
   } catch (error) {
     res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR);
+      .status(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 });
 
