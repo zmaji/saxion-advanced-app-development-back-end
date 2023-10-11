@@ -1,9 +1,0 @@
-{
-  "auths": {
-    "$CI_REGISTRY": {
-      "username": "$DOCKER_USERNAME",
-      "password": "$DOCKER_ACCESS_TOKEN",
-      "auth": ""
-    }
-  }
-}
