@@ -35,7 +35,7 @@ const createComment = async (commentData: Comment, headers: string): Promise<Com
     if (user) {
       commentData.commentID = uuidv4();
       // @ts-ignore
-      commentData.user = user.userID
+      commentData.user = user.userID;
       const newComment = new CommentModel(commentData);
       const comment = await newComment.save();
       return removeIdField(comment);
@@ -53,9 +53,9 @@ const updateComment = async (commentID: string, commentData: Comment, headers: s
 
     if (user) {
       const updatedComment = await CommentModel.findOneAndUpdate(
-        { commentID, user: user.userID },
-        commentData,
-        { new: true }
+          { commentID, user: user.userID },
+          commentData,
+          { new: true },
       );
 
       if (updatedComment) {

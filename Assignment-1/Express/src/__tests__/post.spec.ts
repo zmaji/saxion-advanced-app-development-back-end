@@ -11,20 +11,20 @@ import UserModel from '../Models/UserModel';
 let mongoServer: MongoMemoryServer;
 let server: http.Server;
 let createdPostID: string;
-let adminToken = "";
+let adminToken = '';
 
 const login = async (userName: string, password: string) => {
   const loginCredentials = {
     userName: userName,
-    password: password
-  }
+    password: password,
+  };
 
   const response = await request(app)
-    .post('/credentials/login')
-    .send(loginCredentials);
+      .post('/credentials/login')
+      .send(loginCredentials);
 
-  return response
-}
+  return response;
+};
 
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
@@ -37,7 +37,7 @@ beforeAll(async () => {
     useUnifiedTopology: true,
   });
 
-  for (let post of postIndexData) {
+  for (const post of postIndexData) {
     const newPost = new PostModel(post);
     await newPost.save();
   }
@@ -81,7 +81,7 @@ describe('post', () => {
   describe('GET /posts', () => {
     it('should return a list of posts', async () => {
       const response = await request(app)
-        .get('/posts')
+          .get('/posts');
 
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toEqual(postIndexData);

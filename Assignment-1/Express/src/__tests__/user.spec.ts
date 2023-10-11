@@ -4,26 +4,26 @@ import { StatusCodes } from 'http-status-codes';
 import app from './mocks/http/app';
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import { userIndexData } from "./mocks/data/users";
+import { userIndexData } from './mocks/data/users';
 import UserModel from '../Models/UserModel';
 
 let mongoServer: MongoMemoryServer;
 let server: http.Server;
 let createdUserID: string;
-let adminToken = "";
+let adminToken = '';
 
 const login = async (userName: string, password: string) => {
   const loginCredentials = {
     userName: userName,
-    password: password
-  }
+    password: password,
+  };
 
   const response = await request(app)
-    .post('/credentials/login')
-    .send(loginCredentials);
+      .post('/credentials/login')
+      .send(loginCredentials);
 
-  return response
-}
+  return response;
+};
 
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
@@ -36,7 +36,7 @@ beforeAll(async () => {
     useUnifiedTopology: true,
   });
 
-  for (let user of userIndexData) {
+  for (const user of userIndexData) {
     const newUser = new UserModel(user);
     await newUser.save();
   }

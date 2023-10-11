@@ -10,21 +10,21 @@ import UserModel from '../Models/UserModel';
 
 let mongoServer: MongoMemoryServer;
 let server: http.Server;
-let adminToken: "";
-let createdArticleID: "";
+let adminToken: '';
+let createdArticleID: '';
 
 const login = async (userName: string, password: string) => {
   const loginCredentials = {
     userName: userName,
-    password: password
-  }
+    password: password,
+  };
 
   const response = await request(app)
-    .post('/credentials/login')
-    .send(loginCredentials);
+      .post('/credentials/login')
+      .send(loginCredentials);
 
-  return response
-}
+  return response;
+};
 
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
@@ -37,7 +37,7 @@ beforeAll(async () => {
     useUnifiedTopology: true,
   });
 
-  for (let article of articleIndexData) {
+  for (const article of articleIndexData) {
     const newArticle = new ArticleModel(article);
     await newArticle.save();
   }

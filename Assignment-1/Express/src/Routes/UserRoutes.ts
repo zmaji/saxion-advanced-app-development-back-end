@@ -12,17 +12,17 @@ router.get('', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
 
     if (result) {
       res
-        .status(StatusCodes.OK)
-        .json(result);
+          .status(StatusCodes.OK)
+          .json(result);
     } else {
       res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: 'Unable to find users' });
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: 'Unable to find users' });
     }
   } catch (error) {
     res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'An error occurred' });
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'An error occurred' });
   }
 });
 
@@ -31,17 +31,17 @@ router.get('/:userID', isLoggedIn, isAdmin, async (req: Request, res: Response) 
     const result = await UserController.getUser(req.params.userID);
     if (result) {
       res
-        .status(StatusCodes.OK)
-        .json(result);
+          .status(StatusCodes.OK)
+          .json(result);
     } else {
       res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: `Unable to find user with ID ${req.params.userID}` });
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: `Unable to find user with ID ${req.params.userID}` });
     }
   } catch (error) {
     res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'An error occurred' });
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'An error occurred' });
   }
 });
 
@@ -51,13 +51,13 @@ router.post('', async (req: Request, res: Response) => {
 
     if (user) {
       res
-        .status(StatusCodes.CREATED)
-        .json(user);
+          .status(StatusCodes.CREATED)
+          .json(user);
     }
   } catch (error) {
     res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: 'Please make sure to enter all fields correctly' });
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: 'Please make sure to enter all fields correctly' });
   }
 });
 
@@ -67,17 +67,17 @@ router.put('/:userID', isLoggedIn, isAdmin, async (req: Request, res: Response) 
 
     if (updatedUser) {
       res
-        .status(StatusCodes.OK)
-        .json(updatedUser);
+          .status(StatusCodes.OK)
+          .json(updatedUser);
     } else {
       res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: `Unable to update user with ID ${req.params.userID}` });
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: `Unable to update user with ID ${req.params.userID}` });
     }
   } catch (error) {
     res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'An error occurred' });
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'An error occurred' });
   }
 });
 
@@ -87,17 +87,17 @@ router.delete('/:userID', isLoggedIn, isAdmin, async (req: Request, res: Respons
 
     if (result) {
       res
-        .sendStatus(StatusCodes.NO_CONTENT)
-        .json(`Successfully deleted user with ID ${req.params.userID}`);
+          .sendStatus(StatusCodes.NO_CONTENT)
+          .json(`Successfully deleted user with ID ${req.params.userID}`);
     } else {
       res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: `Unable to find user with ID ${req.params.userID}` });
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: `Unable to find user with ID ${req.params.userID}` });
     }
   } catch (error) {
     res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'An error occurred' });
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'An error occurred' });
   }
 });
 

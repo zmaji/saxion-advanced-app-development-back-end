@@ -11,17 +11,17 @@ router.post('/login', async (req: Request, res: Response) => {
 
     if (token) {
       res
-        .status(StatusCodes.OK)
-        .json({ token });
+          .status(StatusCodes.OK)
+          .json({ token });
     } else {
       res
-        .status(StatusCodes.UNAUTHORIZED)
-        .json({ error: 'Authentication failed: Wrong username and/or password' });
+          .status(StatusCodes.UNAUTHORIZED)
+          .json({ error: 'Authentication failed: Wrong username and/or password' });
     }
   } catch (error) {
     res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'An error occurred' });
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'An error occurred' });
   }
 });
 

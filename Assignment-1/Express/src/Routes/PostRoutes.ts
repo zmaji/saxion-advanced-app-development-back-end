@@ -11,17 +11,17 @@ router.get('', async (req: Request, res: Response) => {
 
     if (result) {
       res
-        .status(StatusCodes.OK)
-        .json(result);
+          .status(StatusCodes.OK)
+          .json(result);
     } else {
       res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: 'Unable to find posts' });
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: 'Unable to find posts' });
     }
   } catch (error) {
     res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'An error occurred' });
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'An error occurred' });
   }
 });
 
@@ -30,17 +30,17 @@ router.get('/:postID', async (req: Request, res: Response) => {
     const result = await PostController.getPost(req.params.postID);
     if (result) {
       res
-        .status(StatusCodes.OK)
-        .json(result);
+          .status(StatusCodes.OK)
+          .json(result);
     } else {
       res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: `Unable to find post with ID ${req.params.postID}` });
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: `Unable to find post with ID ${req.params.postID}` });
     }
   } catch (error) {
     res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'An error occurred' });
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'An error occurred' });
   }
 });
 
@@ -51,18 +51,18 @@ router.post('', isLoggedIn, async (req: Request, res: Response) => {
 
       if (post) {
         res
-          .status(StatusCodes.CREATED)
-          .json(post);
+            .status(StatusCodes.CREATED)
+            .json(post);
       }
     } else {
       res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ error: 'Authorization header is missing' });
+          .status(StatusCodes.BAD_REQUEST)
+          .json({ error: 'Authorization header is missing' });
     }
   } catch (error) {
     res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: 'Fields were not filled in properly' });
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: 'Fields were not filled in properly' });
   }
 });
 
@@ -73,18 +73,18 @@ router.put('/:postID', isLoggedIn, async (req: Request, res: Response) => {
 
       if (updatedPost) {
         res
-          .status(StatusCodes.OK)
-          .json(updatedPost);
+            .status(StatusCodes.OK)
+            .json(updatedPost);
       } else {
         res
-          .status(StatusCodes.NOT_FOUND)
-          .json({ error: `Unable to update post with ID ${req.params.postID}` });
+            .status(StatusCodes.NOT_FOUND)
+            .json({ error: `Unable to update post with ID ${req.params.postID}` });
       }
     }
   } catch (error) {
     res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'An error occurred' });
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'An error occurred' });
   }
 });
 
@@ -93,16 +93,16 @@ router.delete('/:postID', isLoggedIn, async (req: Request, res: Response) => {
     const result = await PostController.deletePost(req.params.postID);
     if (result) {
       res
-        .sendStatus(StatusCodes.NO_CONTENT)
-        .json(`Successfully deleted post with ID ${req.params.postID}`);
+          .sendStatus(StatusCodes.NO_CONTENT)
+          .json(`Successfully deleted post with ID ${req.params.postID}`);
     } else {
       res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: `Unable to find post with ID ${req.params.postID}` });
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: `Unable to find post with ID ${req.params.postID}` });
     }
   } catch (error) {
     res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .status(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 });
 

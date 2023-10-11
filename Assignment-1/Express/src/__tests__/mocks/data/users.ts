@@ -1,4 +1,4 @@
-import type { User } from "../../../Typings/User";
+import type { User } from '../../../Typings/User';
 
 export const userIndexData: User[] = [
   {
@@ -10,8 +10,8 @@ export const userIndexData: User[] = [
     avatar: 'test',
     roles: [
       'user',
-      'admin'
-    ]
+      'admin',
+    ],
   },
   {
     userID: 'a913eae9-0dd5-4a3e-8b5e-e72ba158bedf',
@@ -21,7 +21,7 @@ export const userIndexData: User[] = [
     secret: 'OuHRdKDQuu',
     avatar: 'test',
     roles: [
-      'user'
-    ]
-  }
+      'user',
+    ],
+  },
 ];

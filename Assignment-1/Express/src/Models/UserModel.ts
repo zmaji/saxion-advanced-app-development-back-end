@@ -3,7 +3,7 @@
 import type { User } from '../Typings/User';
 
 import mongoose, { Schema } from 'mongoose';
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
 
 const userSchema: Schema<User> = new Schema({
   userID: {
@@ -44,7 +44,7 @@ const userSchema: Schema<User> = new Schema({
   versionKey: false,
 });
 
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function(next) {
   if (!this.isModified('password') || !this.password) {
     return next();
   }
@@ -56,7 +56,7 @@ userSchema.pre('save', async function (next) {
 });
 
 
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function(next) {
   if (!this.isModified('password') || !this.password) {
     return next();
   }

@@ -11,20 +11,20 @@ import CommentModel from '../Models/CommentModel';
 let mongoServer: MongoMemoryServer;
 let server: http.Server;
 let createdCommentID: string;
-let adminToken = "";
+let adminToken = '';
 
 const login = async (userName: string, password: string) => {
   const loginCredentials = {
     userName: userName,
-    password: password
-  }
+    password: password,
+  };
 
   const response = await request(app)
-    .post('/credentials/login')
-    .send(loginCredentials);
+      .post('/credentials/login')
+      .send(loginCredentials);
 
-  return response
-}
+  return response;
+};
 
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
@@ -37,7 +37,7 @@ beforeAll(async () => {
     useUnifiedTopology: true,
   });
 
-  for (let comment of commentIndexData) {
+  for (const comment of commentIndexData) {
     const newComment = new CommentModel(comment);
     await newComment.save();
   }
@@ -81,7 +81,7 @@ describe('comment', () => {
   describe('GET /comments', () => {
     it('should return a list of comments', async () => {
       const response = await request(app)
-        .get('/comments')
+          .get('/comments');
 
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toEqual(commentIndexData);
