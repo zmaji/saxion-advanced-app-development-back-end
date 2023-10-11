@@ -34,6 +34,7 @@ const createComment = async (commentData: Comment, headers: string): Promise<Com
 
     if (user) {
       commentData.commentID = uuidv4();
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       commentData.user = user.userID;
       const newComment = new CommentModel(commentData);
@@ -53,9 +54,9 @@ const updateComment = async (commentID: string, commentData: Comment, headers: s
 
     if (user) {
       const updatedComment = await CommentModel.findOneAndUpdate(
-          { commentID, user: user.userID },
-          commentData,
-          { new: true },
+        { commentID, user: user.userID },
+        commentData,
+        { new: true },
       );
 
       if (updatedComment) {

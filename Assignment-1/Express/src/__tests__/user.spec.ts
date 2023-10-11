@@ -11,6 +11,7 @@ let mongoServer: MongoMemoryServer;
 let server: http.Server;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 let createdUserID: string;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let adminToken = '';
 
 const login = async (userName: string, password: string) => {
