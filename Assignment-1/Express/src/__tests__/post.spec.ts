@@ -10,6 +10,7 @@ import UserModel from '../Models/UserModel';
 
 let mongoServer: MongoMemoryServer;
 let server: http.Server;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let createdPostID: string;
 let adminToken = '';
 
@@ -20,8 +21,8 @@ const login = async (userName: string, password: string) => {
   };
 
   const response = await request(app)
-      .post('/credentials/login')
-      .send(loginCredentials);
+    .post('/credentials/login')
+    .send(loginCredentials);
 
   return response;
 };
@@ -81,7 +82,7 @@ describe('post', () => {
   describe('GET /posts', () => {
     it('should return a list of posts', async () => {
       const response = await request(app)
-          .get('/posts');
+        .get('/posts');
 
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toEqual(postIndexData);

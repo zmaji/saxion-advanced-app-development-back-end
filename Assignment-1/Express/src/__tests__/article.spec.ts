@@ -10,9 +10,12 @@ import UserModel from '../Models/UserModel';
 
 let mongoServer: MongoMemoryServer;
 let server: http.Server;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let adminToken: '';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let createdArticleID: '';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const login = async (userName: string, password: string) => {
   const loginCredentials = {
     userName: userName,
@@ -20,8 +23,8 @@ const login = async (userName: string, password: string) => {
   };
 
   const response = await request(app)
-      .post('/credentials/login')
-      .send(loginCredentials);
+    .post('/credentials/login')
+    .send(loginCredentials);
 
   return response;
 };
