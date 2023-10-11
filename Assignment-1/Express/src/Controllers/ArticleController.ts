@@ -4,9 +4,9 @@ import ArticleModel from '../Models/ArticleModel';
 import { removeIdField } from '../helpers/removeMongoID';
 import { v4 as uuidv4 } from 'uuid';
 
-const getArticles = async (category: string): Promise<Article[]> => {
+const getArticles = async (category?: string): Promise<Article[]> => {
   try {
-    const results = await ArticleModel.find({ category: category });
+    const results = category ? await ArticleModel.find({ category: category }) : await ArticleModel.find();
     return removeIdField(results);
   } catch (error) {
     throw error;

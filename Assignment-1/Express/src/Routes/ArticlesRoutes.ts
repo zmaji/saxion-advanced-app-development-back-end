@@ -10,21 +10,15 @@ router.get('', async (req: Request, res: Response) => {
   try {
     const category = req.query.category as string | undefined;
 
-    if (category) {
-      const result = await ArticleController.getArticles(category);
-      if (result) {
-        res
-          .status(StatusCodes.OK)
-          .json(result);
-      } else {
-        res
-          .status(StatusCodes.NOT_FOUND)
-          .json({ error: 'Unable to find articles' });
-      }
+    const result = category ? await ArticleController.getArticles(category) : await ArticleController.getArticles();
+    if (result) {
+      res
+        .status(StatusCodes.OK)
+        .json(result);
     } else {
       res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ error: 'Category parameter is missing or invalid' });
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: 'Unable to find articles' });
     }
   } catch (error) {
     res
