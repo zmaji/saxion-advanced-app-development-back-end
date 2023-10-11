@@ -59,7 +59,8 @@ deploy_dockerhub:
     - docker:20.10.16-dind
   script:
     - cd Assignment-1/Express
-    - echo $DOCKER_ACCESS_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin
+    - cat dockerConfig.json | docker login --config - $CI_REGISTRY
+#    - echo $DOCKER_ACCESS_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin
 #    - docker login -u $DOCKER_USERNAME -p $DOCKER_ACCESS_TOKEN
     - docker build -t "$DOCKER_USERNAME"/fly-with-confidence .
     - docker push "$DOCKER_USERNAME"/fly-with-confidence
