@@ -59,9 +59,11 @@ deploy_dockerhub:
     - docker:20.10.16-dind
   script:
     - cd Assignment-1/Express
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker build -t $CI_REGISTRY/saxion.nl/hbo-ict/aad/backend/07/fly-with-confidence .
-    - docker push $CI_REGISTRY/saxion.nl/hbo-ict/aad/backend/07/fly-with-confidence
+    - docker build -t $DOCKER_USERNAME/fly-with-confidence .
+    - docker login -u $DOCKER_USERNAME -p $DOCKER_ACCESS_TOKEN
+    - docker push $DOCKER_USERNAME/fly-with-confidence
+#    - docker build -t $CI_REGISTRY/saxion.nl/hbo-ict/aad/backend/07/fly-with-confidence .
+#    - docker push $CI_REGISTRY/saxion.nl/hbo-ict/aad/backend/07/fly-with-confidence
 #    - docker build -t $CI_REGISTRY/fly-with-confidence:latest .
 #    - docker push $CI_REGISTRY/fly-with-confidence:latest
 #  when: manual
