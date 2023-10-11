@@ -59,10 +59,10 @@ deploy_dockerhub:
     - docker:20.10.16-dind
   script:
     - cd Assignment-1/Express
-    - docker login -u $DOCKER_USERNAME -p $DOCKER_ACCESS_TOKEN $CI_REGISTRY
     - docker build -t "$DOCKER_USERNAME"/fly-with-confidence:latest .
+    - docker login $CI_REGISTRY -u $DOCKER_USERNAME -p $DOCKER_ACCESS_TOKEN
     - docker push "$DOCKER_USERNAME"/fly-with-confidence:latest
-  when: manual
+#  when: manual
 
 deploy_production:
   stage: deploy
