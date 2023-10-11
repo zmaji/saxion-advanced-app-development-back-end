@@ -12,6 +12,7 @@ let mongoServer: MongoMemoryServer;
 let server: http.Server;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 let createdPostID: string;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let adminToken = '';
 
 const login = async (userName: string, password: string) => {
@@ -33,6 +34,7 @@ beforeAll(async () => {
 
   server = app.listen(0);
   await mongoose.connect(mongoUri, {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     useNewUrlParser: true,
     useUnifiedTopology: true,
