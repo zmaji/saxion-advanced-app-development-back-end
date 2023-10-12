@@ -52,7 +52,7 @@ test_api:
     - build
   when: manual
 
-deploy_dockerhub:
+release_dockerhub:
   image: docker:stable
   stage: release
   services:
