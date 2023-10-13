@@ -50,7 +50,7 @@ beforeAll(async () => {
     userName: 'Gardif',
     email: 'test2@test.com',
     password: 'Password2',
-    secret: 'OuHRdKDQuu',
+    secret: '5459313b-7db5-4565-8710-8aeece7c7f79',
     avatar: 'test',
   });
   await testUser.save();
@@ -59,8 +59,8 @@ beforeAll(async () => {
     userID: '5459313b-7db5-4565-8710-8aeece7c7f79',
     userName: 'zmaji',
     email: 'test@test.com',
-    password: 'Password1',
-    secret: 'lxziOo8CIq',
+    password: 'adminpassword',
+    secret: 'a913eae9-0dd5-4a3e-8b5e-e72ba158bedf',
     avatar: 'test',
     roles: ['user', 'admin'],
   });
@@ -77,60 +77,61 @@ afterAll(async () => {
 });
 
 describe('article', () => {
-  describe('GET /articles', () => {
-    it('should return a list of articles', async () => {
-      const response = await request(app).get('/articles');
-
-      expect(response.status).toBe(StatusCodes.OK);
-      expect(response.body).toEqual(articleIndexData);
-    });
-  });
-
-  describe('GET /articles/:articleID', () => {
-    it('should return a specific article', async () => {
-      const articleID = 'b47ddeef-7f57-4a13-909f-5b5f0f993fcc';
-      const response = await request(app).get(`/articles/${articleID}`);
-
-      expect(response.status).toBe(StatusCodes.OK);
-      expect(response.body).toEqual(articleIndexData.find((article) => article.articleID === articleID));
-    });
-
-    it('should handle an invalid articleID', async () => {
-      const invalidArticleID = 'invalid-id';
-      const response = await request(app).get(`/articles/${invalidArticleID}`);
-
-      expect(response.status).toBe(StatusCodes.NOT_FOUND);
-      expect(response.body).toEqual({ error: 'Unable to find article with ID invalid-id' });
-    });
-  });
-
-  // describe('POST /articles', () => {
-  //   it('should create a new article', async () => {
-  //     const admin = await login('zmaji', 'Password1');
-  //     adminToken = admin.body.token;
-
-  //     const newArticleData = {
-  //       title: 'New Article',
-  //       description: 'Description of the new article',
-  //       content: 'Content of the new article',
-  //     };
-
-  //     const response = await request(app)
-  //       .post('/articles')
-  //       .set('Authorization', `Bearer ${adminToken}`)
-  //       .send(newArticleData);
-  //     const { articleID } = response.body;
-  //     createdArticleID = articleID;
-
-  //     expect(response.status).toBe(StatusCodes.CREATED);
-  //     expect(response.body).toEqual({
-  //       articleID: articleID,
-  //       title: 'New Article',
-  //       description: 'Description of the new article',
-  //       content: 'Content of the new article',
-  //     });
+  // describe('GET /articles', () => {
+  //   it('should return a list of articles', async () => {
+  //     const response = await request(app).get('/articles');
+  //
+  //     expect(response.status).toBe(StatusCodes.OK);
+  //     expect(response.body).toEqual(articleIndexData);
   //   });
+  // });
+  //
+  // describe('GET /articles/:articleID', () => {
+  //   it('should return a specific article', async () => {
+  //     const articleID = 'b47ddeef-7f57-4a13-909f-5b5f0f993fcc';
+  //     const response = await request(app).get(`/articles/${articleID}`);
+  //
+  //     expect(response.status).toBe(StatusCodes.OK);
+  //     expect(response.body).toEqual(articleIndexData.find((article) => article.articleID === articleID));
+  //   });
+  //
+  //   it('should handle an invalid articleID', async () => {
+  //     const invalidArticleID = 'invalid-id';
+  //     const response = await request(app).get(`/articles/${invalidArticleID}`);
+  //
+  //     expect(response.status).toBe(StatusCodes.NOT_FOUND);
+  //     expect(response.body).toEqual({ error: 'Unable to find article with ID invalid-id' });
+  //   });
+  // });
 
+  describe('POST /articles', () => {
+    it('should create a new article', async () => {
+      const admin = await login('zmaji', 'adminpassword');
+      console.log(admin.body);
+      adminToken = admin.body.token;
+
+      const newArticleData = {
+        title: 'New Article',
+        description: 'Description of the new article',
+        content: 'Content of the new article',
+      };
+
+      const response = await request(app)
+          .post('/articles')
+          .set('Authorization', 'Bearer ' + adminToken)
+          .send(newArticleData);
+      const { articleID } = response.body;
+      createdArticleID = articleID;
+
+      expect(response.status).toBe(StatusCodes.CREATED);
+      expect(response.body).toEqual({
+        articleID: articleID,
+        title: 'New Article',
+        description: 'Description of the new article',
+        content: 'Content of the new article',
+      });
+    });
+  });
   //   it('should handle errors during article creation', async () => {
   //     const newArticleData = {
   //       title: 'New Article',

@@ -15,8 +15,6 @@ declare global {
 }
 
 const isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
-  console.log('Authenticating...');
-
   const token = getTokenFromRequest(req);
 
   if (token) {

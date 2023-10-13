@@ -55,18 +55,6 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
-
-userSchema.pre('save', async function(next) {
-  if (!this.isModified('password') || !this.password) {
-    return next();
-  }
-
-  const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(this.password, salt);
-  this.password = hash;
-  next();
-});
-
 const UserModel = mongoose.model<User>('User', userSchema);
 
 export default UserModel;

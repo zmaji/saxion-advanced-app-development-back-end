@@ -15,10 +15,6 @@ router.get('', async (req: Request, res: Response) => {
       res
           .status(StatusCodes.OK)
           .json(result);
-    } else {
-      res
-          .status(StatusCodes.NOT_FOUND)
-          .json({ error: 'Unable to find articles' });
     }
   } catch (error) {
     res

@@ -4,7 +4,7 @@ import AuthController from '../Controllers/AuthController';
 
 const router = Router();
 
-router.post('/login', async (req: Request, res: Response) => {
+router.post('', async (req: Request, res: Response) => {
   try {
     const { userName, password } = req.body;
     const token = await AuthController.authenticateUser(userName, password);
