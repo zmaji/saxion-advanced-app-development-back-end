@@ -59,14 +59,14 @@ release_dockerhub:
     - docker:dind
   script:
     - cd Assignment-1/Express
-#    - echo $DOCKER_ACCESS_TOKEN | docker login -u $DOCKER_USERNAME $CI_REGISTRY --password-stdin
     - docker login -u $DOCKER_USERNAME -p $DOCKER_ACCESS_TOKEN
-    - docker build -t "$DOCKER_USERNAME"/fly-with-confidence .
-    - docker push "$DOCKER_USERNAME"/fly-with-confidence
-#    - docker build -t $CI_REGISTRY/saxion.nl/hbo-ict/aad/backend/07/fly-with-confidence .
-#    - docker push $CI_REGISTRY/saxion.nl/hbo-ict/aad/backend/07/fly-with-confidence
-#    - docker build -t $CI_REGISTRY/fly-with-confidence:latest .
-#    - docker push $CI_REGISTRY/fly-with-confidence:latest
+    - BRANCH_NAME=${CI_COMMIT_REF_NAME//\//-}
+    - docker build -t "$DOCKER_USERNAME/fly-with-confidence:$BRANCH_NAME" .
+    - docker push "$DOCKER_USERNAME/fly-with-confidence:$BRANCH_NAME"
+  only:
+    - /^feature\/.*$/
+  tags:
+    - docker
 #  when: manual
 
 

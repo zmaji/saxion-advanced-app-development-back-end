@@ -11,4 +11,8 @@ module.exports = {
   forceExit: true,
   clearMocks: true,
   resetMocks: true,
+  collectCoverage: process.env.npm_lifecycle_event === 'test:coverage',
+  collectCoverageFrom: ['src/**/*.ts'],
+  coverageReporters: ['json', 'lcov', 'text', 'clover'],
+  coverageDirectory: 'coverage',
 };
