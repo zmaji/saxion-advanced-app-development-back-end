@@ -14,11 +14,7 @@ let server: http.Server;
 
 beforeAll(async () => {
   try {
-    mongoServer = await MongoMemoryServer.create({
-      binary: {
-        version: '5.0.19',
-      },
-    });
+    mongoServer = await MongoMemoryServer.create();
     const mongoUri = mongoServer.getUri();
 
     server = app.listen(0);
