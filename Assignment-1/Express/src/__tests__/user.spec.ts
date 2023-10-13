@@ -29,7 +29,7 @@ beforeAll(async () => {
     const savedUser = await newUser.save();
     user.password = savedUser.password;
   }
-});
+}, 20000);
 
 // beforeAll(async () => {
 //   try {

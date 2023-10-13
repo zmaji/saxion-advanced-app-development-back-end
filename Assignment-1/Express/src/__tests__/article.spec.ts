@@ -35,7 +35,7 @@ beforeAll(async () => {
     const newUser = new UserModel(user);
     await newUser.save();
   }
-});
+}, 20000);
 
 // beforeAll(async () => {
 //   try {
