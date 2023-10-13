@@ -1,3 +1,5 @@
+import type { Post } from '../Typings/Post';
+
 import http from 'http';
 import request from 'supertest';
 import { StatusCodes } from 'http-status-codes';
@@ -22,8 +24,8 @@ const login = async (userName: string, password: string) => {
   };
 
   const response = await request(app)
-      .post('/credentials/login')
-      .send(loginCredentials);
+    .post('/credentials/login')
+    .send(loginCredentials);
 
   return response;
 };
@@ -84,10 +86,15 @@ describe('post', () => {
   describe('GET /posts', () => {
     it('should return a list of posts', async () => {
       const response = await request(app)
-          .get('/posts');
+        .get('/posts');
 
       expect(response.status).toBe(StatusCodes.OK);
-      expect(response.body).toEqual(postIndexData);
+      expect(Array.isArray(response.body)).toBe(true);
+      response.body.forEach((post: Post, index: number) => {
+        expect(post).toEqual(expect.objectContaining({
+          ...postIndexData[index],
+        }));
+      });
     });
   });
 

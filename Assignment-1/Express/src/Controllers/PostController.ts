@@ -1,25 +1,69 @@
-import type { Post } from '../Typings/Post';
+import type { Post, PostDetail, SimplePost } from '../Typings/Post';
 import type { User } from '../Typings/User';
 
 import { removeIdField } from '../helpers/removeMongoID';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
+import { Document } from 'mongoose';
 import PostModel from '../Models/PostModel';
+import CommentModel from '../Models/CommentModel';
+import UserModel from '../Models/UserModel';
 
-const getPosts = async (): Promise<Post[]> => {
+const getPosts = async (): Promise<SimplePost[] | null> => {
   try {
-    const results = await PostModel.find();
-    return removeIdField(results);
+    const posts: Post[] | null = await PostModel.find();
+
+    if (posts) {
+      const postArray: SimplePost[] = [];
+
+      for (const post of posts) {
+        const comments = await CommentModel.find({ post: post.postID });
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const plainPost = (post as Document).toObject();
+        delete plainPost._id;
+
+        postArray.push({
+          ...plainPost,
+          commentCount: comments.length,
+        });
+      }
+
+      return postArray;
+    }
+    return null;
   } catch (error) {
     throw error;
   }
 };
 
-const getPost = async (postID: string): Promise<Post | null> => {
+const getPost = async (postID: string): Promise<PostDetail | null> => {
   try {
-    const result = await PostModel.findOne({ postID });
-    if (result) {
-      return removeIdField(result);
+    const post: Post | null = await PostModel.findOne({ postID: postID });
+
+    if (post) {
+      const userID = post.user;
+      const user = await UserModel.findOne({ userID: userID });
+      const comments = await CommentModel.find({ post: postID });
+
+      if (comments) {
+        for (const comment of comments) {
+          const user = await UserModel.findOne({ userID: comment.user });
+          comment.user = user!.userName;
+        }
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const plainPost = (post as Document).toObject();
+        delete plainPost._id;
+
+        return {
+          ...plainPost,
+          user: user!.userName,
+          comments: comments,
+        };
+      }
     }
     return null;
   } catch (error) {

@@ -13,6 +13,10 @@ const postSchema: Schema<Post> = new Schema({
     ref: 'User',
     required: true,
   },
+  date: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -21,8 +25,8 @@ const postSchema: Schema<Post> = new Schema({
     type: String,
     required: true,
   },
-  category: {
-    type: String,
+  categories: {
+    type: [String],
     required: true,
   },
   likes: {
