@@ -47,8 +47,6 @@ test_api:
       - Assignment-1/Express/node_modules/
   script:
     - cd Assignment-1/Express
-    - apt-get update
-    - apt-get install -y libssl1.1
     - npm run test
   needs:
     - build
