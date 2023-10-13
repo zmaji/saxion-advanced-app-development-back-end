@@ -3,24 +3,72 @@ import type { Post } from '../../../Typings/Post';
 export const postIndexData: Post[] = [
   {
     'postID': '8cf0f459-c9ce-45d0-8e41-5d8091f81308',
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     'user': 'a913eae9-0dd5-4a3e-8b5e-e72ba158bedf',
-    'title': 'Post Title 1',
-    'content': 'Post Content 1',
-    'category': 'Post Category 1',
-    'likes': 5,
-    'dislikes': 1,
+    'date': '20-03-2023',
+    'title': 'Dealing with Flight Anxiety',
+    'content': 'I\'ve been struggling with flight anxiety,' +
+      'and I need some advice on how to cope with it. What strategies have worked for you?',
+    'categories': [
+      'Anxiety Management',
+      'Air Travel Worries',
+    ],
+    'likes': 8,
+    'dislikes': 3,
   },
   {
     'postID': 'd2a53a53-5f50-4e8b-bcff-73753bbc4c91',
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     'user': 'a913eae9-0dd5-4a3e-8b5e-e72ba158bedf',
-    'title': 'Post Title 2',
-    'content': 'Post Content 2',
-    'category': 'Post Category 2',
-    'likes': 10,
+    'date': '15-05-2023',
+    'title': 'Overcoming Flight Jitters',
+    'content': 'Flying has always made me nervous, but I\'m ' +
+      'determined to conquer my fear. Share your tips and experiences in managing flight anxiety.',
+    'categories': [
+      'Fear of Flying',
+      'Coping Strategies',
+    ],
+    'likes': 11,
+    'dislikes': 4,
+  },
+  {
+    'postID': '7a1d6b14-7fc4-4cc6-8b1f-194c78583f36',
+    'user': 'a913eae9-0dd5-4a3e-8b5e-e72ba158bedf',
+    'date': '10-07-2023',
+    'title': 'Tips for a Stress-Free Flight',
+    'content': 'Let\'s discuss how to make air travel less ' +
+      'stressful for those with flight anxiety. Share your advice and stories!',
+    'categories': [
+      'Travel Anxiety',
+      'Stress Reduction',
+    ],
+    'likes': 6,
     'dislikes': 2,
+  },
+  {
+    'postID': 'c64ea67f-5bc9-4929-8102-158d6b96ffeb',
+    'user': 'a913eae9-0dd5-4a3e-8b5e-e72ba158bedf',
+    'date': '02-08-2023',
+    'title': 'Conquering My Fear of Flying',
+    'content': 'I used to be terrified of flying, but I\'ve made significant ' +
+      'progress in overcoming my fear. Let\'s share our success stories and support each other.',
+    'categories': [
+      'Success Stories',
+      'Anxiety Victory',
+    ],
+    'likes': 9,
+    'dislikes': 1,
+  },
+  {
+    'postID': 'b8f1daaa-0655-4527-a90d-7a52a499de24',
+    'user': 'a913eae9-0dd5-4a3e-8b5e-e72ba158bedf',
+    'date': '19-09-2023',
+    'title': 'Managing Flight Anxiety',
+    'content': 'Flight anxiety can be overwhelming, but with the right ' +
+      'strategies, it\'s manageable. Let\'s discuss what works for you.',
+    'categories': [
+      'Coping Methods',
+      'Anxiety Relief',
+    ],
+    'likes': 7,
+    'dislikes': 5,
   },
 ];

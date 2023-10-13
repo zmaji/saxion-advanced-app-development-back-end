@@ -8,6 +8,11 @@ const commentSchema: Schema<Comment> = new Schema({
     unique: true,
     immutable: true,
   },
+  date: {
+    type: String,
+    immutable: true,
+    required: true,
+  },
   user: {
     type: String,
     ref: 'User',

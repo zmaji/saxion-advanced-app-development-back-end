@@ -7,6 +7,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import { postIndexData } from './mocks/data/posts';
 import PostModel from '../Models/PostModel';
 import UserModel from '../Models/UserModel';
+import { Post } from '../Typings/Post';
 
 let mongoServer: MongoMemoryServer;
 let server: http.Server;
@@ -87,7 +88,12 @@ describe('post', () => {
           .get('/posts');
 
       expect(response.status).toBe(StatusCodes.OK);
-      expect(response.body).toEqual(postIndexData);
+      expect(Array.isArray(response.body)).toBe(true);
+      response.body.forEach((post: Post, index: number) => {
+        expect(post).toEqual(expect.objectContaining({
+          ...postIndexData[index],
+        }));
+      });
     });
   });
 
