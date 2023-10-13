@@ -63,7 +63,7 @@ router.post('', async (req: Request, res: Response) => {
 
 router.put('/:userID', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
   try {
-    const updatedUser = await UserController.updateUser(req.params.userID, req.body, req.user);
+    const updatedUser = await UserController.updateUser(req.params.userID, req.body);
 
     if (updatedUser) {
       res
@@ -87,8 +87,7 @@ router.delete('/:userID', isLoggedIn, isAdmin, async (req: Request, res: Respons
 
     if (result) {
       res
-          .sendStatus(StatusCodes.NO_CONTENT)
-          .json(`Successfully deleted user with ID ${req.params.userID}`);
+          .sendStatus(StatusCodes.NO_CONTENT);
     } else {
       res
           .status(StatusCodes.NOT_FOUND)

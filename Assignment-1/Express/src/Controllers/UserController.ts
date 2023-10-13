@@ -37,7 +37,7 @@ const createUser = async (userData: User): Promise<User> => {
   }
 };
 
-const updateUser = async (userID: string, userData: User, requestUser: User | undefined): Promise<User | null> => {
+const updateUser = async (userID: string, userData: User): Promise<User | null> => {
   try {
     const updatedUser = await UserModel.findOneAndUpdate(
         { userID },
@@ -56,7 +56,7 @@ const updateUser = async (userID: string, userData: User, requestUser: User | un
 
 const deleteUser = async (userID: string): Promise<boolean> => {
   try {
-    const result = await UserModel.deleteOne({ userID });
+    const result = await UserModel.deleteOne({ userID: userID });
     return result.deletedCount === 1;
   } catch (error) {
     throw error;

@@ -173,6 +173,39 @@ describe('user', () => {
     });
   });
 
+  describe('DELETE /users/:userID', () => {
+    it('should be able to delete a user as an admin', async () => {
+      const loginResponse = await request(app)
+          .post('/credentials')
+          .send({
+            userName: 'zmaji',
+            password: 'adminPassword',
+          });
+
+      const response = await request(app)
+          .delete(`/users/${userIndexData[2].userID}`)
+          .set('Authorization', `Bearer ${loginResponse.body.token}`);
+
+      expect(response.status).toBe(StatusCodes.NO_CONTENT);
+    });
+
+    it('should not allow edits from unauthorized users', async () => {
+      const loginResponse = await request(app)
+          .post('/credentials')
+          .send({
+            userName: 'Gardif',
+            password: 'userPassword',
+          });
+
+      const response = await request(app)
+          .delete(`/users/${userIndexData[0].userID}`)
+          .set('Authorization', `Bearer ${loginResponse.body.token}`);
+
+      expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
+      expect(response.body).toEqual({ error: 'This action needs admin privileges.' });
+    });
+  });
+
   describe('user authentication', () => {
     it('should return a token on a successful login', async () => {
       const response = await request(app)

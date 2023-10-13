@@ -1,4 +1,4 @@
-import type {User} from '../Typings/User';
+import type { User } from '../Typings/User';
 
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';

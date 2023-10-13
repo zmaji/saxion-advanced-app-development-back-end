@@ -7,14 +7,10 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import { articleIndexData } from './mocks/data/articles';
 import ArticleModel from '../Models/ArticleModel';
 import UserModel from '../Models/UserModel';
-import {userIndexData} from "./mocks/data/users";
+import { userIndexData } from './mocks/data/users';
 
 let mongoServer: MongoMemoryServer;
 let server: http.Server;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-let adminToken: '';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-let createdArticleID: '';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const login = async (userName: string, password: string) => {
