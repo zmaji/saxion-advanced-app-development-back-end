@@ -36,7 +36,7 @@ beforeAll(async () => {
   } catch (error) {
     console.error('Error setting up MongoDB Memory Server:', error);
   }
-}, 10000);
+}, 20000);
 
 
 afterAll(async () => {
@@ -51,7 +51,7 @@ afterAll(async () => {
   } catch (error) {
     console.error('Error tearing down test environment:', error);
   }
-}, 10000);
+});
 
 describe('article', () => {
   describe('GET /articles', () => {
@@ -60,7 +60,7 @@ describe('article', () => {
 
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toEqual(articleIndexData);
-    }, 10000);
+    });
   });
 
   describe('GET /articles/:articleID', () => {
@@ -69,7 +69,7 @@ describe('article', () => {
 
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toEqual(articleIndexData[0]);
-    }, 10000);
+    });
 
     it('should handle an invalid articleID', async () => {
       const invalidArticleID = 'invalid-id';
@@ -77,7 +77,7 @@ describe('article', () => {
 
       expect(response.status).toBe(StatusCodes.NOT_FOUND);
       expect(response.body).toEqual({ error: 'Unable to find article with ID invalid-id' });
-    }, 10000);
+    });
   });
 
   describe('POST /articles', () => {
@@ -107,7 +107,7 @@ describe('article', () => {
         articleID: articleID,
         ...newArticleData,
       });
-    }, 10000);
+    });
 
     it('should handle errors during article creation', async () => {
       const loginResponse = await request(app)
@@ -129,7 +129,7 @@ describe('article', () => {
 
       expect(response.status).toBe(StatusCodes.BAD_REQUEST);
       expect(response.body).toEqual({ error: 'Fields were not filled in properly' });
-    }, 10000);
+    });
   });
 
   describe('PUT /articles', () => {
@@ -158,7 +158,7 @@ describe('article', () => {
         ...updatedArticleData,
         category: articleIndexData[0].category,
       });
-    }, 10000);
+    });
 
     it('should handle updating a non-existent article', async () => {
       const loginResponse = await request(app)
@@ -181,7 +181,7 @@ describe('article', () => {
 
       expect(updateResponse.status).toBe(StatusCodes.NOT_FOUND);
       expect(updateResponse.body).toEqual({ error: 'Unable to update article with ID nonExistentID' });
-    }, 10000);
+    });
   });
 
   describe('DELETE /articles/:articleID', () => {
@@ -201,7 +201,7 @@ describe('article', () => {
 
       expect(response.status).toBe(StatusCodes.NO_CONTENT);
       expect(deletedArticle).toBeNull();
-    }, 10000);
+    });
 
     it('should handle deleting a non-existent article', async () => {
       const loginResponse = await request(app)
@@ -217,6 +217,6 @@ describe('article', () => {
 
       expect(response.status).toBe(StatusCodes.NOT_FOUND);
       expect(response.body).toEqual({ error: 'Unable to find article with ID nonExistentID' });
-    }, 10000);
+    });
   });
 });
