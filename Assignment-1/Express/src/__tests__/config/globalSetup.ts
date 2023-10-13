@@ -4,7 +4,13 @@ import config from './config';
 
 export = async function globalSetup() {
   if (config.Memory) {
-    const instance = await MongoMemoryServer.create();
+    const instance = await MongoMemoryServer.create({
+      binary: {
+        version: '6.0.6',
+        // @ts-ignore
+        skipMD5: true,
+      },
+    });
     const uri = instance.getUri();
 
     // eslint-disable-next-line
