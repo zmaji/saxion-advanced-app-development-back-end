@@ -64,8 +64,6 @@ release_dockerhub:
     - docker push "$DOCKER_USERNAME/fly-with-confidence:$BRANCH_NAME"
   only:
     - /^feature\//
-  tags:
-    - docker
 
 deploy_production:
   stage: deploy
