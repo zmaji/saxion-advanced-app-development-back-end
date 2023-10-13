@@ -13,33 +13,47 @@ let mongoServer: MongoMemoryServer;
 let server: http.Server;
 
 beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create();
-  const mongoUri = mongoServer.getUri();
+  try {
+    mongoServer = await MongoMemoryServer.create({
+      binary: {
+        version: '5.0.19',
+      },
+    });
+    const mongoUri = mongoServer.getUri();
 
-  server = app.listen(0);
-  await mongoose.connect(mongoUri, {
-    // @ts-ignore
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+    server = app.listen(0);
+    await mongoose.connect(mongoUri, {
+      // @ts-ignore
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
 
-  for (const article of articleIndexData) {
-    const newArticle = new ArticleModel(article);
-    await newArticle.save();
-  }
+    for (const article of articleIndexData) {
+      const newArticle = new ArticleModel(article);
+      await newArticle.save();
+    }
 
-  for (const user of userIndexData) {
-    const newUser = new UserModel(user);
-    await newUser.save();
+    for (const user of userIndexData) {
+      const newUser = new UserModel(user);
+      await newUser.save();
+    }
+  } catch (error) {
+    console.error('Error setting up MongoDB Memory Server:', error);
   }
 });
 
 
 afterAll(async () => {
-  await mongoose.disconnect();
-  await mongoServer.stop();
-  if (server) {
-    server.close();
+  try {
+    await mongoose.disconnect();
+    if (mongoServer) {
+      await mongoServer.stop();
+    }
+    if (server) {
+      server.close();
+    }
+  } catch (error) {
+    console.error('Error tearing down test environment:', error);
   }
 });
 
@@ -51,7 +65,7 @@ describe('article', () => {
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toEqual(articleIndexData);
     }, 10000);
-  });
+  }, 10000);
 
   describe('GET /articles/:articleID', () => {
     it('should return a specific article', async () => {
@@ -68,7 +82,7 @@ describe('article', () => {
       expect(response.status).toBe(StatusCodes.NOT_FOUND);
       expect(response.body).toEqual({ error: 'Unable to find article with ID invalid-id' });
     }, 10000);
-  });
+  }, 10000);
 
   describe('POST /articles', () => {
     it('should create a new article', async () => {

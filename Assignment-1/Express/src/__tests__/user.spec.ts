@@ -11,28 +11,42 @@ let mongoServer: MongoMemoryServer;
 let server: http.Server;
 
 beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create();
-  const mongoUri = mongoServer.getUri();
+  try {
+    mongoServer = await MongoMemoryServer.create({
+      binary: {
+        version: '5.0.19',
+      },
+    });
+    const mongoUri = mongoServer.getUri();
 
-  server = app.listen(0);
-  await mongoose.connect(mongoUri, {
+    server = app.listen(0);
+    await mongoose.connect(mongoUri, {
     // @ts-ignore
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
 
-  for (const user of userIndexData) {
-    const newUser = new UserModel(user);
-    const savedUser = await newUser.save();
-    user.password = savedUser.password;
+    for (const user of userIndexData) {
+      const newUser = new UserModel(user);
+      const savedUser = await newUser.save();
+      user.password = savedUser.password;
+    }
+  } catch (error) {
+    console.error('Error setting up MongoDB Memory Server:', error);
   }
 });
 
 afterAll(async () => {
-  await mongoose.disconnect();
-  await mongoServer.stop();
-  if (server) {
-    server.close();
+  try {
+    await mongoose.disconnect();
+    if (mongoServer) {
+      await mongoServer.stop();
+    }
+    if (server) {
+      server.close();
+    }
+  } catch (error) {
+    console.error('Error tearing down test environment:', error);
   }
 });
 
