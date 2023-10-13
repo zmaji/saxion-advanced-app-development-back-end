@@ -65,7 +65,7 @@ describe('article', () => {
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toEqual(articleIndexData);
     }, 10000);
-  }, 10000);
+  });
 
   describe('GET /articles/:articleID', () => {
     it('should return a specific article', async () => {
@@ -82,7 +82,7 @@ describe('article', () => {
       expect(response.status).toBe(StatusCodes.NOT_FOUND);
       expect(response.body).toEqual({ error: 'Unable to find article with ID invalid-id' });
     }, 10000);
-  }, 10000);
+  });
 
   describe('POST /articles', () => {
     it('should create a new article', async () => {
