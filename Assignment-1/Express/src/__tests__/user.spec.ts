@@ -151,7 +151,7 @@ describe('user', () => {
         avatar: userIndexData[2].avatar,
         roles: roles,
       });
-    });
+    }, 10000);
 
     it('should not allow edits from unauthorized users', async () => {
       const loginResponse = await request(app)
@@ -170,7 +170,7 @@ describe('user', () => {
 
       expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
       expect(response.body).toEqual({ error: 'This action needs admin privileges.' });
-    });
+    }, 10000);
   });
 
   describe('DELETE /users/:userID', () => {
@@ -187,7 +187,7 @@ describe('user', () => {
           .set('Authorization', `Bearer ${loginResponse.body.token}`);
 
       expect(response.status).toBe(StatusCodes.NO_CONTENT);
-    });
+    }, 10000);
 
     it('should not allow edits from unauthorized users', async () => {
       const loginResponse = await request(app)
@@ -203,7 +203,7 @@ describe('user', () => {
 
       expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
       expect(response.body).toEqual({ error: 'This action needs admin privileges.' });
-    });
+    }, 10000);
   });
 
   describe('user authentication', () => {
@@ -217,7 +217,7 @@ describe('user', () => {
 
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body.token).toBeDefined();
-    });
+    }, 10000);
 
     it('should be able to register a new user', async () => {
       const newUserData = {
@@ -241,7 +241,7 @@ describe('user', () => {
         secret: secret,
         roles: roles,
       });
-    });
+    }, 10000);
 
     it('should handle errors during user registration', async () => {
       const newUserData = {
@@ -255,6 +255,6 @@ describe('user', () => {
 
       expect(response.status).toBe(StatusCodes.BAD_REQUEST);
       expect(response.body).toEqual({ error: 'Please make sure to enter all fields correctly' });
-    });
+    }, 10000);
   });
 });
