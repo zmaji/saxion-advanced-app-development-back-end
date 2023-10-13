@@ -63,7 +63,7 @@ release_dockerhub:
     - docker build -t "$DOCKER_USERNAME/fly-with-confidence:$BRANCH_NAME" .
     - docker push "$DOCKER_USERNAME/fly-with-confidence:$BRANCH_NAME"
   only:
-    - /^feature\/.*$/
+    - /^feature\//
   tags:
     - docker
 
