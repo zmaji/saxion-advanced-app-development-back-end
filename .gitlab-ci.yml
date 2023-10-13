@@ -39,17 +39,6 @@ test_lint:
   needs:
     - build
 
-
-test_lint_fix:
-  stage: test
-  script:
-    - npm run lint:fix
-  only:
-    - refs: [branches]
-  when: on_failure
-  tags:
-    - nodejs
-
 test_api:
   stage: test
   cache:
