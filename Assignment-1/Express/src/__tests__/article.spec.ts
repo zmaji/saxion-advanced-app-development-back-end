@@ -1,82 +1,8 @@
-import http from 'http';
 import request from 'supertest';
 import { StatusCodes } from 'http-status-codes';
-import createServer from '../Utils/Server';
-import mongoose from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
 import { articleIndexData } from './mocks/data/articles';
 import ArticleModel from '../Models/ArticleModel';
-import UserModel from '../Models/UserModel';
-import { userIndexData } from './mocks/data/users';
-import { Express } from 'express';
-
-let mongoServer: MongoMemoryServer;
-let server: http.Server;
-let app: Express;
-
-beforeAll(async () => {
-  mongoServer = new MongoMemoryServer();
-  mongoServer = await MongoMemoryServer.create();
-  const mongoUri = mongoServer.getUri();
-
-  await mongoose.connect(mongoUri, {
-    // @ts-ignore
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-  app = createServer();
-
-  for (const article of articleIndexData) {
-    const newArticle = new ArticleModel(article);
-    await newArticle.save();
-  }
-
-  for (const user of userIndexData) {
-    const newUser = new UserModel(user);
-    await newUser.save();
-  }
-}, 20000);
-
-// beforeAll(async () => {
-//   try {
-//     mongoServer = await MongoMemoryServer.create();
-//     const mongoUri = mongoServer.getUri();
-//
-//     server = app.listen(0);
-//     await mongoose.connect(mongoUri, {
-//       // @ts-ignore
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true,
-//     });
-//
-//     for (const article of articleIndexData) {
-//       const newArticle = new ArticleModel(article);
-//       await newArticle.save();
-//     }
-//
-//     for (const user of userIndexData) {
-//       const newUser = new UserModel(user);
-//       await newUser.save();
-//     }
-//   } catch (error) {
-//     console.error('Error setting up MongoDB Memory Server:', error);
-//   }
-// }, 20000);
-
-
-afterAll(async () => {
-  try {
-    await mongoose.disconnect();
-    if (mongoServer) {
-      await mongoServer.stop();
-    }
-    if (server) {
-      server.close();
-    }
-  } catch (error) {
-    console.error('Error tearing down test environment:', error);
-  }
-});
+import { app } from './config/setupFile';
 
 describe('article', () => {
   describe('GET /articles', () => {

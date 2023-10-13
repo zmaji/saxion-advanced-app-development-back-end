@@ -1,100 +1,17 @@
-import type { Post } from '../Typings/Post';
-
-import http from 'http';
 import request from 'supertest';
 import { StatusCodes } from 'http-status-codes';
-import app from './mocks/http/app';
-import mongoose from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
 import { postIndexData } from './mocks/data/posts';
-import PostModel from '../Models/PostModel';
-import UserModel from '../Models/UserModel';
+import { app } from './config/setupFile';
 
-let mongoServer: MongoMemoryServer;
-let server: http.Server;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-let createdPostID: string;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-let adminToken = '';
-
-const login = async (userName: string, password: string) => {
-  const loginCredentials = {
-    userName: userName,
-    password: password,
-  };
-
-  const response = await request(app)
-    .post('/credentials/login')
-    .send(loginCredentials);
-
-  return response;
-};
-
-beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create();
-  const mongoUri = mongoServer.getUri();
-
-  server = app.listen(0);
-  await mongoose.connect(mongoUri, {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-
-  for (const post of postIndexData) {
-    const newPost = new PostModel(post);
-    await newPost.save();
-  }
-
-  const testUser = new UserModel({
-    userID: 'a913eae9-0dd5-4a3e-8b5e-e72ba158bedf',
-    userName: 'Gardif',
-    email: 'test2@test.com',
-    password: 'Password2',
-    secret: 'OuHRdKDQuu',
-    avatar: 'test',
-  });
-  await testUser.save();
-
-  const testAdmin = new UserModel({
-    userID: '5459313b-7db5-4565-8710-8aeece7c7f79',
-    userName: 'zmaji',
-    email: 'test@test.com',
-    password: 'Password1',
-    secret: 'lxziOo8CIq',
-    avatar: 'test',
-    roles: ['user', 'admin'],
-  });
-  await testAdmin.save();
-});
-
-afterAll(async () => {
-  await mongoose.disconnect();
-  await mongoServer.stop();
-  if (server) {
-    server.close();
-  }
-});
 
 describe('post', () => {
-  beforeAll(async () => {
-    const admin = await login('zmaji', 'Password1');
-    adminToken = admin.body.token;
-  });
-
   describe('GET /posts', () => {
     it('should return a list of posts', async () => {
       const response = await request(app)
-        .get('/posts');
+          .get('/posts');
 
       expect(response.status).toBe(StatusCodes.OK);
-      expect(Array.isArray(response.body)).toBe(true);
-      response.body.forEach((post: Post, index: number) => {
-        expect(post).toEqual(expect.objectContaining({
-          ...postIndexData[index],
-        }));
-      });
+      expect(response.body).toEqual(postIndexData);
     });
   });
 

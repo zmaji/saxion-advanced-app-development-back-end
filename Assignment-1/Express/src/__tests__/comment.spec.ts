@@ -1,85 +1,9 @@
-import http from 'http';
 import request from 'supertest';
 import { StatusCodes } from 'http-status-codes';
-import app from './mocks/http/app';
-import mongoose from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
 import { commentIndexData } from './mocks/data/comments';
-import UserModel from '../Models/UserModel';
-import CommentModel from '../Models/CommentModel';
-
-let mongoServer: MongoMemoryServer;
-let server: http.Server;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-let createdCommentID: string;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-let adminToken = '';
-
-const login = async (userName: string, password: string) => {
-  const loginCredentials = {
-    userName: userName,
-    password: password,
-  };
-
-  const response = await request(app)
-      .post('/credentials/login')
-      .send(loginCredentials);
-
-  return response;
-};
-
-beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create();
-  const mongoUri = mongoServer.getUri();
-
-  server = app.listen(0);
-  await mongoose.connect(mongoUri, {
-    // @ts-ignore
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-
-  for (const comment of commentIndexData) {
-    const newComment = new CommentModel(comment);
-    await newComment.save();
-  }
-
-  const testUser = new UserModel({
-    userID: 'a913eae9-0dd5-4a3e-8b5e-e72ba158bedf',
-    userName: 'Gardif',
-    email: 'test2@test.com',
-    password: 'Password2',
-    secret: 'OuHRdKDQuu',
-    avatar: 'test',
-  });
-  await testUser.save();
-
-  const testAdmin = new UserModel({
-    userID: '5459313b-7db5-4565-8710-8aeece7c7f79',
-    userName: 'zmaji',
-    email: 'test@test.com',
-    password: 'Password1',
-    secret: 'lxziOo8CIq',
-    avatar: 'test',
-    roles: ['user', 'admin'],
-  });
-  await testAdmin.save();
-});
-
-afterAll(async () => {
-  await mongoose.disconnect();
-  await mongoServer.stop();
-  if (server) {
-    server.close();
-  }
-});
+import { app } from './config/setupFile';
 
 describe('comment', () => {
-  beforeAll(async () => {
-    const admin = await login('zmaji', 'Password1');
-    adminToken = admin.body.token;
-  });
-
   describe('GET /comments', () => {
     it('should return a list of comments', async () => {
       const response = await request(app)
