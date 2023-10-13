@@ -50,7 +50,6 @@ test_api:
     - npm run test
   needs:
     - build
-  when: manual
 
 release_dockerhub:
   image: docker:stable
@@ -63,12 +62,10 @@ release_dockerhub:
     - BRANCH_NAME=${CI_COMMIT_REF_NAME//\//-}
     - docker build -t "$DOCKER_USERNAME/fly-with-confidence:$BRANCH_NAME" .
     - docker push "$DOCKER_USERNAME/fly-with-confidence:$BRANCH_NAME"
-#  only:
-#    - /^feature\/.*$/
+  only:
+    - /^feature\/.*$/
   tags:
     - docker
-#  when: manual
-
 
 deploy_production:
   stage: deploy
