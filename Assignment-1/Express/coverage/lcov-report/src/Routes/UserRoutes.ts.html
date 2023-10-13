@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60.86% </span>
+                <span class="strong">82.6% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>28/46</span>
+                <span class='fraction'>38/46</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">55.55% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/9</span>
+                <span class='fraction'>5/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/10</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60.97% </span>
+                <span class="strong">80.48% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>25/41</span>
+                <span class='fraction'>33/41</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -166,8 +166,7 @@
 <a name='L101'></a><a href='#L101'>101</a>
 <a name='L102'></a><a href='#L102'>102</a>
 <a name='L103'></a><a href='#L103'>103</a>
-<a name='L104'></a><a href='#L104'>104</a>
-<a name='L105'></a><a href='#L105'>105</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<a name='L104'></a><a href='#L104'>104</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
@@ -231,11 +230,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -251,12 +250,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -334,15 +332,15 @@ router.post('', async (req: Request, res: Response) =&gt; {
   }
 });
 &nbsp;
-router.put('/:userID', isLoggedIn, isAdmin, <span class="fstat-no" title="function not covered" >async (r</span>eq: Request, res: Response) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const updatedUser = <span class="cstat-no" title="statement not covered" >await UserController.updateUser(req.params.userID, req.body);</span>
+router.put('/:userID', isLoggedIn, isAdmin, async (req: Request, res: Response) =&gt; {
+  try {
+    const updatedUser = await UserController.updateUser(req.params.userID, req.body);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (updatedUser) {</span>
-<span class="cstat-no" title="statement not covered" >      res</span>
+    if (updatedUser) {
+      res
           .status(StatusCodes.OK)
           .json(updatedUser);
-    } else {
+    } else <span class="missing-if-branch" title="else path not taken" >E</span>{
 <span class="cstat-no" title="statement not covered" >      res</span>
           .status(StatusCodes.NOT_FOUND)
           .json({ error: `Unable to update user with ID ${req.params.userID}` });
@@ -354,15 +352,14 @@ router.put('/:userID', isLoggedIn, isAdmin, <span class="fstat-no" title="functi
   }
 });
 &nbsp;
-router.delete('/:userID', isLoggedIn, isAdmin, <span class="fstat-no" title="function not covered" >async (r</span>eq: Request, res: Response) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const result = <span class="cstat-no" title="statement not covered" >await UserController.deleteUser(req.params.userID);</span>
+router.delete('/:userID', isLoggedIn, isAdmin, async (req: Request, res: Response) =&gt; {
+  try {
+    const result = await UserController.deleteUser(req.params.userID);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (result) {</span>
-<span class="cstat-no" title="statement not covered" >      res</span>
-          .sendStatus(StatusCodes.NO_CONTENT)
-          .json(`Successfully deleted user with ID ${req.params.userID}`);
-    } else {
+    if (result) {
+      res
+          .sendStatus(StatusCodes.NO_CONTENT);
+    } else <span class="missing-if-branch" title="else path not taken" >E</span>{
 <span class="cstat-no" title="statement not covered" >      res</span>
           .status(StatusCodes.NOT_FOUND)
           .json({ error: `Unable to find user with ID ${req.params.userID}` });
@@ -382,7 +379,7 @@ export default router;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-13T13:40:07.670Z
+                at 2023-10-13T15:18:38.670Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

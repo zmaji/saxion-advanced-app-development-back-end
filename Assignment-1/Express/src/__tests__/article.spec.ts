@@ -12,20 +12,6 @@ import { userIndexData } from './mocks/data/users';
 let mongoServer: MongoMemoryServer;
 let server: http.Server;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const login = async (userName: string, password: string) => {
-  const loginCredentials = {
-    userName: userName,
-    password: password,
-  };
-
-  const response = await request(app)
-      .post('/credentials/login')
-      .send(loginCredentials);
-
-  return response;
-};
-
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
   const mongoUri = mongoServer.getUri();
@@ -66,141 +52,161 @@ describe('article', () => {
       expect(response.body).toEqual(articleIndexData);
     });
   });
-  //
-  // describe('GET /articles/:articleID', () => {
-  //   it('should return a specific article', async () => {
-  //     const articleID = 'b47ddeef-7f57-4a13-909f-5b5f0f993fcc';
-  //     const response = await request(app).get(`/articles/${articleID}`);
-  //
-  //     expect(response.status).toBe(StatusCodes.OK);
-  //     expect(response.body).toEqual(articleIndexData.find((article) => article.articleID === articleID));
-  //   });
-  //
-  //   it('should handle an invalid articleID', async () => {
-  //     const invalidArticleID = 'invalid-id';
-  //     const response = await request(app).get(`/articles/${invalidArticleID}`);
-  //
-  //     expect(response.status).toBe(StatusCodes.NOT_FOUND);
-  //     expect(response.body).toEqual({ error: 'Unable to find article with ID invalid-id' });
-  //   });
-  // });
+
+  describe('GET /articles/:articleID', () => {
+    it('should return a specific article', async () => {
+      const response = await request(app).get(`/articles/${articleIndexData[0].articleID}`);
+
+      expect(response.status).toBe(StatusCodes.OK);
+      expect(response.body).toEqual(articleIndexData[0]);
+    });
+
+    it('should handle an invalid articleID', async () => {
+      const invalidArticleID = 'invalid-id';
+      const response = await request(app).get(`/articles/${invalidArticleID}`);
+
+      expect(response.status).toBe(StatusCodes.NOT_FOUND);
+      expect(response.body).toEqual({ error: 'Unable to find article with ID invalid-id' });
+    });
+  });
 
   describe('POST /articles', () => {
     it('should create a new article', async () => {
-      const admin = await login('zmaji', 'adminpassword');
-      console.log(admin.body);
-      adminToken = admin.body.token;
+      const loginResponse = await request(app)
+          .post('/credentials')
+          .send({
+            userName: 'zmaji',
+            password: 'adminPassword',
+          });
 
       const newArticleData = {
         title: 'New Article',
         description: 'Description of the new article',
         content: 'Content of the new article',
+        category: 'Article category',
       };
 
       const response = await request(app)
           .post('/articles')
-          .set('Authorization', 'Bearer ' + adminToken)
+          .set('Authorization', `Bearer ${loginResponse.body.token}`)
           .send(newArticleData);
       const { articleID } = response.body;
-      createdArticleID = articleID;
 
       expect(response.status).toBe(StatusCodes.CREATED);
       expect(response.body).toEqual({
         articleID: articleID,
-        title: 'New Article',
-        description: 'Description of the new article',
-        content: 'Content of the new article',
+        ...newArticleData,
       });
     });
+
+    it('should handle errors during article creation', async () => {
+      const loginResponse = await request(app)
+          .post('/credentials')
+          .send({
+            userName: 'zmaji',
+            password: 'adminPassword',
+          });
+
+      const newArticleData = {
+        title: 'New Article',
+        description: 'Description of the new article',
+      };
+
+      const response = await request(app)
+          .post('/articles')
+          .set('Authorization', `Bearer ${loginResponse.body.token}`)
+          .send(newArticleData);
+
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+      expect(response.body).toEqual({ error: 'Fields were not filled in properly' });
+    });
   });
-  //   it('should handle errors during article creation', async () => {
-  //     const newArticleData = {
-  //       title: 'New Article',
-  //       description: 'Description of the new article',
-  //     };
 
-  //     const response = await request(app)
-  //       .post('/articles')
-  //       .set('Authorization', `Bearer ${adminToken}`)
-  //       .send(newArticleData);
+  describe('PUT /articles', () => {
+    it('should update an existing article', async () => {
+      const loginResponse = await request(app)
+          .post('/credentials')
+          .send({
+            userName: 'zmaji',
+            password: 'adminPassword',
+          });
 
-  //     expect(response.status).toBe(StatusCodes.BAD_REQUEST);
-  //     expect(response.body).toEqual({ error: 'Fields were not filled in properly' });
-  //   });
-  // });
+      const updatedArticleData = {
+        title: 'Updated Article Title',
+        description: 'Updated description',
+        content: 'Updated content',
+      };
 
-  // describe('PUT /articles', () => {
-  //   beforeAll(async () => {
-  //     const admin = await login('zmaji', 'Password1');
-  //     adminToken = admin.body.token;
-  //   });
+      const updateResponse = await request(app)
+          .put(`/articles/${articleIndexData[0].articleID}`)
+          .set('Authorization', `Bearer ${loginResponse.body.token}`)
+          .send(updatedArticleData);
 
-  //   it('should update an existing article', async () => {
-  //     const updatedArticleData = {
-  //       title: 'Updated Article Title',
-  //       description: 'Updated description',
-  //       content: 'Updated content',
-  //     };
+      expect(updateResponse.status).toBe(StatusCodes.OK);
+      expect(updateResponse.body).toEqual({
+        articleID: articleIndexData[0].articleID,
+        ...updatedArticleData,
+        category: articleIndexData[0].category,
+      });
+    });
 
-  //     const updateResponse = await request(app)
-  //       .put(`/articles/${createdArticleID}`)
-  //       .set('Authorization', `Bearer ${adminToken}`)
-  //       .send(updatedArticleData);
+    it('should handle updating a non-existent article', async () => {
+      const loginResponse = await request(app)
+          .post('/credentials')
+          .send({
+            userName: 'zmaji',
+            password: 'adminPassword',
+          });
 
-  //     expect(updateResponse.status).toBe(StatusCodes.OK);
-  //     expect(updateResponse.body).toEqual({
-  //       articleID: createdArticleID,
-  //       title: 'Updated Article Title',
-  //       description: 'Updated description',
-  //       content: 'Updated content',
-  //     });
-  //   });
+      const updatedArticleData = {
+        title: 'Updated Article Title',
+        description: 'Updated description',
+        content: 'Updated content',
+      };
 
-  //   it('should handle updating a non-existent article', async () => {
-  //     const nonExistentArticleID = 'nonExistentID';
+      const updateResponse = await request(app)
+          .put('/articles/nonExistentID')
+          .set('Authorization', `Bearer ${loginResponse.body.token}`)
+          .send(updatedArticleData);
 
-  //     const updatedArticleData = {
-  //       title: 'Updated Article Title',
-  //       description: 'Updated description',
-  //       content: 'Updated content',
-  //     };
+      expect(updateResponse.status).toBe(StatusCodes.NOT_FOUND);
+      expect(updateResponse.body).toEqual({ error: 'Unable to update article with ID nonExistentID' });
+    });
+  });
 
-  //     const updateResponse = await request(app)
-  //       .put(`/articles/${nonExistentArticleID}`)
-  //       .set('Authorization', `Bearer ${adminToken}`)
-  //       .send(updatedArticleData);
+  describe('DELETE /articles/:articleID', () => {
+    it('should delete an existing article', async () => {
+      const loginResponse = await request(app)
+          .post('/credentials')
+          .send({
+            userName: 'zmaji',
+            password: 'adminPassword',
+          });
 
-  //     expect(updateResponse.status).toBe(StatusCodes.NOT_FOUND);
-  //     expect(updateResponse.body).toEqual({ error: `Unable to update article with ID ${nonExistentArticleID}` });
-  //   });
-  // });
+      const response = await request(app)
+          .delete(`/articles/${articleIndexData[1].articleID}`)
+          .set('Authorization', `Bearer ${loginResponse.body.token}`);
 
-  // describe('DELETE /articles/:articleID', () => {
-  //   beforeAll(async () => {
-  //     const admin = await login('zmaji', 'Password1');
-  //     adminToken = admin.body.token;
-  //   });
+      const deletedArticle = await ArticleModel.findOne({ articleID: articleIndexData[1].articleID });
 
-  //   it('should delete an existing article', async () => {
-  //     const response = await request(app)
-  //       .delete(`/articles/${createdArticleID}`)
-  //       .set('Authorization', `Bearer ${adminToken}`);
+      expect(response.status).toBe(StatusCodes.NO_CONTENT);
+      expect(deletedArticle).toBeNull();
+    });
 
-  //     expect(response.status).toBe(StatusCodes.NO_CONTENT);
+    it('should handle deleting a non-existent article', async () => {
+      const loginResponse = await request(app)
+          .post('/credentials')
+          .send({
+            userName: 'zmaji',
+            password: 'adminPassword',
+          });
 
-  //     const deletedArticle = await ArticleModel.findOne({ articleID: createdArticleID });
-  //     expect(deletedArticle).toBeNull();
-  //   });
+      const response = await request(app)
+          .delete('/articles/nonExistentID')
+          .set('Authorization', `Bearer ${loginResponse.body.token}`);
 
-  //   it('should handle deleting a non-existent article', async () => {
-  //     const nonExistentArticleID = 'nonExistentID';
-
-  //     const response = await request(app)
-  //       .delete(`/articles/${nonExistentArticleID}`)
-  //       .set('Authorization', `Bearer ${adminToken}`);
-
-  //     expect(response.status).toBe(StatusCodes.NOT_FOUND);
-  //     expect(response.body).toEqual({ error: `Unable to find article with ID ${nonExistentArticleID}` });
-  //   });
-  // });
+      expect(response.status).toBe(StatusCodes.NOT_FOUND);
+      expect(response.body).toEqual({ error: 'Unable to find article with ID nonExistentID' });
+    });
+  });
 });
