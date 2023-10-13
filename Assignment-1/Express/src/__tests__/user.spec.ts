@@ -34,7 +34,7 @@ beforeAll(async () => {
   } catch (error) {
     console.error('Error setting up MongoDB Memory Server:', error);
   }
-});
+}, 10000);
 
 afterAll(async () => {
   try {
@@ -48,7 +48,7 @@ afterAll(async () => {
   } catch (error) {
     console.error('Error tearing down test environment:', error);
   }
-});
+}, 10000);
 
 describe('user', () => {
   describe('GET /users', () => {

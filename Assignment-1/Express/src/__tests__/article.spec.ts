@@ -40,7 +40,7 @@ beforeAll(async () => {
   } catch (error) {
     console.error('Error setting up MongoDB Memory Server:', error);
   }
-});
+}, 10000);
 
 
 afterAll(async () => {
@@ -55,7 +55,7 @@ afterAll(async () => {
   } catch (error) {
     console.error('Error tearing down test environment:', error);
   }
-});
+}, 10000);
 
 describe('article', () => {
   describe('GET /articles', () => {
