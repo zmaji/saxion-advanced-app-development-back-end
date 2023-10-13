@@ -10,7 +10,7 @@ export const articleIndexData: Article[] = [
     content:
       'Recent research indicates that turbulence is rising and that this change is sparked by climate change, ' +
       'specifically elevated carbon dioxide emissions affecting air currents.',
-    category: 'Education and information'
+    category: 'Education and information',
   },
   {
     articleID: 'a88ab39b-147e-4e81-a337-9c1f3547baba',
@@ -22,6 +22,6 @@ export const articleIndexData: Article[] = [
       'Your odds of being in an accident during a flight are one in 1.2 million, ' +
       'and the chances of that accident being fatal are one in 11 million.' +
       ' Your chances of dying in a car crash, conversely, are one in 5,000.',
-    category: 'Education and information'
+    category: 'Education and information',
   },
 ];

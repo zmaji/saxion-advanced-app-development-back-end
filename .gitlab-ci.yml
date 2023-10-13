@@ -1,0 +1,77 @@
+# This file is a template, and might need editing before it works on your project.
+# To contribute improvements to CI/CD templates, please follow the Development guide at:
+# https://docs.gitlab.com/ee/development/cicd/templates.html
+# This specific template is located at:
+# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Nodejs.gitlab-ci.yml
+
+# Official framework image. Look for the different tagged releases at:
+# https://hub.docker.com/r/library/node/tags/
+image: node:latest
+
+# This folder is cached between builds
+# https://docs.gitlab.com/ee/ci/yaml/index.html#cache
+cache:
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - Assignment-1/Express/node_modules/
+
+stages:
+  - build
+  - test
+  - release
+  - deploy
+
+build:
+  stage: build
+  script:
+    - cd Assignment-1/Express
+    - npm install
+
+test_lint:
+  stage: test
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - Assignment-1/Express/node_modules/
+  script:
+    - cd Assignment-1/Express
+    - npm run lint
+  needs:
+    - build
+
+test_api:
+  stage: test
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - Assignment-1/Express/node_modules/
+  script:
+    - cd Assignment-1/Express
+    - npm run test
+  needs:
+    - build
+
+release_dockerhub:
+  image: docker:stable
+  stage: release
+  services:
+    - docker:dind
+  script:
+    - cd Assignment-1/Express
+    - docker login -u $DOCKER_USERNAME -p $DOCKER_ACCESS_TOKEN
+    - BRANCH_NAME=${CI_COMMIT_REF_NAME//\//-}
+    - docker build -t "$DOCKER_USERNAME/fly-with-confidence:$BRANCH_NAME" .
+    - docker push "$DOCKER_USERNAME/fly-with-confidence:$BRANCH_NAME"
+  only:
+    - /^feature\/.*$/
+  tags:
+    - docker
+
+deploy_production:
+  stage: deploy
+  script:
+    - ./deploy.sh
+  only:
+    - main
+  when: manual
+  environment: production
