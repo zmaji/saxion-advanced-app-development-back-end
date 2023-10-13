@@ -1,3 +1,5 @@
+import type { Post } from '../Typings/Post';
+
 import http from 'http';
 import request from 'supertest';
 import { StatusCodes } from 'http-status-codes';
@@ -7,7 +9,6 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import { postIndexData } from './mocks/data/posts';
 import PostModel from '../Models/PostModel';
 import UserModel from '../Models/UserModel';
-import { Post } from '../Typings/Post';
 
 let mongoServer: MongoMemoryServer;
 let server: http.Server;
@@ -23,8 +24,8 @@ const login = async (userName: string, password: string) => {
   };
 
   const response = await request(app)
-      .post('/credentials/login')
-      .send(loginCredentials);
+    .post('/credentials/login')
+    .send(loginCredentials);
 
   return response;
 };
@@ -85,7 +86,7 @@ describe('post', () => {
   describe('GET /posts', () => {
     it('should return a list of posts', async () => {
       const response = await request(app)
-          .get('/posts');
+        .get('/posts');
 
       expect(response.status).toBe(StatusCodes.OK);
       expect(Array.isArray(response.body)).toBe(true);
