@@ -6,7 +6,7 @@ module.exports = {
     '^.+\\.ts$': 'ts-jest',
   },
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(ts|js)$',
-  testPathIgnorePatterns: ['/node_modules/', '/dist/', '/src/__tests__/mocks/'],
+  testPathIgnorePatterns: ['/node_modules/', '/dist/', '/src/__tests__/mocks/', 'coverage'],
   verbose: true,
   forceExit: true,
   clearMocks: true,

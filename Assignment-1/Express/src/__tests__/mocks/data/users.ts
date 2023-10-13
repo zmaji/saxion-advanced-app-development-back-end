@@ -26,4 +26,15 @@ export const userIndexData: User[] = [
       'user',
     ],
   },
+  {
+    userID: 'b1a8cdb4-bfca-4a3e-a3de-4b1f496c6c25',
+    userName: 'DummyUser',
+    email: 'dummy@saxion.nl',
+    password: 'dummyPassword',
+    secret: uuidv4(),
+    avatar: 'test',
+    roles: [
+      'user',
+    ],
+  },
 ];

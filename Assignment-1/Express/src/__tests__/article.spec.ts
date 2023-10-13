@@ -7,6 +7,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import { articleIndexData } from './mocks/data/articles';
 import ArticleModel from '../Models/ArticleModel';
 import UserModel from '../Models/UserModel';
+import {userIndexData} from "./mocks/data/users";
 
 let mongoServer: MongoMemoryServer;
 let server: http.Server;
@@ -45,26 +46,10 @@ beforeAll(async () => {
     await newArticle.save();
   }
 
-  const testUser = new UserModel({
-    userID: 'a913eae9-0dd5-4a3e-8b5e-e72ba158bedf',
-    userName: 'Gardif',
-    email: 'test2@test.com',
-    password: 'Password2',
-    secret: '5459313b-7db5-4565-8710-8aeece7c7f79',
-    avatar: 'test',
-  });
-  await testUser.save();
-
-  const testAdmin = new UserModel({
-    userID: '5459313b-7db5-4565-8710-8aeece7c7f79',
-    userName: 'zmaji',
-    email: 'test@test.com',
-    password: 'adminpassword',
-    secret: 'a913eae9-0dd5-4a3e-8b5e-e72ba158bedf',
-    avatar: 'test',
-    roles: ['user', 'admin'],
-  });
-  await testAdmin.save();
+  for (const user of userIndexData) {
+    const newUser = new UserModel(user);
+    await newUser.save();
+  }
 });
 
 
@@ -77,14 +62,14 @@ afterAll(async () => {
 });
 
 describe('article', () => {
-  // describe('GET /articles', () => {
-  //   it('should return a list of articles', async () => {
-  //     const response = await request(app).get('/articles');
-  //
-  //     expect(response.status).toBe(StatusCodes.OK);
-  //     expect(response.body).toEqual(articleIndexData);
-  //   });
-  // });
+  describe('GET /articles', () => {
+    it('should return a list of articles', async () => {
+      const response = await request(app).get('/articles');
+
+      expect(response.status).toBe(StatusCodes.OK);
+      expect(response.body).toEqual(articleIndexData);
+    });
+  });
   //
   // describe('GET /articles/:articleID', () => {
   //   it('should return a specific article', async () => {

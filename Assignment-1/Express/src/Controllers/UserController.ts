@@ -37,7 +37,7 @@ const createUser = async (userData: User): Promise<User> => {
   }
 };
 
-const updateUser = async (userID: string, userData: User): Promise<User | null> => {
+const updateUser = async (userID: string, userData: User, requestUser: User | undefined): Promise<User | null> => {
   try {
     const updatedUser = await UserModel.findOneAndUpdate(
         { userID },

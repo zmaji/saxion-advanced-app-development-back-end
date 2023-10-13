@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">51.06% </span>
+                <span class="strong">26.08% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>24/47</span>
+                <span class='fraction'>12/46</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/9</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/10</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.38% </span>
+                <span class="strong">29.26% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>22/42</span>
+                <span class='fraction'>12/41</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -165,11 +165,7 @@
 <a name='L100'></a><a href='#L100'>100</a>
 <a name='L101'></a><a href='#L101'>101</a>
 <a name='L102'></a><a href='#L102'>102</a>
-<a name='L103'></a><a href='#L103'>103</a>
-<a name='L104'></a><a href='#L104'>104</a>
-<a name='L105'></a><a href='#L105'>105</a>
-<a name='L106'></a><a href='#L106'>106</a>
-<a name='L107'></a><a href='#L107'>107</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<a name='L103'></a><a href='#L103'>103</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
@@ -178,15 +174,11 @@
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -200,15 +192,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -283,45 +275,41 @@ import isLoggedIn from '../Middleware/is-logged-in';
 &nbsp;
 const router = Router();
 &nbsp;
-router.get('', async (req: Request, res: Response) =&gt; {
-  try {
-    const category = req.query.category as string | undefined;
+router.get('', <span class="fstat-no" title="function not covered" >async (r</span>eq: Request, res: Response) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const category = <span class="cstat-no" title="statement not covered" >req.query.category as string | undefined;</span>
 &nbsp;
-    const result = await ArticleController.getArticles(category)
-    if (result) {
-      res
-        .status(StatusCodes.OK)
-        .json(result);
-    } else <span class="missing-if-branch" title="else path not taken" >E</span>{
+    const result = <span class="cstat-no" title="statement not covered" >await ArticleController.getArticles(category);</span>
+<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (result) {</span>
 <span class="cstat-no" title="statement not covered" >      res</span>
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: 'Unable to find articles' });
+          .status(StatusCodes.OK)
+          .json(result);
     }
   } catch (error) {
 <span class="cstat-no" title="statement not covered" >    res</span>
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'An error occurred' });
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'An error occurred' });
   }
 });
 &nbsp;
 &nbsp;
-router.get('/:articleID', async (req: Request, res: Response) =&gt; {
-  try {
-    const result = await ArticleController.getArticle(req.params.articleID);
+router.get('/:articleID', <span class="fstat-no" title="function not covered" >async (r</span>eq: Request, res: Response) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const result = <span class="cstat-no" title="statement not covered" >await ArticleController.getArticle(req.params.articleID);</span>
 &nbsp;
-    if (result) {
-      res
-        .status(StatusCodes.OK)
-        .json(result);
+<span class="cstat-no" title="statement not covered" >    if (result) {</span>
+<span class="cstat-no" title="statement not covered" >      res</span>
+          .status(StatusCodes.OK)
+          .json(result);
     } else {
-      res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: `Unable to find article with ID ${req.params.articleID}` });
+<span class="cstat-no" title="statement not covered" >      res</span>
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: `Unable to find article with ID ${req.params.articleID}` });
     }
   } catch (error) {
 <span class="cstat-no" title="statement not covered" >    res</span>
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'An error occurred' });
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'An error occurred' });
   }
 });
 &nbsp;
@@ -331,13 +319,13 @@ router.post('', isLoggedIn, isAdmin, <span class="fstat-no" title="function not 
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (article) {</span>
 <span class="cstat-no" title="statement not covered" >      res</span>
-        .status(StatusCodes.CREATED)
-        .json(article);
+          .status(StatusCodes.CREATED)
+          .json(article);
     }
   } catch (error) {
 <span class="cstat-no" title="statement not covered" >    res</span>
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: 'Fields were not filled in properly' });
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: 'Fields were not filled in properly' });
   }
 });
 &nbsp;
@@ -347,17 +335,17 @@ router.put('/:articleID', isLoggedIn, isAdmin, <span class="fstat-no" title="fun
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (updatedArticle) {</span>
 <span class="cstat-no" title="statement not covered" >      res</span>
-        .status(StatusCodes.OK)
-        .json(updatedArticle);
+          .status(StatusCodes.OK)
+          .json(updatedArticle);
     } else {
 <span class="cstat-no" title="statement not covered" >      res</span>
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: `Unable to update article with ID ${req.params.articleID}` });
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: `Unable to update article with ID ${req.params.articleID}` });
     }
   } catch (error) {
 <span class="cstat-no" title="statement not covered" >    res</span>
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: 'Field were not filled in properly' });
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'Field were not filled in properly' });
   }
 });
 &nbsp;
@@ -367,16 +355,16 @@ router.delete('/:articleID', isLoggedIn, isAdmin, <span class="fstat-no" title="
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (result) {</span>
 <span class="cstat-no" title="statement not covered" >      res</span>
-        .sendStatus(StatusCodes.NO_CONTENT)
-        .json(`Successfully deleted article with ID ${req.params.articleID}`);
+          .sendStatus(StatusCodes.NO_CONTENT)
+          .json(`Successfully deleted article with ID ${req.params.articleID}`);
     } else {
 <span class="cstat-no" title="statement not covered" >      res</span>
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: `Unable to find article with ID ${req.params.articleID}` });
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: `Unable to find article with ID ${req.params.articleID}` });
     }
   } catch (error) {
 <span class="cstat-no" title="statement not covered" >    res</span>
-      .status(StatusCodes.INTERNAL_SERVER_ERROR);
+        .status(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 });
 &nbsp;
@@ -388,7 +376,7 @@ export default router;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-13T09:58:33.358Z
+                at 2023-10-13T13:40:07.670Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
