@@ -1,36 +1,57 @@
 import http from 'http';
 import request from 'supertest';
 import { StatusCodes } from 'http-status-codes';
-import app from './mocks/http/app';
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { userIndexData } from './mocks/data/users';
 import UserModel from '../Models/UserModel';
+import { Express } from 'express';
+import createServer from '../Utils/Server';
 
 let mongoServer: MongoMemoryServer;
 let server: http.Server;
+let app: Express;
 
 beforeAll(async () => {
-  try {
-    mongoServer = await MongoMemoryServer.create();
-    const mongoUri = mongoServer.getUri();
+  mongoServer = new MongoMemoryServer();
+  mongoServer = await MongoMemoryServer.create();
+  const mongoUri = mongoServer.getUri();
 
-    server = app.listen(0);
-    await mongoose.connect(mongoUri, {
+  await mongoose.connect(mongoUri, {
     // @ts-ignore
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  app = createServer();
 
-    for (const user of userIndexData) {
-      const newUser = new UserModel(user);
-      const savedUser = await newUser.save();
-      user.password = savedUser.password;
-    }
-  } catch (error) {
-    console.error('Error setting up MongoDB Memory Server:', error);
+  for (const user of userIndexData) {
+    const newUser = new UserModel(user);
+    const savedUser = await newUser.save();
+    user.password = savedUser.password;
   }
-}, 20000);
+});
+
+// beforeAll(async () => {
+//   try {
+//     mongoServer = await MongoMemoryServer.create();
+//     const mongoUri = mongoServer.getUri();
+//
+//     server = app.listen(0);
+//     await mongoose.connect(mongoUri, {
+//     // @ts-ignore
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//     });
+//
+//     for (const user of userIndexData) {
+//       const newUser = new UserModel(user);
+//       const savedUser = await newUser.save();
+//       user.password = savedUser.password;
+//     }
+//   } catch (error) {
+//     console.error('Error setting up MongoDB Memory Server:', error);
+//   }
+// }, 20000);
 
 afterAll(async () => {
   try {
