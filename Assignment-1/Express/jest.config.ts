@@ -24,5 +24,6 @@ module.exports = {
     '/node_modules/',
     '/src/__tests__/mocks',
     '/src/__tests__/config',
+    '/src/typings',
   ],
 };

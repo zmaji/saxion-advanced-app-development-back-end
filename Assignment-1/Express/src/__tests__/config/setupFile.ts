@@ -44,9 +44,9 @@ beforeAll(async () => {
     const newComment = new CommentModel(comment);
     await newComment.save();
   }
-}, 25000);
+}, 30000);
 
 afterAll(async () => {
-  // put your client disconnection code here, example with mongodb:
   await mongoose.disconnect();
-}, 25000);
+  await mongoServer.stop();
+}, 30000);
