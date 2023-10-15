@@ -14,6 +14,23 @@ describe('comment', () => {
     });
   });
 
+  describe('GET /comments/:commentID', () => {
+    it('should return a specific comment', async () => {
+      const response = await request(app).get(`/comments/${commentIndexData[0].commentID}`);
+
+      expect(response.status).toBe(StatusCodes.OK);
+      expect(response.body).toEqual(commentIndexData[0]);
+    });
+
+    it('should handle an invalid commentID', async () => {
+      const invalidCommentID = 'invalid-id';
+      const response = await request(app).get(`/comments/${invalidCommentID}`);
+
+      expect(response.status).toBe(StatusCodes.NOT_FOUND);
+      expect(response.body).toEqual({ error: 'Unable to find comment with ID invalid-id' });
+    });
+  });
+
   // describe('POST /comments', () => {
   //   it('should create a new comment', async () => {
   //     const newCommentData = {
@@ -49,36 +66,6 @@ describe('comment', () => {
 
   //     expect(response.status).toBe(StatusCodes.BAD_REQUEST);
   //     expect(response.body).toEqual({ error: 'Fields were not filled in properly' });
-  //   });
-  // });
-
-
-  // describe('GET /comments/:commentID', () => {
-  //   it('should return a specific comment', async () => {
-
-  //     const response = await request(app)
-  //       .get(`/comments/${createdCommentID}`)
-  //       .set('Authorization', `Bearer ${adminToken}`);
-
-  //     const { commentID, user, post } = response.body
-
-  //     expect(response.status).toBe(StatusCodes.OK);
-  //     expect(response.body).toEqual({
-  //       commentID: commentID,
-  //       user: user,
-  //       post: post,
-  //       content: 'Content of Test Comment',
-  //     });
-  //   });
-
-  //   it('should handle an invalid commentID', async () => {
-  //     const invalidCommentID = 'invalid-id';
-  //     const response = await request(app)
-  //       .get(`/comments/${invalidCommentID}`)
-  //       .set('Authorization', `Bearer ${adminToken}`);
-
-  //     expect(response.status).toBe(StatusCodes.NOT_FOUND);
-  //     expect(response.body).toEqual({ error: 'Unable to find comment with ID invalid-id' });
   //   });
   // });
 

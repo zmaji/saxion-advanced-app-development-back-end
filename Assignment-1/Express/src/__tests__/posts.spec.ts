@@ -3,7 +3,6 @@ import { StatusCodes } from 'http-status-codes';
 import { postIndexData } from './mocks/data/posts';
 import { app } from './config/setupFile';
 
-
 describe('post', () => {
   describe('GET /posts', () => {
     it('should return a list of posts', async () => {
@@ -12,6 +11,23 @@ describe('post', () => {
 
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toEqual(postIndexData);
+    });
+  });
+
+  describe('GET /posts/:postID', () => {
+    it('should return a specific post', async () => {
+      const response = await request(app).get(`/posts/${postIndexData[0].postID}`);
+
+      expect(response.status).toBe(StatusCodes.OK);
+      expect(response.body).toEqual(postIndexData[0]);
+    });
+
+    it('should handle an invalid postID', async () => {
+      const invalidPostID = 'invalid-id';
+      const response = await request(app).get(`/posts/${invalidPostID}`);
+
+      expect(response.status).toBe(StatusCodes.NOT_FOUND);
+      expect(response.body).toEqual({ error: 'Unable to find post with ID invalid-id' });
     });
   });
 
@@ -55,39 +71,6 @@ describe('post', () => {
 
   //     expect(response.status).toBe(StatusCodes.BAD_REQUEST);
   //     expect(response.body).toEqual({ error: 'Fields were not filled in properly' });
-  //   });
-  // });
-
-
-  // describe('GET /posts/:postID', () => {
-  //   it('should return a specific post', async () => {
-
-  //     const response = await request(app)
-  //       .get(`/posts/${createdPostID}`)
-  //       .set('Authorization', `Bearer ${adminToken}`);
-
-  //     const { postID, user, dislikes, likes } = response.body
-
-  //     expect(response.status).toBe(StatusCodes.OK);
-  //     expect(response.body).toEqual({
-  //       postID: postID,
-  //       user: user,
-  //       title: 'Test Post',
-  //       content: 'Content of Test Post',
-  //       category: 'Category of Test Post',
-  //       dislikes: dislikes,
-  //       likes: likes
-  //     });
-  //   });
-
-  //   it('should handle an invalid postID', async () => {
-  //     const invalidPostID = 'invalid-id';
-  //     const response = await request(app)
-  //       .get(`/posts/${invalidPostID}`)
-  //       .set('Authorization', `Bearer ${adminToken}`);
-
-  //     expect(response.status).toBe(StatusCodes.NOT_FOUND);
-  //     expect(response.body).toEqual({ error: 'Unable to find post with ID invalid-id' });
   //   });
   // });
 
