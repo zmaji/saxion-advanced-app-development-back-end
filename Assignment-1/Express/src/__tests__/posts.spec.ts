@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { StatusCodes } from 'http-status-codes';
-import { postIndexData } from './mocks/data/posts';
+import { postDetailIndex, simplePostIndexData } from './mocks/data/posts';
 import { app } from './config/setupFile';
 
 describe('post', () => {
@@ -10,16 +10,16 @@ describe('post', () => {
           .get('/posts');
 
       expect(response.status).toBe(StatusCodes.OK);
-      expect(response.body).toEqual(postIndexData);
+      expect(response.body).toEqual(simplePostIndexData);
     });
   });
 
   describe('GET /posts/:postID', () => {
     it('should return a specific post', async () => {
-      const response = await request(app).get(`/posts/${postIndexData[0].postID}`);
+      const response = await request(app).get(`/posts/${postDetailIndex[0].postID}`);
 
       expect(response.status).toBe(StatusCodes.OK);
-      expect(response.body).toEqual(postIndexData[0]);
+      expect(response.body).toEqual(postDetailIndex[0]);
     });
 
     it('should handle an invalid postID', async () => {

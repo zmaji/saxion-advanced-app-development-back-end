@@ -1,31 +1,26 @@
 import type { Post, PostDetail, SimplePost } from '../Typings/Post';
 import type { User } from '../Typings/User';
+import type { Comment } from '../Typings/Comment';
 
 import { removeIdField } from '../helpers/removeMongoID';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
-import { Document } from 'mongoose';
 import PostModel from '../Models/PostModel';
 import CommentModel from '../Models/CommentModel';
 import UserModel from '../Models/UserModel';
 
 const getPosts = async (): Promise<SimplePost[] | null> => {
   try {
-    const posts: Post[] | null = await PostModel.find();
+    const posts = await PostModel.find({}, { _id: 0 }).select('-date -user').lean();
 
     if (posts) {
       const postArray: SimplePost[] = [];
 
       for (const post of posts) {
-        const comments = await CommentModel.find({ post: post.postID });
-
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const plainPost = (post as Document).toObject();
-        delete plainPost._id;
+        const comments = await CommentModel.find({ post: post.postID }, { _id: 0 });
 
         postArray.push({
-          ...plainPost,
+          ...post,
           commentCount: comments.length,
         });
       }
@@ -40,26 +35,21 @@ const getPosts = async (): Promise<SimplePost[] | null> => {
 
 const getPost = async (postID: string): Promise<PostDetail | null> => {
   try {
-    const post: Post | null = await PostModel.findOne({ postID: postID });
+    const post: Post | null = await PostModel.findOne({ postID: postID }, { _id: 0 }).lean();
 
     if (post) {
       const userID = post.user;
       const user = await UserModel.findOne({ userID: userID });
-      const comments = await CommentModel.find({ post: postID });
+      const comments: Comment[] = await CommentModel.find({ post: postID }, { _id: 0 });
 
-      if (comments) {
+      if (comments && comments.length) {
         for (const comment of comments) {
           const user = await UserModel.findOne({ userID: comment.user });
           comment.user = user!.userName;
         }
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const plainPost = (post as Document).toObject();
-        delete plainPost._id;
-
         return {
-          ...plainPost,
+          ...post,
           user: user!.userName,
           comments: comments,
         };
@@ -74,15 +64,14 @@ const getPost = async (postID: string): Promise<PostDetail | null> => {
 const createPost = async (postData: Post, headers: string): Promise<Post | null> => {
   try {
     const token = headers.split(' ')[1];
-    const user = jwt.decode(token) as User | null;
+    const user:User | null = jwt.decode(token) as User | null;
 
     if (user) {
       postData.postID = uuidv4();
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       postData.user = user.userID;
       const newPost = new PostModel(postData);
       const post = await newPost.save();
+
       return removeIdField(post);
     }
     return null;

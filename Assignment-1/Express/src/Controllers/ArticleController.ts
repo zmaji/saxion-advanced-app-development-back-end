@@ -6,8 +6,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 const getArticles = async (category?: string): Promise<Article[]> => {
   try {
-    const results = category ? await ArticleModel.find({ category: category }) : await ArticleModel.find();
-    return removeIdField(results);
+    return category ?
+        await ArticleModel.find({ category: category }, { _id: 0 }) :
+        await ArticleModel.find({}, { _id: 0 });
   } catch (error) {
     throw error;
   }
@@ -15,9 +16,9 @@ const getArticles = async (category?: string): Promise<Article[]> => {
 
 const getArticle = async (articleID: string): Promise<Article | null> => {
   try {
-    const result = await ArticleModel.findOne({ articleID });
+    const result = await ArticleModel.findOne({ articleID }, { _id: 0 });
     if (result) {
-      return removeIdField(result);
+      return result;
     }
     return null;
   } catch (error) {
