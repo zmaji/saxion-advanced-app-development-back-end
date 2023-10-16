@@ -56,7 +56,7 @@ const updateUser = async (userID: string, userData: User): Promise<User | null> 
 
 const deleteUser = async (userID: string): Promise<boolean> => {
   try {
-    const result = await UserModel.deleteOne({ userID });
+    const result = await UserModel.deleteOne({ userID: userID });
     return result.deletedCount === 1;
   } catch (error) {
     throw error;

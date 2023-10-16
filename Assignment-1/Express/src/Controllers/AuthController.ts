@@ -7,19 +7,17 @@ import UserModel from '../Models/UserModel';
 export const authenticateUser = async (userName: string, password: string): Promise<string | null> => {
   try {
     if (userName && password) {
-      const user: User | null = await UserModel.findOne({ userName });
+      const user: User | null = await UserModel.findOne({ userName: userName });
 
       if (user) {
-        const result = await bcrypt.compare(password, user.password);
+        const result = bcrypt.compareSync(password, user.password);
 
         if (result) {
-          const token = jwt.sign({
+          return jwt.sign({
             userID: user.userID,
             email: user.email,
             roles: user.roles,
           }, user.secret);
-
-          return token;
         } else {
           return null;
         }

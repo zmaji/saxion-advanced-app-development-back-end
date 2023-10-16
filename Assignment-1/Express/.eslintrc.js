@@ -37,7 +37,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.spec.ts'],
+      files: ['src/__tests__/**/*'],
       rules: {
         '@typescript-eslint/no-non-null-assertion': 'off',
         'import/order': importOrderRule,
