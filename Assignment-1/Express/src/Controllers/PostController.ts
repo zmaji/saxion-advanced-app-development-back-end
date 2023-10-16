@@ -64,7 +64,7 @@ const getPost = async (postID: string): Promise<PostDetail | null> => {
 const createPost = async (postData: Post, headers: string): Promise<Post | null> => {
   try {
     const token = headers.split(' ')[1];
-    const user:User | null = jwt.decode(token) as User | null;
+    const user: User | null = jwt.decode(token) as User | null;
 
     if (user) {
       postData.postID = uuidv4();
@@ -87,9 +87,9 @@ const updatePost = async (postID: string, postData: Post, headers: string): Prom
 
     if (user) {
       const updatedPost = await PostModel.findOneAndUpdate(
-          { postID, user: user.userID },
-          postData,
-          { new: true },
+        { postID, user: user.userID },
+        postData,
+        { new: true },
       );
 
       if (updatedPost) {

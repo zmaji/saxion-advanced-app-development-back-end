@@ -10,7 +10,8 @@
       "Air Travel Worries"
     ],
     "likes": 8,
-    "dislikes": 3
+    "dislikes": 3,
+    "image": "mock"
   },
   {
     "postID": "d2a53a53-5f50-4e8b-bcff-73753bbc4c91",
@@ -23,7 +24,8 @@
       "Coping Strategies"
     ],
     "likes": 11,
-    "dislikes": 4
+    "dislikes": 4,
+    "image": "mock"
   },
   {
     "postID": "7a1d6b14-7fc4-4cc6-8b1f-194c78583f36",
@@ -36,7 +38,8 @@
       "Stress Reduction"
     ],
     "likes": 6,
-    "dislikes": 2
+    "dislikes": 2,
+    "image": "mock"
   },
   {
     "postID": "c64ea67f-5bc9-4929-8102-158d6b96ffeb",
@@ -49,7 +52,8 @@
       "Anxiety Victory"
     ],
     "likes": 9,
-    "dislikes": 1
+    "dislikes": 1,
+    "image": "mock"
   },
   {
     "postID": "b8f1daaa-0655-4527-a90d-7a52a499de24",
@@ -62,6 +66,7 @@
       "Anxiety Relief"
     ],
     "likes": 7,
-    "dislikes": 5
+    "dislikes": 5,
+    "image": "mock"
   }
 ]
