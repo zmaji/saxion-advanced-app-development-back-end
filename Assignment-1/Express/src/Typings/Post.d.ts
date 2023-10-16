@@ -8,7 +8,9 @@ export interface Post {
   content: string,
   categories: string[],
   likes: number,
-  dislikes: number
+  dislikes: number,
+  image: string,
+  location: string,
 }
 
 export interface SimplePost {
@@ -18,7 +20,8 @@ export interface SimplePost {
   categories: string[],
   likes: number,
   dislikes: number,
-  commentCount: number
+  commentCount: number,
+  image: string,
 }
 
 export interface PostDetail {
@@ -30,5 +33,7 @@ export interface PostDetail {
   categories: string[],
   likes: number,
   dislikes: number,
-  comments: Comment[]
+  comments: Comment[],
+  image: string,
+  location: string,
 }
