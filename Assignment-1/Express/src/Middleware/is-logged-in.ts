@@ -22,6 +22,7 @@ const isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
 
     if (payload) {
       req.user = payload as User;
+
       return next();
     }
   }
@@ -50,14 +51,17 @@ const verifyToken = async (token: string) => {
           return jwt.verify(token, user.secret);
         } catch (error) {
           console.log(error);
+
           return null;
         }
       }
     } catch (error) {
       console.log(error);
+
       return null;
     }
   }
+
   return null;
 };
 

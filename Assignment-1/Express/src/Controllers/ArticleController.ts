@@ -20,6 +20,7 @@ const getArticle = async (articleID: string): Promise<Article | null> => {
     if (result) {
       return result;
     }
+
     return null;
   } catch (error) {
     throw error;
@@ -31,6 +32,7 @@ const createArticle = async (articleData: Article): Promise<Article> => {
     articleData.articleID = uuidv4();
     const newArticle = new ArticleModel(articleData);
     const article = await newArticle.save();
+
     return removeIdField(article);
   } catch (error) {
     throw error;
@@ -48,6 +50,7 @@ const updateArticle = async (articleID: string, articleData: Article): Promise<A
     if (updatedArticle) {
       return removeIdField(updatedArticle);
     }
+
     return null;
   } catch (error) {
     throw error;
@@ -57,6 +60,7 @@ const updateArticle = async (articleID: string, articleData: Article): Promise<A
 const deleteArticle = async (articleID: string): Promise<boolean> => {
   try {
     const result = await ArticleModel.deleteOne({ articleID });
+
     return result.deletedCount === 1;
   } catch (error) {
     throw error;

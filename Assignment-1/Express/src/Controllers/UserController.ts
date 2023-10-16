@@ -7,6 +7,7 @@ import UserModel from '../Models/UserModel';
 const getUsers = async (): Promise<User[]> => {
   try {
     const results = await UserModel.find();
+
     return removeIdField(results);
   } catch (error) {
     throw error;
@@ -19,6 +20,7 @@ const getUser = async (userID: string): Promise<User | null> => {
     if (result) {
       return removeIdField(result);
     }
+
     return null;
   } catch (error) {
     throw error;
@@ -56,6 +58,7 @@ const updateUser = async (userID: string, userData: User): Promise<User | null> 
     if (updatedUser) {
       return removeIdField(updatedUser);
     }
+
     return null;
   } catch (error) {
     throw error;
@@ -65,6 +68,7 @@ const updateUser = async (userID: string, userData: User): Promise<User | null> 
 const deleteUser = async (userID: string): Promise<boolean> => {
   try {
     const result = await UserModel.deleteOne({ userID: userID });
+
     return result.deletedCount === 1;
   } catch (error) {
     throw error;

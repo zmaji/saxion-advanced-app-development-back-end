@@ -11,8 +11,10 @@ export function removeIdField<T extends Document | Document[]>(docOrArray: T): T
     if (doc && doc._id) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { _id, ...rest } = doc.toObject();
+
       return rest;
     }
+
     return doc;
   };
 

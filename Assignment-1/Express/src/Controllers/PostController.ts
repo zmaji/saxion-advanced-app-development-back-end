@@ -27,6 +27,7 @@ const getPosts = async (): Promise<SimplePost[] | null> => {
 
       return postArray;
     }
+
     return null;
   } catch (error) {
     throw error;
@@ -55,6 +56,7 @@ const getPost = async (postID: string): Promise<PostDetail | null> => {
         };
       }
     }
+
     return null;
   } catch (error) {
     throw error;
@@ -74,6 +76,7 @@ const createPost = async (postData: Post, headers: string): Promise<Post | null>
 
       return removeIdField(post);
     }
+
     return null;
   } catch (error) {
     throw error;
@@ -96,6 +99,7 @@ const updatePost = async (postID: string, postData: Post, headers: string): Prom
         return removeIdField(updatedPost);
       }
     }
+
     return null;
   } catch (error) {
     throw error;
@@ -105,6 +109,7 @@ const updatePost = async (postID: string, postData: Post, headers: string): Prom
 const deletePost = async (postID: string): Promise<boolean> => {
   try {
     const result = await PostModel.deleteOne({ postID });
+
     return result.deletedCount === 1;
   } catch (error) {
     throw error;

@@ -20,6 +20,7 @@ const getComment = async (commentID: string): Promise<Comment | null> => {
     if (result) {
       return result;
     }
+
     return null;
   } catch (error) {
     throw error;
@@ -36,8 +37,10 @@ const createComment = async (commentData: Comment, headers: string): Promise<Com
       commentData.user = user.userID;
       const newComment = new CommentModel(commentData);
       const comment = await newComment.save();
+
       return removeIdField(comment);
     }
+
     return null;
   } catch (error) {
     throw error;
@@ -60,6 +63,7 @@ const updateComment = async (commentID: string, commentData: Comment, headers: s
         return removeIdField(updatedComment);
       }
     }
+
     return null;
   } catch (error) {
     throw error;
@@ -69,6 +73,7 @@ const updateComment = async (commentID: string, commentData: Comment, headers: s
 const deleteComment = async (commentID: string): Promise<boolean> => {
   try {
     const result = await CommentModel.deleteOne({ commentID });
+
     return result.deletedCount === 1;
   } catch (error) {
     throw error;
