@@ -22,6 +22,7 @@ export interface SimplePost {
   dislikes: number,
   commentCount: number,
   image: string,
+  date: string,
 }
 
 export interface PostDetail {
