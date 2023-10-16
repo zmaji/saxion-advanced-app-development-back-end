@@ -25,13 +25,21 @@ const getUser = async (userID: string): Promise<User | null> => {
   }
 };
 
-const createUser = async (userData: User): Promise<User> => {
+const createUser = async (userData: User): Promise<User | string> => {
   try {
-    userData.userID = uuidv4();
-    userData.secret = uuidv4();
-    const newUser = new UserModel(userData);
-    const user = await newUser.save();
-    return removeIdField(user);
+    const { userName, email } = userData;
+    const existingUser = await UserModel.findOne({ userName, email });
+
+    if (!existingUser) {
+      userData.userID = uuidv4();
+      userData.secret = uuidv4();
+      const newUser = new UserModel(userData);
+      const user = await newUser.save();
+
+      return removeIdField(user);
+    } else {
+      return 'This username or email is already in use';
+    }
   } catch (error) {
     throw error;
   }

@@ -47,12 +47,16 @@ router.get('/:userID', isLoggedIn, isAdmin, async (req: Request, res: Response) 
 
 router.post('', async (req: Request, res: Response) => {
   try {
-    const user = await UserController.createUser(req.body);
+    const result = await UserController.createUser(req.body);
 
-    if (user) {
+    if (typeof result !== 'string') {
       res
           .status(StatusCodes.CREATED)
-          .json(user);
+          .json(result);
+    } else {
+      res
+          .status(StatusCodes.BAD_REQUEST)
+          .json(result);
     }
   } catch (error) {
     res
