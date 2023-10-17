@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import PostModel from '../Models/PostModel';
 import CommentModel from '../Models/CommentModel';
 import UserModel from '../Models/UserModel';
+import logger from '../logger';
 
 const getPosts = async (): Promise<SimplePost[] | null> => {
   try {
@@ -30,6 +31,7 @@ const getPosts = async (): Promise<SimplePost[] | null> => {
 
     return null;
   } catch (error) {
+    logger.error('Something went wrong getting posts');
     throw error;
   }
 };
@@ -59,6 +61,7 @@ const getPost = async (postID: string): Promise<PostDetail | null> => {
 
     return null;
   } catch (error) {
+    logger.error('Something went wrong getting a post');
     throw error;
   }
 };
@@ -66,7 +69,7 @@ const getPost = async (postID: string): Promise<PostDetail | null> => {
 const createPost = async (postData: Post, headers: string): Promise<Post | null> => {
   try {
     const token = headers.split(' ')[1];
-    const user:User | null = jwt.decode(token) as User | null;
+    const user: User | null = jwt.decode(token) as User | null;
 
     if (user) {
       postData.postID = uuidv4();
@@ -79,6 +82,7 @@ const createPost = async (postData: Post, headers: string): Promise<Post | null>
 
     return null;
   } catch (error) {
+    logger.error('Something went wrong creating a post');
     throw error;
   }
 };
@@ -90,9 +94,9 @@ const updatePost = async (postID: string, postData: Post, headers: string): Prom
 
     if (user) {
       const updatedPost = await PostModel.findOneAndUpdate(
-          { postID, user: user.userID },
-          postData,
-          { new: true },
+        { postID, user: user.userID },
+        postData,
+        { new: true },
       );
 
       if (updatedPost) {
@@ -102,6 +106,7 @@ const updatePost = async (postID: string, postData: Post, headers: string): Prom
 
     return null;
   } catch (error) {
+    logger.error('Something went wrong updating a post');
     throw error;
   }
 };
@@ -112,6 +117,7 @@ const deletePost = async (postID: string): Promise<boolean> => {
 
     return result.deletedCount === 1;
   } catch (error) {
+    logger.error('Something went wrong deleting a post');
     throw error;
   }
 };

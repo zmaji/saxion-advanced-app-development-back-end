@@ -3,6 +3,7 @@ import type { User } from '../Typings/User';
 import { v4 as uuidv4 } from 'uuid';
 import { removeIdField } from '../helpers/removeMongoID';
 import UserModel from '../Models/UserModel';
+import logger from '../logger';
 
 const getUsers = async (): Promise<User[]> => {
   try {
@@ -10,6 +11,7 @@ const getUsers = async (): Promise<User[]> => {
 
     return removeIdField(results);
   } catch (error) {
+    logger.error('Something went wrong getting users');
     throw error;
   }
 };
@@ -23,6 +25,7 @@ const getUser = async (userID: string): Promise<User | null> => {
 
     return null;
   } catch (error) {
+    logger.error('Something went wrong getting a user');
     throw error;
   }
 };
@@ -43,6 +46,7 @@ const createUser = async (userData: User): Promise<User | string> => {
       return 'This username or email is already in use';
     }
   } catch (error) {
+    logger.error('Something went wrong creating a user');
     throw error;
   }
 };
@@ -50,9 +54,9 @@ const createUser = async (userData: User): Promise<User | string> => {
 const updateUser = async (userID: string, userData: User): Promise<User | null> => {
   try {
     const updatedUser = await UserModel.findOneAndUpdate(
-        { userID },
-        userData,
-        { new: true },
+      { userID },
+      userData,
+      { new: true },
     );
 
     if (updatedUser) {
@@ -61,6 +65,7 @@ const updateUser = async (userID: string, userData: User): Promise<User | null> 
 
     return null;
   } catch (error) {
+    logger.error('Something went wrong updating a user');
     throw error;
   }
 };
@@ -71,6 +76,7 @@ const deleteUser = async (userID: string): Promise<boolean> => {
 
     return result.deletedCount === 1;
   } catch (error) {
+    logger.error('Something went wrong deleting a user');
     throw error;
   }
 };

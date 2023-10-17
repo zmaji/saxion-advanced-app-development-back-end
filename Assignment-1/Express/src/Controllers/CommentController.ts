@@ -5,11 +5,13 @@ import { removeIdField } from '../helpers/removeMongoID';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import CommentModel from '../Models/CommentModel';
+import logger from '../logger';
 
 const getComments = async (): Promise<Comment[]> => {
   try {
     return await CommentModel.find({}, { _id: 0 });
   } catch (error) {
+    logger.error('Something went wrong getting comments');
     throw error;
   }
 };
@@ -23,6 +25,7 @@ const getComment = async (commentID: string): Promise<Comment | null> => {
 
     return null;
   } catch (error) {
+    logger.error('Something went wrong getting a comment');
     throw error;
   }
 };
@@ -43,6 +46,7 @@ const createComment = async (commentData: Comment, headers: string): Promise<Com
 
     return null;
   } catch (error) {
+    logger.error('Something went wrong creating a comment');
     throw error;
   }
 };
@@ -54,9 +58,9 @@ const updateComment = async (commentID: string, commentData: Comment, headers: s
 
     if (user) {
       const updatedComment = await CommentModel.findOneAndUpdate(
-          { commentID, user: user.userID },
-          commentData,
-          { new: true },
+        { commentID, user: user.userID },
+        commentData,
+        { new: true },
       );
 
       if (updatedComment) {
@@ -66,6 +70,7 @@ const updateComment = async (commentID: string, commentData: Comment, headers: s
 
     return null;
   } catch (error) {
+    logger.error('Something went wrong updating a comment');
     throw error;
   }
 };
@@ -76,6 +81,7 @@ const deleteComment = async (commentID: string): Promise<boolean> => {
 
     return result.deletedCount === 1;
   } catch (error) {
+    logger.error('Something went wrong deleting a comment');
     throw error;
   }
 };

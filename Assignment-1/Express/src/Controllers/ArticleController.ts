@@ -3,13 +3,15 @@ import type { Article } from '../Typings/Article';
 import ArticleModel from '../Models/ArticleModel';
 import { removeIdField } from '../helpers/removeMongoID';
 import { v4 as uuidv4 } from 'uuid';
+import logger from '../logger';
 
 const getArticles = async (category?: string): Promise<Article[]> => {
   try {
     return category ?
-        await ArticleModel.find({ category: category }, { _id: 0 }) :
-        await ArticleModel.find({}, { _id: 0 });
+      await ArticleModel.find({ category: category }, { _id: 0 }) :
+      await ArticleModel.find({}, { _id: 0 });
   } catch (error) {
+    logger.error('Something went wrong retrieving articles', error);
     throw error;
   }
 };
@@ -23,6 +25,7 @@ const getArticle = async (articleID: string): Promise<Article | null> => {
 
     return null;
   } catch (error) {
+    logger.error('Something went wrong retrieving articles');
     throw error;
   }
 };
@@ -35,6 +38,7 @@ const createArticle = async (articleData: Article): Promise<Article> => {
 
     return removeIdField(article);
   } catch (error) {
+    logger.error('Something went wrong creating an article');
     throw error;
   }
 };
@@ -42,9 +46,9 @@ const createArticle = async (articleData: Article): Promise<Article> => {
 const updateArticle = async (articleID: string, articleData: Article): Promise<Article | null> => {
   try {
     const updatedArticle = await ArticleModel.findOneAndUpdate(
-        { articleID },
-        articleData,
-        { new: true },
+      { articleID },
+      articleData,
+      { new: true },
     );
 
     if (updatedArticle) {
@@ -53,6 +57,7 @@ const updateArticle = async (articleID: string, articleData: Article): Promise<A
 
     return null;
   } catch (error) {
+    logger.error('Something went wrong updating an article');
     throw error;
   }
 };
@@ -63,6 +68,7 @@ const deleteArticle = async (articleID: string): Promise<boolean> => {
 
     return result.deletedCount === 1;
   } catch (error) {
+    logger.error('Something went wrong deleting an article');
     throw error;
   }
 };
