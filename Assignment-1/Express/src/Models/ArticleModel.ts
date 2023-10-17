@@ -25,7 +25,7 @@ const articleSchema: Schema<Article> = new Schema({
     required: true,
   },
   image: {
-    type: String
+    type: String,
   },
 }, {
   collection: 'articles',
