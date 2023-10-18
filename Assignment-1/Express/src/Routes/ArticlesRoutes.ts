@@ -23,7 +23,6 @@ router.get('', async (req: Request, res: Response) => {
   }
 });
 
-
 router.get('/:articleID', async (req: Request, res: Response) => {
   try {
     const result = await ArticleController.getArticle(req.params.articleID);

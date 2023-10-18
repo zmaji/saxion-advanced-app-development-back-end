@@ -4,7 +4,7 @@
     "title": "Fasten Your Seatbelts: What You Need to Know About Turbulence",
     "description": "Recent incidents with turbulence during air travel raise questions about this challenging weather phenomenon. Here’s what we know about it and how to stay safe.",
     "content": "Recent research indicates that turbulence is rising and that this change is sparked by climate change, specifically elevated carbon dioxide emissions affecting air currents.",
-    "category": "Education and information",
+    "category": "education-and-information-1",
     "image": "mock"
   },
   {
@@ -13,7 +13,7 @@
     "description": "Flying becomes safer with every year that passes",
     "content": "According to research by Harvard University, flying in the US, Europe, and Australia is actually significantly safer than driving a car. Your odds of being in an accident during a flight is one in 1.2 million, and the chances of that accident being fatal are one in 11 million. Your chances of dying in a car crash, conversely, are one in 5,000.",
     "category": "Education and information",
-    "image": "mock"
+    "image": "education-and-information-2"
   },
   {
     "articleID": "b789e4b0-9cf2-4c5b-86f5-8ec7f6ce4874",
@@ -21,7 +21,7 @@
     "description": "Discover what it's like to be in the cockpit and the responsibilities of a commercial airline pilot.",
     "content": "We delve into the daily life of a pilot, the extensive training they undergo, and the critical role they play in ensuring safe air travel.",
     "category": "Flight activities",
-    "image": "mock"
+    "image": "flight-activities-1"
   },
   {
     "articleID": "c06a5fb1-60e3-48b2-b4c2-9f2a98765f04",
@@ -29,7 +29,7 @@
     "description": "Learn effective relaxation techniques to alleviate pre-flight jitters and stress.",
     "content": "Explore various methods to relax, from deep breathing exercises to yoga stretches, ensuring a calm and enjoyable flying experience.",
     "category": "Relaxation techniques",
-    "image": "mock"
+    "image": "relaxation-techniques-1"
   },
   {
     "articleID": "e18913a7-55a5-4a5b-9c6e-9d2567985a86",
@@ -37,7 +37,7 @@
     "description": "Discover how mindfulness practices can enhance your in-flight experience and reduce travel-related stress.",
     "content": "We'll discuss mindfulness techniques, meditation, and tips to stay present and grounded while flying.",
     "category": "Mindfulness",
-    "image": "mock"
+    "image": "mindfulness-1"
   },
   {
     "articleID": "d72a4bde-95e1-49d3-847e-dc979c98c2ce",
@@ -45,7 +45,7 @@
     "description": "Get organized and ensure a smooth start to your journey with these pre-flight preparation tips.",
     "content": "From packing essentials to navigating airport security, this guide will help you prepare like a pro.",
     "category": "Pre-flight preparation",
-    "image": "mock"
+    "image": "pre-flight-preperation-1"
   },
   {
     "articleID": "f03ab50a-97d8-4e91-a5b0-c9c51cc11c68",
@@ -53,7 +53,7 @@
     "description": "Keep young travelers engaged and entertained during the flight with these exciting activities.",
     "content": "Explore creative ways to make flying a memorable adventure for children, from games to travel-themed crafts.",
     "category": "Flight activities",
-    "image": "mock"
+    "image": "flight-activities-2"
   },
   {
     "articleID": "a6a4fc31-4e9c-4e91-9d8b-4e0c8eb23a75",
@@ -61,7 +61,7 @@
     "description": "Overcome flight anxiety with effective relaxation techniques designed to bring calm and comfort to your journey.",
     "content": "We'll provide step-by-step guidance on breathing exercises and visualization methods to ease nervousness.",
     "category": "Relaxation techniques",
-    "image": "mock"
+    "image": "relaxation-techniques-2"
   },
   {
     "articleID": "f91bc0f2-5e93-4f26-94a1-5d08ff3d7240",
@@ -69,7 +69,7 @@
     "description": "Embrace mindfulness practices to fully enjoy the travel experience and stay stress-free.",
     "content": "Learn how to stay connected with the present moment, appreciate the journey, and let go of travel-related worries.",
     "category": "Mindfulness",
-    "image": "mock"
+    "image": "mindfulness-2"
   },
   {
     "articleID": "c9d4f740-52c0-4b35-9ca9-4162efdc725b",
@@ -77,6 +77,6 @@
     "description": "Discover a variety of in-flight entertainment options and activities to make long flights enjoyable.",
     "content": "From movies and books to in-flight games and onboard Wi-Fi, we've got you covered.",
     "category": "Flight activities",
-    "image": "mock"
+    "image": "flight-activities-3"
   }
 ]
