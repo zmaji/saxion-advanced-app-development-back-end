@@ -11,7 +11,7 @@ const getArticles = async (category?: string): Promise<Article[]> => {
       await ArticleModel.find({ category: category }, { _id: 0 }) :
       await ArticleModel.find({}, { _id: 0 });
   } catch (error) {
-    logger.error('Something went wrong retrieving articles', error);
+    logger.error('Something went wrong retrieving articles:', error);
     throw error;
   }
 };
@@ -25,7 +25,7 @@ const getArticle = async (articleID: string): Promise<Article | null> => {
 
     return null;
   } catch (error) {
-    logger.error('Something went wrong retrieving articles');
+    logger.error('Something went wrong retrieving an article:', error);
     throw error;
   }
 };
@@ -38,7 +38,7 @@ const createArticle = async (articleData: Article): Promise<Article> => {
 
     return removeIdField(article);
   } catch (error) {
-    logger.error('Something went wrong creating an article');
+    logger.error('Something went wrong creating an article:', error);
     throw error;
   }
 };
@@ -57,7 +57,7 @@ const updateArticle = async (articleID: string, articleData: Article): Promise<A
 
     return null;
   } catch (error) {
-    logger.error('Something went wrong updating an article');
+    logger.error('Something went wrong updating an article:', error);
     throw error;
   }
 };
@@ -68,7 +68,7 @@ const deleteArticle = async (articleID: string): Promise<boolean> => {
 
     return result.deletedCount === 1;
   } catch (error) {
-    logger.error('Something went wrong deleting an article');
+    logger.error('Something went wrong deleting an article:', error);
     throw error;
   }
 };

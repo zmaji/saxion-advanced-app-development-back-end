@@ -11,7 +11,7 @@ const getUsers = async (): Promise<User[]> => {
 
     return removeIdField(results);
   } catch (error) {
-    logger.error('Something went wrong getting users');
+    logger.error('Something went wrong getting users:', error);
     throw error;
   }
 };
@@ -43,10 +43,11 @@ const createUser = async (userData: User): Promise<User | string> => {
 
       return removeIdField(user);
     } else {
+      logger.warn('This username or email is already in use');
       return 'This username or email is already in use';
     }
   } catch (error) {
-    logger.error('Something went wrong creating a user');
+    logger.error('Something went wrong creating a user:', error);
     throw error;
   }
 };
@@ -65,7 +66,7 @@ const updateUser = async (userID: string, userData: User): Promise<User | null> 
 
     return null;
   } catch (error) {
-    logger.error('Something went wrong updating a user');
+    logger.error('Something went wrong updating a user', error);
     throw error;
   }
 };
@@ -76,7 +77,7 @@ const deleteUser = async (userID: string): Promise<boolean> => {
 
     return result.deletedCount === 1;
   } catch (error) {
-    logger.error('Something went wrong deleting a user');
+    logger.error('Something went wrong deleting a user', error);
     throw error;
   }
 };

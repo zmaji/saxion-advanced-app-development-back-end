@@ -29,7 +29,7 @@ export const authenticateUser = async (userName: string, password: string): Prom
       return null;
     }
   } catch (error) {
-    logger.error('Something went wrong authenticating a user');
+    logger.error('Something went wrong authenticating a user:', error);
     throw error;
   }
 };

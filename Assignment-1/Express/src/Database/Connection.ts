@@ -23,7 +23,7 @@ class Database {
         logger.info('Database connection successful to ' + DB_HOST + ':' + DB_PORT);
       })
       .catch((err) => {
-        logger.fatal('Database connection error', err);
+        logger.error('Database connection error:', err);
       });
   }
 }

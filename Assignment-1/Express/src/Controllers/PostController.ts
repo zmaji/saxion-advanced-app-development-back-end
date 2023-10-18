@@ -31,7 +31,7 @@ const getPosts = async (): Promise<SimplePost[] | null> => {
 
     return null;
   } catch (error) {
-    logger.error('Something went wrong getting posts');
+    logger.error('Something went wrong getting posts:', error);
     throw error;
   }
 };
@@ -61,7 +61,7 @@ const getPost = async (postID: string): Promise<PostDetail | null> => {
 
     return null;
   } catch (error) {
-    logger.error('Something went wrong getting a post');
+    logger.error('Something went wrong getting a post:', error);
     throw error;
   }
 };
@@ -82,7 +82,7 @@ const createPost = async (postData: Post, headers: string): Promise<Post | null>
 
     return null;
   } catch (error) {
-    logger.error('Something went wrong creating a post');
+    logger.error('Something went wrong creating a post:', error);
     throw error;
   }
 };
@@ -106,7 +106,7 @@ const updatePost = async (postID: string, postData: Post, headers: string): Prom
 
     return null;
   } catch (error) {
-    logger.error('Something went wrong updating a post');
+    logger.error('Something went wrong updating a post:', error);
     throw error;
   }
 };
@@ -117,7 +117,7 @@ const deletePost = async (postID: string): Promise<boolean> => {
 
     return result.deletedCount === 1;
   } catch (error) {
-    logger.error('Something went wrong deleting a post');
+    logger.error('Something went wrong deleting a post:', error);
     throw error;
   }
 };
