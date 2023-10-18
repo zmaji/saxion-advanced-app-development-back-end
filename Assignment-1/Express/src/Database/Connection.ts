@@ -2,7 +2,7 @@
 
 import mongoose from 'mongoose';
 import config from '../config';
-import logger from '../helpers/logger';
+import logger from '../../logger';
 
 const DB_HOST = config.DB_HOST;
 const DB_PORT = config.DB_PORT;

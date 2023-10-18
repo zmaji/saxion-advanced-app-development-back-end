@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
 import userController from '../Controllers/UserController';
-import logger from '../helpers/logger';
+import logger from '../../logger';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace

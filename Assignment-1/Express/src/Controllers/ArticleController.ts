@@ -3,7 +3,7 @@ import type { Article } from '../Typings/Article';
 import ArticleModel from '../Models/ArticleModel';
 import { removeIdField } from '../helpers/removeMongoID';
 import { v4 as uuidv4 } from 'uuid';
-import logger from '../helpers/logger';
+import logger from '../../logger';
 
 const getArticles = async (category?: string): Promise<Article[]> => {
   try {
@@ -26,8 +26,8 @@ const getArticle = async (articleID: string): Promise<Article | null> => {
     return null;
   } catch (error) {
     logger.error('Something went wrong retrieving an article:', error);
-    throw error;
   }
+  return null;
 };
 
 const createArticle = async (articleData: Article): Promise<Article> => {

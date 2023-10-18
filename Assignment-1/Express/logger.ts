@@ -49,7 +49,7 @@ const logger = createLogger({
       )
     }),
     new transports.File({
-      filename: './logfile.log',
+      filename: '/logfile.log',
       format: combine(
         prettyPrint(),
         logFormat,
