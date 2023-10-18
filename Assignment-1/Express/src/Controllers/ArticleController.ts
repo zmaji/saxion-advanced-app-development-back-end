@@ -26,8 +26,8 @@ const getArticle = async (articleID: string): Promise<Article | null> => {
     return null;
   } catch (error) {
     logger.error('Something went wrong retrieving an article:', error);
+    throw error;
   }
-  return null;
 };
 
 const createArticle = async (articleData: Article): Promise<Article> => {

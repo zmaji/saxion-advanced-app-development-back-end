@@ -29,18 +29,15 @@ router.get('/:articleID', async (req: Request, res: Response) => {
     const result = await ArticleController.getArticle(req.params.articleID);
 
     if (result) {
-      logger.info(`Successfully retrieved article with ID ${req.params.articleID}`);
       res
         .status(StatusCodes.OK)
         .json(result);
     } else {
-      logger.error(`Unable to find article with ID ${req.params.articleID}`);
       res
         .status(StatusCodes.NOT_FOUND)
         .json({ error: `Unable to find article with ID ${req.params.articleID}` });
     }
   } catch (error) {
-    logger.error('An error occurred:', error);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: 'An error occurred' });
