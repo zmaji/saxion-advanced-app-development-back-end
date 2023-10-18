@@ -18,4 +18,4 @@ services:
     depends_on:
       - mongo
     volumes:
-      - ./logfile.log:/logfile.log
+      - ./Logs/application.log:/Logs/application.log

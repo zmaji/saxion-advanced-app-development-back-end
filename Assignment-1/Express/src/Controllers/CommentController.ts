@@ -5,7 +5,7 @@ import { removeIdField } from '../helpers/removeMongoID';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import CommentModel from '../Models/CommentModel';
-import logger from '../helpers/logger';
+import logger from '../Utils/logger';
 
 const getComments = async (): Promise<Comment[]> => {
   try {
@@ -58,9 +58,9 @@ const updateComment = async (commentID: string, commentData: Comment, headers: s
 
     if (user) {
       const updatedComment = await CommentModel.findOneAndUpdate(
-          { commentID, user: user.userID },
-          commentData,
-          { new: true },
+        { commentID, user: user.userID },
+        commentData,
+        { new: true },
       );
 
       if (updatedComment) {

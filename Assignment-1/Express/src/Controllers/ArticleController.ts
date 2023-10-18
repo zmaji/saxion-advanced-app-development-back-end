@@ -3,7 +3,7 @@ import type { Article } from '../Typings/Article';
 import ArticleModel from '../Models/ArticleModel';
 import { removeIdField } from '../helpers/removeMongoID';
 import { v4 as uuidv4 } from 'uuid';
-import logger from '../helpers/logger';
+import logger from '../Utils/logger';
 
 const getArticles = async (category?: string): Promise<Article[]> => {
   try {
@@ -46,9 +46,9 @@ const createArticle = async (articleData: Article): Promise<Article> => {
 const updateArticle = async (articleID: string, articleData: Article): Promise<Article | null> => {
   try {
     const updatedArticle = await ArticleModel.findOneAndUpdate(
-        { articleID },
-        articleData,
-        { new: true },
+      { articleID },
+      articleData,
+      { new: true },
     );
 
     if (updatedArticle) {

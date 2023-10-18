@@ -3,7 +3,7 @@ import type { User } from '../Typings/User';
 import { v4 as uuidv4 } from 'uuid';
 import { removeIdField } from '../helpers/removeMongoID';
 import UserModel from '../Models/UserModel';
-import logger from '../helpers/logger';
+import logger from '../Utils/logger';
 
 const getUsers = async (): Promise<User[]> => {
   try {
@@ -56,9 +56,9 @@ const createUser = async (userData: User): Promise<User | string> => {
 const updateUser = async (userID: string, userData: User): Promise<User | null> => {
   try {
     const updatedUser = await UserModel.findOneAndUpdate(
-        { userID },
-        userData,
-        { new: true },
+      { userID },
+      userData,
+      { new: true },
     );
 
     if (updatedUser) {
