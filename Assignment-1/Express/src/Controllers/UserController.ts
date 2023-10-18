@@ -44,6 +44,7 @@ const createUser = async (userData: User): Promise<User | string> => {
       return removeIdField(user);
     } else {
       logger.warn('This username or email is already in use');
+
       return 'This username or email is already in use';
     }
   } catch (error) {
@@ -55,9 +56,9 @@ const createUser = async (userData: User): Promise<User | string> => {
 const updateUser = async (userID: string, userData: User): Promise<User | null> => {
   try {
     const updatedUser = await UserModel.findOneAndUpdate(
-      { userID },
-      userData,
-      { new: true },
+        { userID },
+        userData,
+        { new: true },
     );
 
     if (updatedUser) {

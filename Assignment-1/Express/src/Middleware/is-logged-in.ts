@@ -52,6 +52,7 @@ const verifyToken = async (token: string) => {
           return jwt.verify(token, user.secret);
         } catch (error) {
           logger.error('Something went wrong returning the token', error);
+
           return null;
         }
       }

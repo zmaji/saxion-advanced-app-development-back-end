@@ -19,12 +19,12 @@ class Database {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     mongoose.connect(mongoURI, { useNewUrlParser: true })
-      .then(() => {
-        logger.info('Database connection successful to ' + DB_HOST + ':' + DB_PORT);
-      })
-      .catch((err) => {
-        logger.error('Database connection error:', err);
-      });
+        .then(() => {
+          logger.info('Database connection successful to ' + DB_HOST + ':' + DB_PORT);
+        })
+        .catch((err) => {
+          logger.error('Database connection error:', err);
+        });
   }
 }
 

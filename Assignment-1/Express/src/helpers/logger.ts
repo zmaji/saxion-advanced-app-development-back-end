@@ -1,16 +1,11 @@
-import winston,
-{
-  createLogger,
-  format,
-  transports
-} from 'winston';
+import winston, { createLogger, format, transports } from 'winston';
 const {
   combine,
   timestamp,
   printf,
   colorize,
   prettyPrint,
-  errors
+  errors,
 } = format;
 
 const customLevels = {
@@ -24,39 +19,39 @@ const customLevels = {
     // fatal: 'bold red redBG',
     error: 'red',
     warn: 'orange',
-    info: 'green'
-  }
+    info: 'green',
+  },
 };
 
 winston.addColors(customLevels.colors);
 
 const logFormat = printf(({ timestamp, level, message, stack }) => {
-  return `[${timestamp}] [${level}]: ${stack || message}`
+  return `[${timestamp}] [${level}]: ${stack || message}`;
 });
 
 const logger = createLogger({
   levels: customLevels.levels,
   format: combine(
-    errors({ stack: true }),
-    timestamp({ format: 'DD-MM-YYYY HH:mm:ss' }),
-    logFormat
+      errors({ stack: true }),
+      timestamp({ format: 'DD-MM-YYYY HH:mm:ss' }),
+      logFormat,
   ),
   transports: [
     new transports.Console({
       format: combine(
-        colorize(),
-        logFormat
-      )
+          colorize(),
+          logFormat,
+      ),
     }),
     new transports.File({
       filename: '/logfile.log',
       format: combine(
-        prettyPrint(),
-        logFormat,
+          prettyPrint(),
+          logFormat,
       ),
-      options: { flags: 'a' }
-    })
-  ]
+      options: { flags: 'a' },
+    }),
+  ],
 });
 
 export default logger;
