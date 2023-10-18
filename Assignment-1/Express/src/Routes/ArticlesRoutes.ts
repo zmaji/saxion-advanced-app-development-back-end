@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import ArticleController from '../Controllers/ArticleController';
 import isAdmin from '../Middleware/is-admin';
 import isLoggedIn from '../Middleware/is-logged-in';
-import logger from '../../logger';
+import logger from '../helpers/logger';
 
 const router = Router();
 

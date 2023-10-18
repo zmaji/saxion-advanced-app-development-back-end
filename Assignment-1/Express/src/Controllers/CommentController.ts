@@ -5,7 +5,7 @@ import { removeIdField } from '../helpers/removeMongoID';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import CommentModel from '../Models/CommentModel';
-import logger from '../../logger';
+import logger from '../helpers/logger';
 
 const getComments = async (): Promise<Comment[]> => {
   try {

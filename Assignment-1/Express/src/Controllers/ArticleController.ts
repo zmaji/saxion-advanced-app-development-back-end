@@ -3,7 +3,7 @@ import type { Article } from '../Typings/Article';
 import ArticleModel from '../Models/ArticleModel';
 import { removeIdField } from '../helpers/removeMongoID';
 import { v4 as uuidv4 } from 'uuid';
-import logger from '../../logger';
+import logger from '../helpers/logger';
 
 const getArticles = async (category?: string): Promise<Article[]> => {
   try {
