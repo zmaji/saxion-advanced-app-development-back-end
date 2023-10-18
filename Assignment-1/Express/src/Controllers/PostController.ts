@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import PostModel from '../Models/PostModel';
 import CommentModel from '../Models/CommentModel';
 import UserModel from '../Models/UserModel';
-import logger from '../logger';
+import logger from '../helpers/logger';
 
 const getPosts = async (): Promise<SimplePost[] | null> => {
   try {

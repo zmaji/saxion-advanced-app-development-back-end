@@ -1,5 +1,5 @@
 import type { Express } from 'express';
-import logger from './logger';
+import logger from './helpers/logger';
 import Database from './Database/Connection';
 import createServer from './Utils/Server';
 

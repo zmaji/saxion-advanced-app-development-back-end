@@ -3,7 +3,7 @@ import type { User } from '../Typings/User';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import UserModel from '../Models/UserModel';
-import logger from '../logger';
+import logger from '../helpers/logger';
 
 export const authenticateUser = async (userName: string, password: string): Promise<string | null> => {
   try {

@@ -1,4 +1,9 @@
-import winston, { createLogger, format, transports } from 'winston';
+import winston,
+{
+  createLogger,
+  format,
+  transports
+} from 'winston';
 const {
   combine,
   timestamp,
@@ -47,7 +52,7 @@ const logger = createLogger({
       filename: './logfile.log',
       format: combine(
         prettyPrint(),
-        logFormat
+        logFormat,
       ),
       options: { flags: 'a' }
     })
