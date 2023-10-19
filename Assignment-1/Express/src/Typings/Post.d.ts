@@ -15,6 +15,7 @@ export interface Post {
 
 export interface SimplePost {
   postID: string,
+  date: string,
   title: string,
   content: string,
   categories: string[],
@@ -22,7 +23,6 @@ export interface SimplePost {
   dislikes: number,
   commentCount: number,
   image: string,
-  date: string,
 }
 
 export interface PostDetail {

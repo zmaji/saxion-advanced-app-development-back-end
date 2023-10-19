@@ -11,7 +11,7 @@ import UserModel from '../Models/UserModel';
 
 const getPosts = async (): Promise<SimplePost[] | null> => {
   try {
-    const posts = await PostModel.find({}, { _id: 0 }).select('-date -user').lean();
+    const posts = await PostModel.find({}, { _id: 0 }).select('-user').lean();
 
     if (posts) {
       const postArray: SimplePost[] = [];
@@ -38,9 +38,16 @@ const getPost = async (postID: string): Promise<PostDetail | null> => {
     const post: Post | null = await PostModel.findOne({ postID: postID }, { _id: 0 }).lean();
 
     if (post) {
-      const userID = post.user;
-      const user = await UserModel.findOne({ userID: userID });
+      console.log('post', post);
+      const user = await UserModel.findOne({ userID: post.user });
+      console.log('post user', user);
       const comments: Comment[] = await CommentModel.find({ post: postID }, { _id: 0 });
+
+      const postDetail: PostDetail = {
+        ...post,
+        user: user!.userName,
+        comments: [],
+      };
 
       if (comments && comments.length) {
         for (const comment of comments) {
@@ -48,12 +55,13 @@ const getPost = async (postID: string): Promise<PostDetail | null> => {
           comment.user = user!.userName;
         }
 
-        return {
-          ...post,
-          user: user!.userName,
-          comments: comments,
-        };
+        postDetail.comments = comments;
+        console.log('full post object', postDetail);
+
+        return postDetail;
       }
+
+      return postDetail;
     }
     return null;
   } catch (error) {
@@ -63,12 +71,16 @@ const getPost = async (postID: string): Promise<PostDetail | null> => {
 
 const createPost = async (postData: Post, headers: string): Promise<Post | null> => {
   try {
+    console.log('creating post');
     const token = headers.split(' ')[1];
+    console.log('token', token);
     const user: User | null = jwt.decode(token) as User | null;
+    console.log('user', user);
 
     if (user) {
       postData.postID = uuidv4();
       postData.user = user.userID;
+      postData.date = new Date().toISOString();
       const newPost = new PostModel(postData);
       const post = await newPost.save();
 
@@ -87,9 +99,9 @@ const updatePost = async (postID: string, postData: Post, headers: string): Prom
 
     if (user) {
       const updatedPost = await PostModel.findOneAndUpdate(
-        { postID, user: user.userID },
-        postData,
-        { new: true },
+          { postID, user: user.userID },
+          postData,
+          { new: true },
       );
 
       if (updatedPost) {
