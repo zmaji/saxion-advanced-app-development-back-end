@@ -10,7 +10,6 @@ export const authenticateUser = async (userName: string, password: string): Prom
       const user: User | null = await UserModel.findOne({ userName: userName });
 
       if (user) {
-        console.log('user logging in', user);
         const result = bcrypt.compareSync(password, user.password);
 
         if (result) {

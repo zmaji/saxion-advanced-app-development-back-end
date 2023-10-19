@@ -39,11 +39,11 @@ const postSchema: Schema<Post> = new Schema({
   },
   image: {
     type: String,
-    required: false
+    required: false,
   },
   location: {
-    type: String
-  }
+    type: String,
+  },
 
 }, {
   collection: 'posts',

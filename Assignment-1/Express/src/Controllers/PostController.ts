@@ -38,9 +38,7 @@ const getPost = async (postID: string): Promise<PostDetail | null> => {
     const post: Post | null = await PostModel.findOne({ postID: postID }, { _id: 0 }).lean();
 
     if (post) {
-      console.log('post', post);
       const user = await UserModel.findOne({ userID: post.user });
-      console.log('post user', user);
       const comments: Comment[] = await CommentModel.find({ post: postID }, { _id: 0 });
 
       const postDetail: PostDetail = {
@@ -56,9 +54,6 @@ const getPost = async (postID: string): Promise<PostDetail | null> => {
         }
 
         postDetail.comments = comments;
-        console.log('full post object', postDetail);
-
-        return postDetail;
       }
 
       return postDetail;
@@ -71,11 +66,8 @@ const getPost = async (postID: string): Promise<PostDetail | null> => {
 
 const createPost = async (postData: Post, headers: string): Promise<Post | null> => {
   try {
-    console.log('creating post');
     const token = headers.split(' ')[1];
-    console.log('token', token);
     const user: User | null = jwt.decode(token) as User | null;
-    console.log('user', user);
 
     if (user) {
       postData.postID = uuidv4();
