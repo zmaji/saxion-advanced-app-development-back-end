@@ -24,6 +24,9 @@ const articleSchema: Schema<Article> = new Schema({
     type: String,
     required: true,
   },
+  image: {
+    type: String,
+  },
 }, {
   collection: 'articles',
   versionKey: false,

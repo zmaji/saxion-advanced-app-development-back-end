@@ -2,6 +2,7 @@
 
 import mongoose from 'mongoose';
 import config from '../config';
+import logger from '../Utils/logger';
 
 const DB_HOST = config.DB_HOST;
 const DB_PORT = config.DB_PORT;
@@ -19,11 +20,10 @@ class Database {
     // @ts-ignore
     mongoose.connect(mongoURI, { useNewUrlParser: true })
         .then(() => {
-          console.log('Database connection successful to ' + DB_HOST + ':' + DB_PORT);
+          logger.info('Database connection successful to ' + DB_HOST + ':' + DB_PORT);
         })
         .catch((err) => {
-          console.error('Database connection error');
-          console.error(err);
+          logger.error('Database connection error:', err);
         });
   }
 }

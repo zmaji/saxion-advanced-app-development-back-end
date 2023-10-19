@@ -1,5 +1,6 @@
 import type { Express } from 'express';
 
+import logger from './Utils/logger';
 import Database from './Database/Connection';
 import createServer from './Utils/Server';
 
@@ -10,5 +11,5 @@ const port = 3000;
 const database = Database;
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  logger.info(`Example app listening on port ${port}`);
 });

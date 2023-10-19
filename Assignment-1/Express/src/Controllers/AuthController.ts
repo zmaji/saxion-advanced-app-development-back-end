@@ -3,6 +3,7 @@ import type { User } from '../Typings/User';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import UserModel from '../Models/UserModel';
+import logger from '../Utils/logger';
 
 export const authenticateUser = async (userName: string, password: string): Promise<string | null> => {
   try {
@@ -28,6 +29,7 @@ export const authenticateUser = async (userName: string, password: string): Prom
       return null;
     }
   } catch (error) {
+    logger.error('Something went wrong authenticating a user:', error);
     throw error;
   }
 };

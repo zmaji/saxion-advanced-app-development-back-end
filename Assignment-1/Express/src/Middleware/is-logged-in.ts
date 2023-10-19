@@ -4,6 +4,7 @@ import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
 import userController from '../Controllers/UserController';
+import logger from '../Utils/logger';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -50,13 +51,13 @@ const verifyToken = async (token: string) => {
         try {
           return jwt.verify(token, user.secret);
         } catch (error) {
-          console.log(error);
+          logger.error('Something went wrong returning the token', error);
 
           return null;
         }
       }
     } catch (error) {
-      console.log(error);
+      logger.error('Something went wrong retrieving the user', error);
 
       return null;
     }
