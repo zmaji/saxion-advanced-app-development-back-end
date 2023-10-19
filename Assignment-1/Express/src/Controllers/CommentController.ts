@@ -58,9 +58,9 @@ const updateComment = async (commentID: string, commentData: Comment, headers: s
 
     if (user) {
       const updatedComment = await CommentModel.findOneAndUpdate(
-        { commentID, user: user.userID },
-        commentData,
-        { new: true },
+          { commentID, user: user.userID },
+          commentData,
+          { new: true },
       );
 
       if (updatedComment) {

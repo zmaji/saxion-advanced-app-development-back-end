@@ -46,9 +46,9 @@ const createArticle = async (articleData: Article): Promise<Article> => {
 const updateArticle = async (articleID: string, articleData: Article): Promise<Article | null> => {
   try {
     const updatedArticle = await ArticleModel.findOneAndUpdate(
-      { articleID },
-      articleData,
-      { new: true },
+        { articleID },
+        articleData,
+        { new: true },
     );
 
     if (updatedArticle) {
