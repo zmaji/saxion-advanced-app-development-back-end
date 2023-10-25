@@ -5,10 +5,12 @@ import type { Comment } from '../Typings/Comment';
 import { removeIdField } from '../helpers/removeMongoID';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
+import logger from '../Utils/logger';
 import PostModel from '../Models/PostModel';
 import CommentModel from '../Models/CommentModel';
 import UserModel from '../Models/UserModel';
-import logger from '../Utils/logger';
+import LikeModel from '../Models/LikeModel';
+import DislikeModel from '../Models/DislikeModel';
 
 const getPosts = async (): Promise<SimplePost[] | null> => {
   try {
@@ -19,9 +21,13 @@ const getPosts = async (): Promise<SimplePost[] | null> => {
 
       for (const post of posts) {
         const comments = await CommentModel.find({ post: post.postID }, { _id: 0 });
+        const likes = await LikeModel.find({ post: post.postID }, { _id: 0 });
+        const dislikes = await DislikeModel.find({ post: post.postID }, { _id: 0 });
 
         postArray.push({
           ...post,
+          likes: likes.length,
+          dislikes: dislikes.length,
           commentCount: comments.length,
         });
       }
@@ -43,10 +49,14 @@ const getPost = async (postID: string): Promise<PostDetail | null> => {
     if (post) {
       const user = await UserModel.findOne({ userID: post.user });
       const comments: Comment[] = await CommentModel.find({ post: postID }, { _id: 0 });
+      const likes = await LikeModel.find({ post: post.postID }, { _id: 0 });
+      const dislikes = await DislikeModel.find({ post: post.postID }, { _id: 0 });
 
       const postDetail: PostDetail = {
         ...post,
         user: user!.userName,
+        likes: likes.length,
+        dislikes: dislikes.length,
         comments: [],
       };
 
