@@ -37,6 +37,14 @@ const postSchema: Schema<Post> = new Schema({
     type: Number,
     default: 0,
   },
+  image: {
+    type: String,
+    required: false,
+  },
+  location: {
+    type: String,
+  },
+
 }, {
   collection: 'posts',
   versionKey: false,

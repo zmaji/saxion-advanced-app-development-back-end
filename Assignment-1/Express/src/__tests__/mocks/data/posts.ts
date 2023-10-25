@@ -76,6 +76,7 @@ export const postIndexData: Post[] = [
 export const simplePostIndexData: SimplePost[] = [
   {
     'postID': '8cf0f459-c9ce-45d0-8e41-5d8091f81308',
+    'date': '20-03-2023',
     'title': 'Dealing with Flight Anxiety',
     'content': 'I\'ve been struggling with flight anxiety,' +
       'and I need some advice on how to cope with it. What strategies have worked for you?',
@@ -89,6 +90,7 @@ export const simplePostIndexData: SimplePost[] = [
   },
   {
     'postID': 'd2a53a53-5f50-4e8b-bcff-73753bbc4c91',
+    'date': '15-05-2023',
     'title': 'Overcoming Flight Jitters',
     'content': 'Flying has always made me nervous, but I\'m ' +
       'determined to conquer my fear. Share your tips and experiences in managing flight anxiety.',
@@ -102,6 +104,7 @@ export const simplePostIndexData: SimplePost[] = [
   },
   {
     'postID': '7a1d6b14-7fc4-4cc6-8b1f-194c78583f36',
+    'date': '10-07-2023',
     'title': 'Tips for a Stress-Free Flight',
     'content': 'Let\'s discuss how to make air travel less ' +
       'stressful for those with flight anxiety. Share your advice and stories!',
@@ -115,6 +118,7 @@ export const simplePostIndexData: SimplePost[] = [
   },
   {
     'postID': 'c64ea67f-5bc9-4929-8102-158d6b96ffeb',
+    'date': '02-08-2023',
     'title': 'Conquering My Fear of Flying',
     'content': 'I used to be terrified of flying, but I\'ve made significant ' +
       'progress in overcoming my fear. Let\'s share our success stories and support each other.',
@@ -128,6 +132,7 @@ export const simplePostIndexData: SimplePost[] = [
   },
   {
     'postID': 'b8f1daaa-0655-4527-a90d-7a52a499de24',
+    'date': '19-09-2023',
     'title': 'Managing Flight Anxiety',
     'content': 'Flight anxiety can be overwhelming, but with the right ' +
       'strategies, it\'s manageable. Let\'s discuss what works for you.',

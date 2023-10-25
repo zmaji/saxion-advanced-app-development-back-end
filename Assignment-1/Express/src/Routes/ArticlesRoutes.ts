@@ -6,6 +6,21 @@ import isLoggedIn from '../Middleware/is-logged-in';
 
 const router = Router();
 
+router.get('/categories', async (req: Request, res: Response) => {
+  try {
+    const result = await ArticleController.getArticleCategories();
+    if (result) {
+      res
+          .status(StatusCodes.OK)
+          .json(result);
+    }
+  } catch (error) {
+    res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: 'An error occurred' });
+  }
+});
+
 router.get('', async (req: Request, res: Response) => {
   try {
     const category = req.query.category as string | undefined;

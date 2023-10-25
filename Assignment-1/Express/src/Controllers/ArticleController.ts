@@ -73,12 +73,28 @@ const deleteArticle = async (articleID: string): Promise<boolean> => {
   }
 };
 
+const getArticleCategories = (): string[] => {
+  return [
+    'Anxiety Management',
+    'Air Travel Worries',
+    'Fear of Flying',
+    'Coping Strategies',
+    'Travel Anxiety',
+    'Stress Reduction',
+    'Success Stories',
+    'Anxiety Victory',
+    'Coping Methods',
+    'Anxiety Relief',
+  ];
+};
+
 const ArticleController = {
   getArticles,
   getArticle,
   createArticle,
   updateArticle,
   deleteArticle,
+  getArticleCategories,
 };
 
 export default ArticleController;

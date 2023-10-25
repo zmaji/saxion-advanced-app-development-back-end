@@ -12,7 +12,7 @@ import logger from '../Utils/logger';
 
 const getPosts = async (): Promise<SimplePost[] | null> => {
   try {
-    const posts = await PostModel.find({}, { _id: 0 }).select('-date -user').lean();
+    const posts = await PostModel.find({}, { _id: 0 }).select('-user').lean();
 
     if (posts) {
       const postArray: SimplePost[] = [];
@@ -41,9 +41,14 @@ const getPost = async (postID: string): Promise<PostDetail | null> => {
     const post: Post | null = await PostModel.findOne({ postID: postID }, { _id: 0 }).lean();
 
     if (post) {
-      const userID = post.user;
-      const user = await UserModel.findOne({ userID: userID });
+      const user = await UserModel.findOne({ userID: post.user });
       const comments: Comment[] = await CommentModel.find({ post: postID }, { _id: 0 });
+
+      const postDetail: PostDetail = {
+        ...post,
+        user: user!.userName,
+        comments: [],
+      };
 
       if (comments && comments.length) {
         for (const comment of comments) {
@@ -51,12 +56,10 @@ const getPost = async (postID: string): Promise<PostDetail | null> => {
           comment.user = user!.userName;
         }
 
-        return {
-          ...post,
-          user: user!.userName,
-          comments: comments,
-        };
+        postDetail.comments = comments;
       }
+
+      return postDetail;
     }
 
     return null;
@@ -74,6 +77,7 @@ const createPost = async (postData: Post, headers: string): Promise<Post | null>
     if (user) {
       postData.postID = uuidv4();
       postData.user = user.userID;
+      postData.date = new Date().toISOString();
       const newPost = new PostModel(postData);
       const post = await newPost.save();
 
