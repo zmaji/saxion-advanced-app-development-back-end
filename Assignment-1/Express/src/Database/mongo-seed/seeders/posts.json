@@ -11,7 +11,7 @@
     ],
     "likes": 8,
     "dislikes": 3,
-    "image": "mock",
+    "image": "forum-post-1",
     "location": "Schiphol Airport"
   },
   {
@@ -26,7 +26,7 @@
     ],
     "likes": 11,
     "dislikes": 4,
-    "image": "mock",
+    "image": "forum-post-2",
     "location": "Weeze Airport"
   },
   {
@@ -41,7 +41,7 @@
     ],
     "likes": 6,
     "dislikes": 2,
-    "image": "mock",
+    "image": "forum-post-3",
     "location": "Eindhoven Airport"
   },
   {
@@ -56,7 +56,7 @@
     ],
     "likes": 9,
     "dislikes": 1,
-    "image": "mock",
+    "image": "forum-post-4",
     "location": "Apeldoorn"
   },
   {
@@ -71,7 +71,7 @@
     ],
     "likes": 7,
     "dislikes": 5,
-    "image": "mock",
+    "image": "forum-post-5",
     "location": "Deventer"
   }
 ]
