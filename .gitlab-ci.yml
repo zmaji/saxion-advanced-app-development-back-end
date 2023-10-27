@@ -63,7 +63,7 @@ test_api:
 deploy_production:
   stage: deploy
   script:
-    - ssh -i ~/.ssh/fly-with-confidence.pem ubuntu@44.218.157.76
+    - ssh -i $SSH_KEY ubuntu@44.218.157.76
     - cd fly-with-confidence
     - git pull
     - cd Assignment-1/Express
@@ -71,15 +71,3 @@ deploy_production:
   only:
     - main
   when: manual
-
-#  release_dockerhub:
-#    image: docker:stable
-#    stage: release
-#    services:
-#      - docker:dind
-#    script:
-#      - cd Assignment-1/Express
-#      - docker login -u $DOCKER_USERNAME -p $DOCKER_ACCESS_TOKEN
-#      - BRANCH_NAME=${CI_COMMIT_REF_NAME//\//-}
-#      - docker build -t "$DOCKER_USERNAME/fly-with-confidence:$BRANCH_NAME" .
-#      - docker push "$DOCKER_USERNAME/fly-with-confidence:$BRANCH_NAME"
