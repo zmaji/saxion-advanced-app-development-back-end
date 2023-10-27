@@ -24,8 +24,6 @@ build:
     - npm install
   rules:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"
-  except:
-    - main
 
 # Check if linting rules are in order
 test_lint:
@@ -41,8 +39,6 @@ test_lint:
     - build
   rules:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"
-  except:
-    - main
 
 # Run API end-to-end test suites
 test_api:
@@ -62,8 +58,6 @@ test_api:
     - build
   rules:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"
-  except:
-    - main
 
 # Deploy application to AWS production environment
 deploy_production:
