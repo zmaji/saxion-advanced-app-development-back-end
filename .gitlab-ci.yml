@@ -25,7 +25,7 @@ build:
   rules:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"
   except:
-    - mains
+    - main
 
 # Check if linting rules are in order
 test_lint:
