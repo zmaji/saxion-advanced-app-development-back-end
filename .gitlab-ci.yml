@@ -12,7 +12,7 @@ cache:
 # All jobs stages in execution order
 stages:
   - build
-  - tests
+  - test
   - release
   - deploy
 
@@ -59,17 +59,17 @@ test_api:
   rules:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"
 
-## Deploy application to AWS production environment
-#deploy_production:
-#  stage: deploy
-#  script:
-#    - echo "$SSH_KEY" > /tmp/deploy_key.pem
-#    - chmod 600 /tmp/deploy_key.pem
-#    - ssh -i /tmp/deploy_key.pem ubuntu@44.218.157.76
-#    - cd fly-with-confidence
-#    - git pull
-#    - cd Assignment-1/Express
-#    - sudo docker-compose up
-#  only:
-#    - main
-#  when: manual
+# Deploy application to AWS production environment
+deploy_production:
+  stage: deploy
+  script:
+    - echo "$SSH_KEY" > /tmp/deploy_key.pem
+    - chmod 600 /tmp/deploy_key.pem
+    - ssh -i /tmp/deploy_key.pem ubuntu@44.218.157.76
+    - cd fly-with-confidence
+    - git pull
+    - cd Assignment-1/Express
+    - sudo docker-compose up
+  only:
+    - main
+  when: manual
