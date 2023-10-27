@@ -68,7 +68,8 @@ deploy_production:
     - echo "$SSH_KEY" > /tmp/deploy_key.pem
     - chmod 600 /tmp/deploy_key.pem
     - ssh -i /tmp/deploy_key.pem ubuntu@44.218.157.76
-    - ip a
+    - pwd
+    - ls -a
     - cd fly-with-confidence
     - git pull
     - cd Assignment-1/Express
