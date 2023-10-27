@@ -23,7 +23,7 @@ build:
     - cd Assignment-1/Express
     - npm install
   rules:
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"
 
 # Check if linting rules are in order
 test_lint:
@@ -38,7 +38,7 @@ test_lint:
   needs:
     - build
   rules:
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"
 
 # Run API end-to-end test suites
 test_api:
@@ -57,13 +57,15 @@ test_api:
   needs:
     - build
   rules:
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"
 
 # Deploy application to AWS production environment
 deploy_production:
   stage: deploy
   script:
-    - ssh -i $SSH_KEY ubuntu@44.218.157.76
+    - echo "$SSH_KEY" > /tmp/deploy_key.pem
+    - chmod 600 /tmp/deploy_key.pem
+    - ssh -i /tmp/deploy_key.pem ubuntu@44.218.157.76
     - cd fly-with-confidence
     - git pull
     - cd Assignment-1/Express
