@@ -71,7 +71,7 @@ deploy_production:
     - git checkout main
     - git pull
     - cd Assignment-1/Express
-    - sudo docker-compose up
+    - docker-compose up
   only:
     - main
   when: manual
