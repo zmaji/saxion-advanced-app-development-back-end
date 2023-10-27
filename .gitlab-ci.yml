@@ -63,7 +63,9 @@ test_api:
 deploy_production:
   stage: deploy
   script:
-    - ssh -i $SSH_KEY ubuntu@44.218.157.76
+    - echo "$SSH_KEY" > /tmp/deploy_key.pem
+    - chmod 600 /tmp/deploy_key.pem
+    - ssh -i /tmp/deploy_key.pem ubuntu@44.218.157.76
     - cd fly-with-confidence
     - git pull
     - cd Assignment-1/Express
