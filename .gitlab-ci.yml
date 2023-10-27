@@ -69,6 +69,7 @@ deploy_production:
     - chmod 600 /tmp/deploy_key.pem
     - ssh -i /tmp/deploy_key.pem ubuntu@44.218.157.76
     - ls ~/ -la
+    - pwd
     - cd ~/fly-with-confidence
     - git pull
     - cd Assignment-1/Express
