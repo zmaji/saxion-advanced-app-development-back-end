@@ -1,3 +1,5 @@
+name: fly-with-confidence
+
 services:
   mongo:
     image: mongo:latest
