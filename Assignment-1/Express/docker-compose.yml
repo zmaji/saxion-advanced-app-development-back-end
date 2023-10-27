@@ -1,0 +1,26 @@
+name: fly-with-confidence
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: fly-with-confidence-mongo
+
+  mongo-seed:
+    build: src/Database/mongo-seed
+    depends_on:
+      - mongo
+    container_name: fly-with-confidence-mongo-seed
+
+  backend:
+    build: ./
+    environment:
+      DB_HOST: mongo
+      DB_PORT: 27017
+      DB_NAME: fear-of-flight-db
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo
+    container_name: fly-with-confidence-backend
+    volumes:
+      - ./Logs/application.log:/Logs/application.log

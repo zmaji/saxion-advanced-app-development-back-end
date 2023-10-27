@@ -1,0 +1,73 @@
+# Official framework image. Look for the different tagged releases at:
+# https://hub.docker.com/r/library/node/tags/
+image: node:latest
+
+# This folder is cached between builds
+# https://docs.gitlab.com/ee/ci/yaml/index.html#cache
+cache:
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - Assignment-1/Express/node_modules/
+
+# All jobs stages in execution order
+stages:
+  - build
+  - test
+  - release
+  - deploy
+
+# Build the application in preparation for testing
+build:
+  stage: build
+  script:
+    - cd Assignment-1/Express
+    - npm install
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+
+# Check if linting rules are in order
+test_lint:
+  stage: test
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - Assignment-1/Express/node_modules/
+  script:
+    - cd Assignment-1/Express
+    - npm run lint
+  needs:
+    - build
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+
+# Run API end-to-end test suites
+test_api:
+  stage: test
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - Assignment-1/Express/node_modules/
+  script:
+    - apt-get update && apt-get install -y wget
+    - wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+    - dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+    - apt-get install -f
+    - cd Assignment-1/Express
+    - npm run test
+  needs:
+    - build
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+
+# Deploy application to AWS production environment
+deploy_production:
+  stage: deploy
+  script:
+    - ssh -i $SSH_KEY ubuntu@44.218.157.76
+    - cd fly-with-confidence
+    - git pull
+    - cd Assignment-1/Express
+    - sudo docker-compose up
+  only:
+    - main
+  when: manual

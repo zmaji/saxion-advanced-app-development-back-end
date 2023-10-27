@@ -1,5 +1,8 @@
 export interface Article {
-    name: string,
-    description: string,
-    content: string,
+  articleID: string,
+  title: string,
+  description: string,
+  content: string,
+  category: string,
+  image?: string
 }

@@ -1,23 +1,15 @@
-import type { Express } from "express";
+import type { Express } from 'express';
 
-import express from 'express';
+import logger from './Utils/logger';
+import Database from './Database/Connection';
+import createServer from './Utils/Server';
 
-const app: Express = express();
-const port = 3000
+const app: Express = createServer();
+const port = 3000;
 
-import ArticleRoutes from './Routes/ArticlesRoutes';
-
-app.use(express.urlencoded({
-    extended: true
-}))
-
-app.use(express.json());
-
-app.use('/articles', ArticleRoutes);
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const database = Database;
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
+  logger.info(`Example app listening on port ${port}`);
+});
