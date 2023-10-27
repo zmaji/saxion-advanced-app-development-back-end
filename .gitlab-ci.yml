@@ -63,6 +63,7 @@ test_api:
 deploy_production:
   stage: deploy
   script:
+    - mkdir -p ~/.ssh
     - ssh-keyscan 44.218.157.76 >> ~/.ssh/known_hosts
     - echo "$SSH_KEY" > /tmp/deploy_key.pem
     - chmod 600 /tmp/deploy_key.pem
