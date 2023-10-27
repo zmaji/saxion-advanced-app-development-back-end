@@ -67,7 +67,7 @@ deploy_production:
   - ssh-keyscan 44.218.157.76 >> ~/.ssh/known_hosts
   - echo "$SSH_KEY" > /tmp/deploy_key.pem
   - chmod 600 /tmp/deploy_key.pem
-  - ssh -i /tmp/deploy_key.pem ubuntu@44.218.157.76 "cd ~/fly-with-confidence && git fetch && git pull && git checkout main && cd Assignment-1/Express && sudo docker-compose up"
+  - ssh -i /tmp/deploy_key.pem ubuntu@44.218.157.76 "cd ~/fly-with-confidence && git pull && cd Assignment-1/Express && sudo docker-compose up"
   only:
     - main
   when: manual
