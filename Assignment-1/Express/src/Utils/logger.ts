@@ -42,7 +42,7 @@ const logger = createLogger({
       ),
     }),
     new transports.File({
-      filename: '../../Logs/application.log',
+      filename: './Logs/application.log',
       format: combine(
           prettyPrint(),
           logFormat,

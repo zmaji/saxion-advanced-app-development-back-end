@@ -11,7 +11,8 @@
     ],
     "likes": 8,
     "dislikes": 3,
-    "image": "mock"
+    "image": "forum-post-1",
+    "location": "Schiphol Airport"
   },
   {
     "postID": "d2a53a53-5f50-4e8b-bcff-73753bbc4c91",
@@ -25,7 +26,8 @@
     ],
     "likes": 11,
     "dislikes": 4,
-    "image": "mock"
+    "image": "forum-post-2",
+    "location": "Weeze Airport"
   },
   {
     "postID": "7a1d6b14-7fc4-4cc6-8b1f-194c78583f36",
@@ -39,7 +41,8 @@
     ],
     "likes": 6,
     "dislikes": 2,
-    "image": "mock"
+    "image": "forum-post-3",
+    "location": "Eindhoven Airport"
   },
   {
     "postID": "c64ea67f-5bc9-4929-8102-158d6b96ffeb",
@@ -53,7 +56,8 @@
     ],
     "likes": 9,
     "dislikes": 1,
-    "image": "mock"
+    "image": "forum-post-4",
+    "location": "Apeldoorn"
   },
   {
     "postID": "b8f1daaa-0655-4527-a90d-7a52a499de24",
@@ -67,6 +71,7 @@
     ],
     "likes": 7,
     "dislikes": 5,
-    "image": "mock"
+    "image": "forum-post-5",
+    "location": "Deventer"
   }
 ]
