@@ -67,7 +67,7 @@ deploy_production:
   - ssh-keyscan 44.218.157.76 >> ~/.ssh/known_hosts
   - echo "$SSH_KEY" > /tmp/deploy_key.pem
   - chmod 600 /tmp/deploy_key.pem
-  - ssh -i /tmp/deploy_key.pem ubuntu@44.218.157.76 "cd ~/fly-with-confidence && git pull && cd Assignment-1/Express && if [ -n \"\$(sudo docker ps -q)\" ]; then sudo docker stop \$(sudo docker ps -q); fi && if [ -n \"\$(sudo docker ps -a -q)\" ]; then sudo docker rm \$(sudo docker ps -a -q); fi && sudo docker-compose down && sudo docker-compose up -d"
+  - ssh -i /tmp/deploy_key.pem ubuntu@44.218.157.76 "cd ~/fly-with-confidence && git pull && cd Assignment-1/Express && sudo docker-compose down && sudo docker-compose build && sudo docker-compose up"
   only:
     - main
   when: manual
