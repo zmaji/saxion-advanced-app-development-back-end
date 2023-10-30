@@ -39,6 +39,7 @@ module.exports = {
     ],
     'import/order': importOrderRule,
   },
+  ignorePatterns: ['apidoc'],
   overrides: [
     {
       files: ['src/__tests__/**/*'],
@@ -52,6 +53,13 @@ module.exports = {
       files: ['*Controller.ts'],
       rules: {
         'no-useless-catch': 'off',
+      },
+    },
+    {
+      files: ['*Routes.ts'],
+      rules: {
+        'max-len': 'off',
+        'require-jsdoc': 'off',
       },
     },
   ],

@@ -1,0 +1,21 @@
+{
+  "name": "Fly with Confidence APIdoc",
+  "version": "0.1.0",
+  "description": "apiDoc for the Fly with Confidence backend",
+  "title": "Fly with Confidence backend APIdoc",
+  "url": "http://localhost:3000",
+  "order": [
+    "Error",
+    "Define",
+    "PostTitleAndError",
+    "PostError"
+  ],
+  "header": {
+    "title": "Fly with Confidence API Documentation",
+    "filename": "./apidoc/layout/header.md"
+  },
+  "footer": {
+    "title": "Fly with Confidence API",
+    "filename": "./apidoc/layout/footer.md"
+  }
+}

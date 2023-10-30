@@ -9,7 +9,8 @@
     "test:coverage": "echo \"Generating code coverage report\" && jest --coverage --detectOpenHandles",
     "start": "echo \"Starting index.js\" && ts-node src/index.ts",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix src/**/*.ts"
+    "lint:fix": "eslint . --fix src/**/*.ts",
+    "apidoc": "apidoc -i src/Routes -o apidoc/out"
   },
   "author": "",
   "license": "ISC",
