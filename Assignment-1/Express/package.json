@@ -9,7 +9,8 @@
     "test:coverage": "echo \"Generating code coverage report\" && jest --coverage --detectOpenHandles",
     "start": "echo \"Starting index.js\" && ts-node src/index.ts",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix src/**/*.ts"
+    "lint:fix": "eslint . --fix src/**/*.ts",
+    "apidoc": "apidoc -i src/Routes -o apidoc/out"
   },
   "author": "",
   "license": "ISC",
@@ -34,6 +35,7 @@
     "@types/uuid": "^9.0.4",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
+    "apidoc": "^1.2.0",
     "concurrently": "^8.2.1",
     "eslint": "^8.51.0",
     "eslint-config-google": "^0.14.0",
