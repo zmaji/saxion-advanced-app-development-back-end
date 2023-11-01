@@ -1,6 +1,5 @@
 import type { Article } from '../Typings/Article';
 
-import fileUpload from 'express-fileupload';
 import ArticleModel from '../Models/ArticleModel';
 import { removeIdField } from '../helpers/removeMongoID';
 import { v4 as uuidv4 } from 'uuid';
