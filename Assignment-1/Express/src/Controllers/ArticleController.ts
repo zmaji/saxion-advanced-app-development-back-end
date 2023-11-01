@@ -1,9 +1,11 @@
 import type { Article } from '../Typings/Article';
 
+import fileUpload from 'express-fileupload';
 import ArticleModel from '../Models/ArticleModel';
 import { removeIdField } from '../helpers/removeMongoID';
 import { v4 as uuidv4 } from 'uuid';
 import logger from '../Utils/logger';
+import config from '../config';
 
 const getArticles = async (category?: string): Promise<Article[]> => {
   try {
@@ -30,8 +32,16 @@ const getArticle = async (articleID: string): Promise<Article | null> => {
   }
 };
 
-const createArticle = async (articleData: Article): Promise<Article> => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const createArticle = async (articleData: Article, articleImage?: any): Promise<Article> => {
   try {
+    if (articleImage) {
+      const image = articleImage.image;
+      image.name = Date.now() + image.name;
+      image.mv(config.UPLOAD_DIR + '/articles/' + image.name);
+      articleData.image = image.name;
+    }
+
     articleData.articleID = uuidv4();
     const newArticle = new ArticleModel(articleData);
     const article = await newArticle.save();
@@ -75,6 +85,11 @@ const deleteArticle = async (articleID: string): Promise<boolean> => {
 
 const getArticleCategories = (): string[] => {
   return [
+    'Relaxation techniques',
+    'Education and information',
+    'Mindfulness',
+    'Flight activities',
+    'Pre-flight preparation',
     'Anxiety Management',
     'Air Travel Worries',
     'Fear of Flying',

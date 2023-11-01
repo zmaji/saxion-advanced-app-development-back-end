@@ -29,14 +29,6 @@ const postSchema: Schema<Post> = new Schema({
     type: [String],
     required: true,
   },
-  likes: {
-    type: Number,
-    default: 0,
-  },
-  dislikes: {
-    type: Number,
-    default: 0,
-  },
   image: {
     type: String,
     required: false,
