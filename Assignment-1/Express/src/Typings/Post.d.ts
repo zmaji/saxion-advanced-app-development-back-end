@@ -7,8 +7,6 @@ export interface Post {
   title: string,
   content: string,
   categories: string[],
-  likes: number,
-  dislikes: number,
   image?: string,
   location?: string,
 }

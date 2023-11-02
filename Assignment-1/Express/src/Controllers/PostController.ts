@@ -5,6 +5,7 @@ import type { Comment } from '../Typings/Comment';
 import { removeIdField } from '../helpers/removeMongoID';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
+import config from '../config';
 import logger from '../Utils/logger';
 import PostModel from '../Models/PostModel';
 import CommentModel from '../Models/CommentModel';
@@ -79,12 +80,20 @@ const getPost = async (postID: string): Promise<PostDetail | null> => {
   }
 };
 
-const createPost = async (postData: Post, headers: string): Promise<Post | null> => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const createPost = async (postData: Post, headers: string, postImage?: any): Promise<Post | null> => {
   try {
     const token = headers.split(' ')[1];
     const user: User | null = jwt.decode(token) as User | null;
 
     if (user) {
+      if (postImage) {
+        const image = postImage.image;
+        image.name = Date.now() + image.name;
+        image.mv(config.UPLOAD_DIR + '/posts/' + image.name);
+        postData.image = image.name;
+      }
+
       postData.postID = uuidv4();
       postData.user = user.userID;
       postData.date = new Date().toISOString();

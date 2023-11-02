@@ -184,7 +184,7 @@ router.get('/:articleID', async (req: Request, res: Response) => {
  */
 router.post('', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
   try {
-    const article = await ArticleController.createArticle(req.body);
+    const article = await ArticleController.createArticle(req.body, req.files);
 
     if (article) {
       res

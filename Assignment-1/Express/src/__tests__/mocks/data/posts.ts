@@ -12,8 +12,6 @@ export const postIndexData: Post[] = [
       'Anxiety Management',
       'Air Travel Worries',
     ],
-    'likes': 0,
-    'dislikes': 0,
   },
   {
     'postID': 'd2a53a53-5f50-4e8b-bcff-73753bbc4c91',
@@ -26,8 +24,6 @@ export const postIndexData: Post[] = [
       'Fear of Flying',
       'Coping Strategies',
     ],
-    'likes': 0,
-    'dislikes': 0,
   },
   {
     'postID': '7a1d6b14-7fc4-4cc6-8b1f-194c78583f36',
@@ -40,8 +36,6 @@ export const postIndexData: Post[] = [
       'Travel Anxiety',
       'Stress Reduction',
     ],
-    'likes': 0,
-    'dislikes': 0,
   },
   {
     'postID': 'c64ea67f-5bc9-4929-8102-158d6b96ffeb',
@@ -54,8 +48,6 @@ export const postIndexData: Post[] = [
       'Success Stories',
       'Anxiety Victory',
     ],
-    'likes': 0,
-    'dislikes': 0,
   },
   {
     'postID': 'b8f1daaa-0655-4527-a90d-7a52a499de24',
@@ -68,8 +60,6 @@ export const postIndexData: Post[] = [
       'Coping Methods',
       'Anxiety Relief',
     ],
-    'likes': 7,
-    'dislikes': 5,
   },
 ];
 

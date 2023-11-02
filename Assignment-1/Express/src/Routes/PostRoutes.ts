@@ -159,7 +159,7 @@ router.get('/:postID', async (req: Request, res: Response) => {
 router.post('', isLoggedIn, async (req: Request, res: Response) => {
   try {
     if (req.headers.authorization) {
-      const post = await PostController.createPost(req.body, req.headers.authorization);
+      const post = await PostController.createPost(req.body, req.headers.authorization, req.files);
 
       if (post) {
         res

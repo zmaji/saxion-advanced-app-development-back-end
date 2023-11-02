@@ -8,13 +8,20 @@ import DislikeRoutes from '../Routes/DislikeRouter';
 import CommentRoutes from '../Routes/CommentRoutes';
 import UserRoutes from '../Routes/UserRoutes';
 import AuthRoutes from '../Routes/AuthRoutes';
+import fileUpload from 'express-fileupload';
 
 const createServer = () => {
   const app: Express = express();
 
+  app.use(fileUpload({
+    createParentPath: true,
+  }));
+
   app.use(express.urlencoded({
     extended: true,
   }));
+
+  app.use(express.static('public'));
 
   app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
