@@ -7,7 +7,7 @@
     "test": "echo \"Starting Jest tests\" && jest --detectOpenHandles",
     "test:watch": "echo \"Starting Jest tests in watch mode\" && jest --detectOpenHandles --watchAll",
     "test:coverage": "echo \"Generating code coverage report\" && jest --coverage --detectOpenHandles",
-    "start": "echo \"Starting index.js\" && ts-node src/index.ts",
+    "start": "echo \"Starting index.ts\" && ts-node src/index.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix src/**/*.ts",
     "apidoc": "apidoc -i src/Routes -o apidoc/out"
