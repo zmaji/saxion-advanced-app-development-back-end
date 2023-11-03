@@ -163,6 +163,7 @@ router.get('/:articleID', async (req: Request, res: Response) => {
  * @apiBody {String} description Article description.
  * @apiBody {String} content Article content.
  * @apiBody {String} category Article category.
+ * @apiBody {File} image (Optional) Article image file to upload.
  *
  * @apiSuccess {Object} article The created article.
  *
@@ -174,6 +175,7 @@ router.get('/:articleID', async (req: Request, res: Response) => {
  *        "description": "All about testing the article post function",
  *        "content": "Lorem ipsum color du se mit",
  *        "category": "Anxiety Management"
+ *        "image": "article_image.jpg"
  *      }
  *
  * @apiError (Bad Request) {json} Error Response:
@@ -210,6 +212,7 @@ router.post('', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
  * @apiBody {String} description Article description.
  * @apiBody {String} content Article content.
  * @apiBody {String} category Article category.
+ * @apiBody {File} image (Optional) Article image file to upload.
  *
  * @apiSuccess {Object} article The updated article.
  *
@@ -221,7 +224,7 @@ router.post('', isLoggedIn, isAdmin, async (req: Request, res: Response) => {
  *       "description": "All about testing the article put function",
  *       "content": "Lorem ipsum color du se mit is updated",
  *       "category": "Education and information",
- *       "image": "education-and-information-1"
+ *       "image": "education-and-information-1.jpg"
  *     }
  *
  * @apiError (Not Found) {json} Error Response:

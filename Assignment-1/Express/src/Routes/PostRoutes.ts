@@ -125,7 +125,7 @@ router.get('/:postID', async (req: Request, res: Response) => {
  * @apiBody {String} title Title of the post.
  * @apiBody {String} content Content of the post.
  * @apiBody {String[]} categories Categories associated with the post.
- * @apiBody {String} [image] URL of an optional image for the post.
+ * @apiBody {File} image (Optional) Post image file to upload.
  * @apiHeader {String} Authorization User's JWT token.
  *
  * @apiSuccess {Object} post The newly created post.
@@ -141,7 +141,7 @@ router.get('/:postID', async (req: Request, res: Response) => {
  *       "categories": ["Category 1", "Category 2"],
  *       "likes": 0,
  *       "dislikes": 0,
- *       "image": "image-url",
+ *       "image": "post-image.jpg",
  *       "location": "Location"
  *     }
  *
@@ -189,7 +189,7 @@ router.post('', isLoggedIn, async (req: Request, res: Response) => {
  * @apiBody {String} title Updated title of the post.
  * @apiBody {String} content Updated content of the post.
  * @apiBody {String[]} categories Updated categories associated with the post.
- * @apiBody {String} [image] Updated URL of an optional image for the post.
+ * @apiBody {File} image (Optional) Post image file to upload.
  * @apiHeader {String} Authorization User's JWT token.
  *
  * @apiSuccess {Object} post The updated post.
@@ -205,7 +205,7 @@ router.post('', isLoggedIn, async (req: Request, res: Response) => {
  *       "categories": ["Updated Category 1", "Updated Category 2"],
  *       "likes": 0,
  *       "dislikes": 0,
- *       "image": "updated-image-url",
+ *       "image": "updated-post-image.jpg",
  *       "location": "Location"
  *     }
  *
