@@ -36,7 +36,6 @@ For testing purposes, these test users could be used:
 
 1.
 Username: zmaji
-
 Roles: user, admin  
 Secret: lxziOo8CIq  
 Password: Password1  
