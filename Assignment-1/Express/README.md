@@ -1,10 +1,9 @@
-# Prototype 2: Express
+# Fly With Confidence Backend
 
 ## Description
 
-This project is a back-end prototype built by Nils Kimenai and Maurice ten Teije
-using Node.js, Express and MongoDB as a database. This prototype is designed to run in
-a docker container on localhost.
+This project is a back-end built by Nils Kimenai and Maurice ten Teije
+using Node.js, Express and MongoDB as a database.
 
 ## Prerequisites
 
@@ -13,7 +12,7 @@ Before you begin, ensure you have met the following requirements:
 - **Docker**: You should have Docker installed on your system. If not, you can
   download it from
   [Docker's official website](https://www.docker.com/products/docker-desktop/).
-- **(Optional) Node.js**: If you don't have Node installed, you can install it by following
+- **Node.js**: If you don't have Node installed, you can install it by following
   the instructions at
   [Node.js's official website](https://nodejs.org/en).
   With this you can install the application dependencies and run the jest tests.
@@ -32,29 +31,36 @@ To get this project up and running, follow these steps:
 5. Once the containers are running, you can access the application in your web
    browser at `http://localhost:3000/`.
 
-## Testing endpoints
+## Sample credentials
+For testing purposes, these test users could be used:
 
-To test the API endpoints, you can use Postman or access the endpoints in your
-web browser.
+1.
+Username: zmaji
+Roles: user, admin  
+Secret: lxziOo8CIq  
+Password: Password1  
+Password hash: $2a$10$Pps0ct1FKH4BRDA2wxUIcexFx4DCZ3aJ1u6gPTtdf3zAI4l95Iyby
 
-The following entities are included in this project:
-
-1. Article (/articles)
-2. Post (/posts)
-3. Comment (/comments)
-4. User (/users)
-
-A post can have one or more comments. A comment always belongs to one user.
-
-If you chose to use Postman, you can test these endpoints by importing the
-collection file provided in the zip.
-
-1. Click on the hamburger menu in the top left corner.
-2. Click on "File" and then "Import.."
-3. Choose the Postman collection file (`fear-of-flight-express.postman_collection`)
+2.
+Username: Gardif  
+Roles: user  
+Secret: OuHRdKDQuu  
+Password: Password2  
+Password hash: $2a$10$L6RubNqXZfeUqMRexpQnfOCGKmuu6fWHFJ..MXuumtXG27a3Fp0pm
 
 ## Running tests
 The project includes Jest tests to ensure the API endpoints work as expected. To run these tests, use the following command:
-`npm run test`
+`npm run test`.
 
-The provided test code uses Supertest to send HTTP requests to the server and Jest for assertions. It tests various scenarios for the /articles endpoint, including listing articles, fetching a specific article, and creating a new article.
+To generate test coverage, use following command: `npm run test:coverage`. This will generate a test report in the `coverage` directory in the root. To see this report navigate to the folder then click on `Icov-report` and open `index` in your browser.
+
+## Application Logs
+To view the application logs, please create a file called `application.log` inside the Logs directory in the root. This file is needed to write the logs in a clean environment. Unfortunately this step couldn't be automated due to unforseen problems. 
+
+After the application has been dockerized and ran, the logs will be written to this logfile. 
+
+## Linting
+To check the code for errors, use the following command: `npm run lint`. To fix any possible problems, use `npm run lint:fix`.
+
+## APIDoc
+To generate API documentation, use the following command: `npm run apidoc`. This will generate the documentation in the `apidoc` directory in the root. Navigate towards this directory, then to the `out` directory and open `index` in your browser.
