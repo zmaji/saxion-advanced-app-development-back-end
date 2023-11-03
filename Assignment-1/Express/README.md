@@ -37,6 +37,7 @@ To get this project up and running, follow these steps:
 
 ## Sample credentials
 For testing purposes, these test users could be used:
+
 1.
 Username: zmaji
 Roles: user, admin
