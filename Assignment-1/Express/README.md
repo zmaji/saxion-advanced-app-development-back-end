@@ -9,8 +9,6 @@ using Node.js, Express and MongoDB as a database.
 
 Before you begin, ensure you have met the following requirements:
 
-**NOTE:** This only applies for running the back-end locally.
-
 - **Docker**: You should have Docker installed on your system. If not, you can
   download it from
   [Docker's official website](https://www.docker.com/products/docker-desktop/).
@@ -26,8 +24,6 @@ Before you begin, ensure you have met the following requirements:
 
 To get this project up and running, follow these steps:
 
-**NOTE:** This only applies for running the back-end locally.
-
 1. Unzip the project
 2. Navigate to the project's root directory
 3. Dockerize the back-end application and MongoDB database using: 'docker compose build'
@@ -40,16 +36,17 @@ For testing purposes, these test users could be used:
 
 1.
 Username: zmaji
-Roles: user, admin
-Secret: lxziOo8CIq
-Password: Password1
+
+Roles: user, admin  
+Secret: lxziOo8CIq  
+Password: Password1  
 Password hash: $2a$10$Pps0ct1FKH4BRDA2wxUIcexFx4DCZ3aJ1u6gPTtdf3zAI4l95Iyby
 
 2.
-Username: Gardif
-Roles: user
-Secret: OuHRdKDQuu
-Password: Password2
+Username: Gardif  
+Roles: user  
+Secret: OuHRdKDQuu  
+Password: Password2  
 Password hash: $2a$10$L6RubNqXZfeUqMRexpQnfOCGKmuu6fWHFJ..MXuumtXG27a3Fp0pm
 
 ## Running tests
