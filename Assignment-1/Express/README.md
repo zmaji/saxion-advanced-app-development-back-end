@@ -55,7 +55,7 @@ The project includes Jest tests to ensure the API endpoints work as expected. To
 To generate test coverage, use following command: `npm run test:coverage`. This will generate a test report in the `coverage` directory in the root. To see this report navigate to the folder then click on `Icov-report` and open `index` in your browser.
 
 ## Application Logs
-To view the application logs, please create a file called `application.log` inside the Logs directory in the root. This file is needed to write the logs in a clean environment. Unfortunately this step couldn't be automated due to unforseen problems. 
+To view the application logs, please create a file called `application.log` inside the Logs directory (and a Log directory if it doesn't exist) in the root. This file is needed to write the logs in a clean environment. Unfortunately this step couldn't be automated due to unforseen problems. 
 
 After the application has been dockerized and ran, the logs will be written to this logfile. 
 
