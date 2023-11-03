@@ -83,7 +83,7 @@ describe('article', () => {
     });
   });
 
-  describe('PUT /articles', () => {
+  describe('PUT /articles/:articleID', () => {
     it('should update an existing article', async () => {
       const loginResponse = await request(app)
           .post('/credentials')
