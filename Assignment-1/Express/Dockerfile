@@ -6,6 +6,5 @@ COPY ./. .
 EXPOSE 3000/tcp
 EXPOSE 3000/udp
 ENV NODE_OPTIONS="--max-old-space-size=4096"
-ENTRYPOINT ["docker-entrypoint.sh"]
 
 CMD npm run start

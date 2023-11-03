@@ -30,22 +30,22 @@ const logFormat = printf(({ timestamp, level, message, stack }) => {
 const logger = createLogger({
   levels: customLevels.levels,
   format: combine(
-    errors({ stack: true }),
-    timestamp({ format: 'DD-MM-YYYY HH:mm:ss' }),
-    logFormat,
+      errors({ stack: true }),
+      timestamp({ format: 'DD-MM-YYYY HH:mm:ss' }),
+      logFormat,
   ),
   transports: [
     new transports.Console({
       format: combine(
-        colorize(),
-        logFormat,
+          colorize(),
+          logFormat,
       ),
     }),
     new transports.File({
       filename: './Logs/application.log',
       format: combine(
-        prettyPrint(),
-        logFormat,
+          prettyPrint(),
+          logFormat,
       ),
       options: { flags: 'a' },
     }),
