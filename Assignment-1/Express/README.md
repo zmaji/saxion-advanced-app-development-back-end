@@ -35,6 +35,22 @@ To get this project up and running, follow these steps:
 5. Once the containers are running, you can access the application in your web
    browser at `http://localhost:3000/`.
 
+## Sample credentials
+For testing purposes, these test users could be used:
+1.
+Username: zmaji
+Roles: user, admin
+Secret: lxziOo8CIq
+Password: Password1
+Password hash: $2a$10$Pps0ct1FKH4BRDA2wxUIcexFx4DCZ3aJ1u6gPTtdf3zAI4l95Iyby
+
+2.
+Username: Gardif
+Roles: user
+Secret: OuHRdKDQuu
+Password: Password2
+Password hash: $2a$10$L6RubNqXZfeUqMRexpQnfOCGKmuu6fWHFJ..MXuumtXG27a3Fp0pm
+
 ## Running tests
 The project includes Jest tests to ensure the API endpoints work as expected. To run these tests, use the following command:
 `npm run test`.
