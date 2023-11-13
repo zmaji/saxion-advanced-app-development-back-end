@@ -44,9 +44,9 @@ beforeAll(async () => {
     const newComment = new CommentModel(comment);
     await newComment.save();
   }
-}, 30000);
+}, 60000);
 
 afterAll(async () => {
   await mongoose.disconnect();
   await mongoServer.stop();
-}, 30000);
+}, 60000);
